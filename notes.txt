@@ -1,3 +1,7 @@
-navbar=>avatar(before logout)
+**check package.json for both of them and install packages**
+mongodb=> use project mail. for any doubt: https://www.youtube.com/watch?v=St0_qSe7RCE&list=PLJM1tXwlGdaf57oUx0rIqSW668Rpo_7oU&index=2 
 
-check package.json for both of them and install packages
+
+navbar=>avatar(before logout)
+for easy registration comment out the if conditions except if(user)
+
