@@ -54,13 +54,18 @@ const signup = async (req, res) => {
     const savedUser = await user.save();
 
     const token = jwt.sign(
-      {
-        user: savedUser._id,
-        email: savedUser.email,
-      },
-      process.env.JWT_SECRET,{ expiresIn: "1h" }
-    );
-    res.json({ status: true, result: token });
+        {
+          user: existingUser._id,
+          email: existingUser.email,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" },
+        (err, token) => {
+          if (err) throw err;
+          res.status(200).json({ result: token });
+        }
+      );
+      
   } catch (error) {
     console.error(error.message);
     res.status(500).send(error.message);
