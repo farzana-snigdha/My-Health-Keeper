@@ -19,4 +19,4 @@ const signupForm = new mongoose.Schema ({
     }
 });
 
-module.exports = mongoose.model('user', signupForm);
+module.exports = mongoose.model('myTable', signupForm);
