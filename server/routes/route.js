@@ -5,14 +5,14 @@ const bodyParser = require("body-parser");
 const signupForm = require('../models/signupModel');
 
 router.post('/signup', (req, res) => {
-    console.log(req.body);
+    
     const signupUser = new signupForm ({
         fullName:req.body.fullName,
         email:req.body.email,
         password:req.body.password
-        
-    });
-    signupUser.save().then(data => {
+    })
+    signupUser.save()
+    .then(data => {
         res.json(data)
     })
     .catch(error => {
