@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const signupForm = new mongoose.Schema ({
+const signupForm = new mongoose.Schema({
     fullName : {
         type : String,
         required : true
@@ -17,6 +17,6 @@ const signupForm = new mongoose.Schema ({
         type : Date,
         default : Date.now
     }
-});
+})
 
 module.exports = mongoose.model('myTable', signupForm);
