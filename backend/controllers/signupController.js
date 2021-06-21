@@ -12,7 +12,7 @@ const signup = async (req, res) => {
         .status(400)
         .json({ errorMessage: "Please enter all required fields." });
 
-    if (password.length < 6)
+    if (String(password).length < 6)
       return res.status(400).json({
         errorMessage: "Please enter a password of at least 6 characters.",
       });

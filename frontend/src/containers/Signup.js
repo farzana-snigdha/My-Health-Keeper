@@ -1,59 +1,106 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-
-import axios from "axios";
-
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import DatePicker from "react-datepicker";
+import axios from "axios";
+import {
+  Link,
+  Grid,
+  Typography,
+  FormControl,
+  Select,
+  Container,
+  InputLabel,
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+} from "@material-ui/core";
+require("dotenv").config();
+const URL = process.env.URL;
 
 const Signup = ({ signup, isAuthenticated }) => {
-  const [accountCreated, setAccountCreated] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    gender: "",
-    email: "",
-    password: "",
-    re_password: "",
-    dob: "",
-    phone: "",
-  });
+  let history = useHistory();
 
-  // const { name, gender, email, password, re_password, dob,   phone } = formData;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [re_pass, setRePass] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
+  async function register(e) {
     e.preventDefault();
-    {
-      signup(formData).then(() => {
-        setAccountCreated(true);
-      });
-    }
-  };
 
-  const continueWithGoogle = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}`
-      );
+    
+      const registerData = {
+        name,
+        email,
+        pass,
+        re_pass,
+        gender,
+        phone,
+      };
 
-      window.location.replace(res.data.authorization_url);
-    } catch (err) {}
-  };
+       axios.post("http://localhost:5000/users/signup", registerData) .then(function (response) {
+              if (response.data.status) {
+                history.push("/login");
+              }
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
+      // await getLoggedIn();
+      // history.push("/");
+    // } catch (err) {
+    //   console.error("ghg     " + err);
+    // }
+  }
+
+  // const [signupForm, setSignupForm] = useState({
+  //   name: "",
+  //   email: "",
+  //   passwordHash: "",
+  //   passwordVerify: "",
+  //   gender: "",
+
+  //   phone: "",
+  // });
+
+  // const onChange = (e) => {
+  //   setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
+  // };
+
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .post("http://localhost:5001/signup", {
+  //       name: signupForm.name,
+  //       email: signupForm.email,
+  //       password: signupForm.password,
+  //       gender: signupForm.gender,
+  //       phone: signupForm.phone,
+  //       dateOfBirth: signupForm.dateOfBirth,
+  //     })
+  //     .then(function (response) {
+  //       if (response.data.status) {
+  //         history.push("/login");
+  //       }
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // };
 
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100vh",
+    },
+    formControl: {
+      minWidth: 130,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
     },
 
     paper: {
@@ -77,16 +124,6 @@ const Signup = ({ signup, isAuthenticated }) => {
 
   const classes = useStyles();
 
-  if (isAuthenticated) {
-    //  localStorage.setItem('jwt', jwt)
-    console.log(localStorage.getItem("access"));
-    return <Redirect to="/" />;
-  }
-  if (accountCreated) {
-    //  localStorage.setItem('jwt', jwt)
-    console.log(localStorage.getItem("access"));
-    return <Redirect to="/login" />;
-  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -95,7 +132,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={register}>
           <div className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -107,7 +144,8 @@ const Signup = ({ signup, isAuthenticated }) => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={(e) => onChange(e)}
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -119,36 +157,28 @@ const Signup = ({ signup, isAuthenticated }) => {
                   label="User Name"
                   name="name"
                   autoComplete="name"
-                  onChange={(e) => onChange(e)}
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
                 />
               </Grid>
 
-              <Grid item xs={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="gender"
-                  label="Gender"
-                  name="gender"
-                  autoComplete="gender"
-                  onChange={(e) => onChange(e)}
-                />
+              <Grid item xs={5}>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel>Gender</InputLabel>
+                  <Select
+                    id="gender"
+                    name="gender"
+                    onChange={(e) => setGender(e.target.value)}
+                    value={gender}
+                    label="Gender"
+                  >
+                    <option value={"Male"}>Male</option>
+                    <option value={"Female"}>Female</option>
+                    <option value={"Others"}>Others</option>
+                  </Select>
+                </FormControl>
               </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="date"
-                  label="Birthday"
-                  type="text"
-                  defaultValue="2017-05-24"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
+              <Grid item xs={7}>
                 <TextField
                   variant="outlined"
                   required
@@ -157,9 +187,11 @@ const Signup = ({ signup, isAuthenticated }) => {
                   label="Contact Number"
                   name="phone"
                   autoComplete="phone"
-                  onChange={(e) => onChange(e)}
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -170,7 +202,8 @@ const Signup = ({ signup, isAuthenticated }) => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  onChange={(e) => onChange(e)}
+                  onChange={(e) => setPass(e.target.value)}
+                  value={pass}
                   minLength="6"
                 />
               </Grid>
@@ -184,7 +217,8 @@ const Signup = ({ signup, isAuthenticated }) => {
                   type="password"
                   id="re_password"
                   autoComplete="current-password"
-                  onChange={(e) => onChange(e)}
+                  onChange={(e) => setRePass(e.target.value)}
+                  value={re_pass}
                   minLength="6"
                 />
               </Grid>
@@ -195,7 +229,6 @@ const Signup = ({ signup, isAuthenticated }) => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e) => onSubmit(e)}
             >
               Sign Up
             </Button>
@@ -205,7 +238,7 @@ const Signup = ({ signup, isAuthenticated }) => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={continueWithGoogle}
+              // onClick={continueWithGoogle}
             >
               Continue With Google
             </Button>
@@ -223,8 +256,8 @@ const Signup = ({ signup, isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+// const mapStateToProps = (state) => ({
+//   isAuthenticated: state.auth.isAuthenticated,
+// });
 
-export default (Signup);
+export default Signup;
