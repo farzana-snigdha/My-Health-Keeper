@@ -19,78 +19,43 @@ import {
 require("dotenv").config();
 const URL = process.env.URL;
 
-const Signup = ({ signup, isAuthenticated }) => {
-  let history = useHistory();
-
-  const [name, setName] = useState("");
+function Signup() {
+  const [accountCreated, setAccountCreated] = useState(false);
+   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [re_pass, setRePass] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
 
+  const [passErr, setPassErr] = useState(false);
+  const [passMatchErr, setPassMatchErr] = useState(false);
+  const [phoneErr, setPhoneErr] = useState(false);
+  const history = useHistory();
+
   async function register(e) {
     e.preventDefault();
+    try {
+  
+        const registerData = {
+          name,
+          email,
+          pass,
+          re_pass,
+          gender,
+          phone,
+        };
+     
+        await axios.post("http://localhost:5000/users/signup", registerData);
+        setAccountCreated(true);
 
-    
-      const registerData = {
-        name,
-        email,
-        pass,
-        re_pass,
-        gender,
-        phone,
-      };
-
-       axios.post("http://localhost:5000/users/signup", registerData) .then(function (response) {
-              if (response.data.status) {
-                history.push("/login");
-              }
-            })
-            .catch(function (err) {
-              console.log(err);
-            });
-      // await getLoggedIn();
-      // history.push("/");
-    // } catch (err) {
-    //   console.error("ghg     " + err);
-    // }
+        // await getLoggedIn();
+         history.push("/dashboard");
+     
+    } catch (err) {
+      console.error("ghg     " + err);
+    }
   }
-
-  // const [signupForm, setSignupForm] = useState({
-  //   name: "",
-  //   email: "",
-  //   passwordHash: "",
-  //   passwordVerify: "",
-  //   gender: "",
-
-  //   phone: "",
-  // });
-
-  // const onChange = (e) => {
-  //   setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
-  // };
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:5001/signup", {
-  //       name: signupForm.name,
-  //       email: signupForm.email,
-  //       password: signupForm.password,
-  //       gender: signupForm.gender,
-  //       phone: signupForm.phone,
-  //       dateOfBirth: signupForm.dateOfBirth,
-  //     })
-  //     .then(function (response) {
-  //       if (response.data.status) {
-  //         history.push("/login");
-  //       }
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -123,6 +88,16 @@ const Signup = ({ signup, isAuthenticated }) => {
   }));
 
   const classes = useStyles();
+
+
+
+ 
+
+  if (accountCreated) {
+    //  localStorage.setItem('jwt', jwt)
+    // console.log(localStorage.getItem("access"));
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -254,10 +229,6 @@ const Signup = ({ signup, isAuthenticated }) => {
       </div>
     </Container>
   );
-};
-
-// const mapStateToProps = (state) => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-// });
+}
 
 export default Signup;

@@ -3,7 +3,7 @@ const cors = require('cors')
 const router=require("./routers/userRouter")
 
 const app = express();
-app.use(express.json({extende:false}))
+app.use(express.json({extende:true}))
 app.use(cors())
 
 app.use('/users',router)

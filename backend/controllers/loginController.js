@@ -40,17 +40,14 @@ const postLogin = async (req, res) => {
     const token = jwt.sign(
       {
         user: existingUser._id,
-        email: existingUser.email,
+       
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
-      (err, token) => {
-        if (err) throw err;
-        res.status(200).json({ result: token });
-        localStorage.setItem("jwtToken",token)
-      }
+     
      
     );
+    res.status(200).json({result:existingUser,token})
     // console.log( localStorage.getItem("jwtToken"))
   } catch (err) {
     console.error(err);

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from "./hocs/Layout";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
-
+import Dashboard from "./containers/Dashboard";
 import Signup from "./containers/Signup";
 import ResetPassword from "./containers/ResetPassword";
 
@@ -18,6 +18,7 @@ const App = () => (
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/resetpassword" component={ResetPassword} />
+          <Route exact path="/dashboard" component={Dashboard} />
           {/* <Route
             exact
             path="/password/reset/confirm/:uid/:token"

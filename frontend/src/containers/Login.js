@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
-import axios from 'axios';
-
+import axios from "axios";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -15,33 +14,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 
-const Login = ({login,isAuthenticated, IsActivated}) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+function Login() {
+  const [isAuthenticated, AccountAuthenticated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
 
-  const { email, password } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
+  async function login(e) {
     e.preventDefault();
+    try {
+      const loginData = {
+        email,
+        pass,
+      };
 
-     login(email, password);
-  };
+      await axios.post("http://localhost:5000/users/login", loginData);
+      AccountAuthenticated(true);
 
+      // await getLoggedIn();
+      // history.push("/");
+    } catch (err) {
+      console.error("ghg     " + err);
+    }
+  }
+ 
   const continueWithGoogle = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}`)
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}`
+      );
 
-        window.location.replace(res.data.authorization_url);
-    } catch (err) {
-
-    }
-};
-
+      window.location.replace(res.data.authorization_url);
+    } catch (err) {}
+  };
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,12 +82,10 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
   }));
 
   const classes = useStyles();
-
-  if(isAuthenticated){
-   
-  //  localStorage.setItem('jwt', jwt)
-    console.log(localStorage.getItem("access"))
-    return <Redirect to='/'/>
+  if (isAuthenticated) {
+    //  localStorage.setItem('jwt', jwt)
+    // console.log(localStorage.getItem("access"))
+    return <Redirect to="/" />;
   }
   return (
     <Grid container component="main" maxwidth="xs">
@@ -95,7 +97,7 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={login}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -106,7 +108,8 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={(e) => onChange(e)}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
             <TextField
               variant="outlined"
@@ -118,7 +121,8 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e) => onChange(e)}
+              onChange={(e) => setPass(e.target.value)}
+              value={pass}
             />
             {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -130,8 +134,6 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e) => onSubmit(e)}
-             
             >
               Sign In
             </Button>
@@ -143,7 +145,7 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
               className={classes.submit}
               onClick={continueWithGoogle}
             >
-             Continue With Google
+              Continue With Google
             </Button>
 
             <Grid container>
@@ -163,11 +165,10 @@ const Login = ({login,isAuthenticated, IsActivated}) => {
       </Grid>
     </Grid>
   );
-};
+}
 
-const mapStateToProps = (state) => ({  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-       
-  }  );
-
-export default (Login);
+export default Login;
