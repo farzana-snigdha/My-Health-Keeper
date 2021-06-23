@@ -14,6 +14,7 @@ router.post('/reset', auth, userCtrl.resetPassword)
 router.get('/infor', auth, userCtrl.getUserInfor)
 router.get('/logout', userCtrl.logout)
 router.patch('/update', auth, userCtrl.updateUser)
+router.post('/google_login', userCtrl.googleLogin)
 
 // router.get("/login",auth,getLogin)
 router.get('/logout', (req, res)=>  {

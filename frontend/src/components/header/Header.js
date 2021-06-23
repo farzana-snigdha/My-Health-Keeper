@@ -60,9 +60,10 @@ const useStyles = makeStyles((theme) => ({
   imageIcon:{
     height:"30px",
     width:"30px",
-    transform:"translateY(5px)",
+        transform:"translateY(5px)",
     borderRadius:"50%",
-    marginRight:"8px"
+    marginRight:"8px",
+  
   }
   
 }));
@@ -84,14 +85,14 @@ function Header() {
   const userLink = () => {
     return (
       <div>
-        <Link to="#" component={NavLink}>
+        <Link to="/profile" component={NavLink}>
           {<img className={classes.imageIcon} src={user.avatar} alt="" />}
           {user.name}{" "}
         </Link>
 
         
         <Link className={classes.logout} component={NavLink} to="/" onClick={handleLogout} >
-        <i class="fas fa-sign-out-alt"></i>
+        <i className="fas fa-sign-out-alt"></i>
           Logout
         </Link>
       </div>
@@ -128,14 +129,9 @@ function Header() {
               My HealthKeeper
             </Link>
           </Typography>
-          {/* <img className={classes.image} src={person_icon} alt="icon" /> */}
-          {/* {isAuthenticated ? authLinks() : guestLinks()} */}
+         
           <Typography className={classes.signinTitle} color="inherit">
-            {/* <li>
-                  <Link component={NavLink} underline="none" to="/login">
-                    <i className="fas fa-user"></i> Sign in
-                  </Link>
-                </li> */}
+         
             <ul style={transForm}>
               {isLogged ? (
                 userLink()

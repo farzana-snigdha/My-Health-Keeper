@@ -17,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
+import { GoogleLogin } from 'react-google-login';
 
 import { dispatchLogin } from "../../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
@@ -55,17 +56,22 @@ function Login() {
     }
   };
 
-
-  const continueWithGoogle = async () => {
+  const responseGoogle =async (response) => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}`
-      );
+      const res = await axios.post('/user/google_login', {tokenId: response.tokenId})
 
-      window.location.replace(res.data.authorization_url);
-    } catch (err) {}
-  };
+      setUser({...user, error:'', success: res.data.msg})
+      localStorage.setItem('firstLogin', true)
 
+      dispatch(dispatchLogin())
+      history.push('/')
+  } catch (err) {
+      err.response.data.msg && 
+      setUser({...user, err: err.response.data.msg, success: ''})
+  }
+  }
+  
+ 
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100vh",
@@ -89,7 +95,7 @@ function Login() {
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: "#232327",
     },
     form: {
       width: "100%", // Fix IE 11 issue.
@@ -98,10 +104,25 @@ function Login() {
     submit: {
       margin: theme.spacing(4, 14, 1),
       width: "60%",
+      background: "#232327",
+      color: "white",
+      "&:hover": {
+        background: "#122221",
+      },
+    },
+    fontColor:{
+      color:"#122221"
     },
     google: {
-      margin: theme.spacing(1, 14, 1),
+      marginLeft:"113px",
+      // margin: theme.spacing(4, 14, 1),
+     justifyContent:"center",
       width: "60%",
+      background: "#232327",
+      color: "white",
+      "&:hover": {
+        background: "#122221",
+      },
     },
   }));
 
@@ -158,7 +179,9 @@ function Login() {
             >
               Sign In
             </Button>
-            <Grid
+            
+              <Typography className={classes.fontColor}>
+              <Grid
               container
               spacing={0}
               direction="row"
@@ -166,16 +189,18 @@ function Login() {
               justify="center"
             >
               <Grid item xs={3}>
-                <Link href="/reset-password" variant="body2">
+                <Link href="/forgot_password" variant="body2" >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"New? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
+              </Typography>
+             
             <Grid
               container
               spacing={0}
@@ -188,7 +213,14 @@ function Login() {
                 OR
               </Grid>
             </Grid>
-            <Button
+            <GoogleLogin className={classes.google}  theme="dark"
+    clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
+    buttonText="Continue with Google"
+    onSuccess={responseGoogle}
+
+    cookiePolicy={'single_host_origin'}
+  />
+            {/* <Button
               type="submit"
               variant="outlined"
               color="primary"
@@ -196,7 +228,7 @@ function Login() {
               onClick={continueWithGoogle}
             >
               Continue With Google
-            </Button>
+            </Button> */}
           </form>
         </div>
         {err && showErrMsg(err)}

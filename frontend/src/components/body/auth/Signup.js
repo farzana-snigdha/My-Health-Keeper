@@ -90,7 +90,7 @@ function Signup() {
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: "#232327",
     },
     form: {
       width: "100%", // Fix IE 11 issue.
@@ -98,6 +98,11 @@ function Signup() {
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      background: "#232327",
+      color: "white",
+      "&:hover": {
+        background: "#122221",
+      },
     },
   }));
 
@@ -228,7 +233,7 @@ function Signup() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/login" variant="body2" color="#122221">
                   Already have an account? Sign in
                 </Link>
               </Grid>
