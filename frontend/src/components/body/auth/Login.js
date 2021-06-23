@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import axios from "axios";
+import {
+  showErrMsg,
+  showSuccessMsg,
+} from "../../utils/notification/Notification";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,29 +18,44 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 
-function Login() {
-  const [isAuthenticated, AccountAuthenticated] = useState(false);
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+import { dispatchLogin } from "../../../redux/actions/authAction";
+import { useDispatch } from "react-redux";
 
-  async function login(e) {
+const initialState = {
+  email: "",
+  password: "",
+  err: "",
+  success: "",
+};
+
+function Login() {
+  const [user, setUser] = useState(initialState);
+  const dispatch = useDispatch();
+  const history = useHistory()
+   const { email, password, err, success } = user;
+
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value, err: "", success: "" });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const loginData = {
-        email,
-        pass,
-      };
+      const res = await axios.post("/user/login", { email, password });
+      setUser({ ...user, err: "", success: res.data.msg });
 
-      await axios.post("http://localhost:5000/users/login", loginData);
-      AccountAuthenticated(true);
+      localStorage.setItem("firstLogin", true);
 
-      // await getLoggedIn();
-      // history.push("/");
+      dispatch(dispatchLogin());
+      history.push("/")
     } catch (err) {
-      console.error("ghg     " + err);
+      err.response.data.msg &&
+        setUser({ ...user, err: err.response.data.msg, success: "" });
     }
-  }
- 
+  };
+
+
   const continueWithGoogle = async () => {
     try {
       const res = await axios.get(
@@ -77,16 +96,17 @@ function Login() {
       marginTop: theme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      margin: theme.spacing(4, 14, 1),
+      width: "60%",
+    },
+    google: {
+      margin: theme.spacing(1, 14, 1),
+      width: "60%",
     },
   }));
 
   const classes = useStyles();
-  if (isAuthenticated) {
-    //  localStorage.setItem('jwt', jwt)
-    // console.log(localStorage.getItem("access"))
-    return <Redirect to="/" />;
-  }
+
   return (
     <Grid container component="main" maxwidth="xs">
       <CssBaseline />
@@ -97,7 +117,7 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate onSubmit={login}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -107,8 +127,9 @@ function Login() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              type="text"
               autoFocus
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChangeInput}
               value={email}
             />
             <TextField
@@ -121,8 +142,8 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e) => setPass(e.target.value)}
-              value={pass}
+              onChange={handleChangeInput}
+              value={password}
             />
             {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -130,26 +151,21 @@ function Login() {
             /> */}
             <Button
               type="submit"
-              fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onSubmit={handleSubmit}
             >
               Sign In
             </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={continueWithGoogle}
+            <Grid
+              container
+              spacing={0}
+              direction="row"
+              alignItems="center"
+              justify="center"
             >
-              Continue With Google
-            </Button>
-
-            <Grid container>
-              <Grid item xs>
+              <Grid item xs={3}>
                 <Link href="/reset-password" variant="body2">
                   Forgot password?
                 </Link>
@@ -160,8 +176,31 @@ function Login() {
                 </Link>
               </Grid>
             </Grid>
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justify="center"
+              style={{ minHeight: "6vh" }}
+            >
+              <Grid item xs={3}>
+                OR
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              variant="outlined"
+              color="primary"
+              className={classes.google}
+              onClick={continueWithGoogle}
+            >
+              Continue With Google
+            </Button>
           </form>
         </div>
+        {err && showErrMsg(err)}
+        {success && showSuccessMsg(success)}
       </Grid>
     </Grid>
   );

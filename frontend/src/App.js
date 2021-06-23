@@ -1,35 +1,50 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Layout from "./hocs/Layout";
-import Home from "./containers/Home";
-import Login from "./containers/Login";
-import Dashboard from "./containers/Dashboard";
-import Signup from "./containers/Signup";
-import ResetPassword from "./containers/ResetPassword";
+import React, {useEffect} from 'react';
+import {BrowserRouter as Router} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {dispatchLogin, fetchUser, dispatchGetUser} from './redux/actions/authAction'
+
+import Header from './components/header/Header'
+import Body from './components/body/Body'
+import axios from 'axios';
+
+function App() {
+  const dispatch = useDispatch()
+  const token = useSelector(state => state.token)
+  const auth = useSelector(state => state.auth)
+
+  useEffect(() => {
+    const firstLogin = localStorage.getItem('firstLogin')
+    if(firstLogin){
+      const getToken = async () => {
+        const res = await axios.post('/user/refresh_token', null)
+        dispatch({type: 'GET_TOKEN', payload: res.data.access_token})
+      }
+      getToken()
+    }
+  },[auth.isLogged, dispatch])
+
+  useEffect(() => {
+    if(token){
+      const getUser = () => {
+        dispatch(dispatchLogin())
+
+        return fetchUser(token).then(res => {
+          dispatch(dispatchGetUser(res))
+        })
+      }
+      getUser()
+    }
+  },[token, dispatch])
 
 
-
-const App = () => (
-  
+  return (
     <Router>
-      <Layout>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/resetpassword" component={ResetPassword} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          {/* <Route
-            exact
-            path="/password/reset/confirm/:uid/:token"
-            component={ResetPasswordConfirm}
-          /> */}
-     
-          {/* <Route exact path="/activate/:uid/:token" component={Activate} /> */}
-        </Switch>
-      </Layout>
+      <div className="App">
+        <Header />
+        <Body />
+      </div>
     </Router>
-  
   );
+}
 
 export default App;

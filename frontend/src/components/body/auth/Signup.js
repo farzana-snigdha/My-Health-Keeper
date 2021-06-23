@@ -16,44 +16,60 @@ import {
   CssBaseline,
   TextField,
 } from "@material-ui/core";
+import {showErrMsg, showSuccessMsg} from '../../utils/notification/Notification'
+import {isEmpty, isEmail, isLength, isMatch} from '../../utils/validation/Validation'
+
 require("dotenv").config();
 const URL = process.env.URL;
 
+
+const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    re_password: '',
+    gender:'',
+    phone:'',
+    err: '',
+    success: ''
+}
+
 function Signup() {
-  const [accountCreated, setAccountCreated] = useState(false);
-   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [re_pass, setRePass] = useState("");
-  const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
+  const [user, setUser] = useState(initialState)
 
- 
-  const history = useHistory();
+  const {name, email, password,re_password, gender,phone,err, success} = user
 
-  async function register(e) {
-    e.preventDefault();
-    try {
-  
-        const registerData = {
-          name,
-          email,
-          pass,
-          re_pass,
-          gender,
-          phone,
-        };
-     
-        await axios.post("http://localhost:5000/users/signup", registerData);
-        setAccountCreated(true);
-
-        // await getLoggedIn();
-         history.push("/dashboard");
-     
-    } catch (err) {
-      console.error("ghg     " + err);
-    }
+  const handleChangeInput = e => {
+      const {name, value} = e.target
+      setUser({...user, [name]:value, err: '', success: ''})
   }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+
+        if(!isEmail(email))
+            return setUser({...user, err: "Invalid emails.", success: ''})
+
+        if(isLength(password))
+            return setUser({...user, err: "Password must be at least 6 characters.", success: ''})
+        
+        if(!isMatch(password, re_password))
+            return setUser({...user, err: "Password did not match.", success: ''})
+
+        try {
+            const res = await axios.post('/user/signup', {
+                name, email, password,gender,phone
+            })
+
+            setUser({...user, err: '', success: res.data.msg})
+        } catch (err) {
+            err.response.data.msg && 
+            setUser({...user, err: err.response.data.msg, success: ''})
+        }
+  };
+
+  
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -89,14 +105,6 @@ function Signup() {
 
 
 
- 
-
-  if (accountCreated) {
-    //  localStorage.setItem('jwt', jwt)
-    // console.log(localStorage.getItem("access"));
-    return <Redirect to="/dashboard" />;
-  }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -105,7 +113,9 @@ function Signup() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form onSubmit={register}>
+        {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
+        <form onSubmit={handleSubmit}>
           <div className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -117,7 +127,7 @@ function Signup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleChangeInput}
                   value={email}
                 />
               </Grid>
@@ -130,7 +140,7 @@ function Signup() {
                   label="User Name"
                   name="name"
                   autoComplete="name"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={handleChangeInput}
                   value={name}
                 />
               </Grid>
@@ -141,7 +151,8 @@ function Signup() {
                   <Select
                     id="gender"
                     name="gender"
-                    onChange={(e) => setGender(e.target.value)}
+                    required
+                    onChange={handleChangeInput}
                     value={gender}
                     label="Gender"
                   >
@@ -154,13 +165,13 @@ function Signup() {
               <Grid item xs={7}>
                 <TextField
                   variant="outlined"
-                  required
+                  
                   fullWidth
                   id="phone"
                   label="Contact Number"
                   name="phone"
                   autoComplete="phone"
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={handleChangeInput}
                   value={phone}
                 />
               </Grid>
@@ -175,8 +186,8 @@ function Signup() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  onChange={(e) => setPass(e.target.value)}
-                  value={pass}
+                  onChange={handleChangeInput}
+                  value={password}
                   minLength="6"
                 />
               </Grid>
@@ -190,8 +201,8 @@ function Signup() {
                   type="password"
                   id="re_password"
                   autoComplete="current-password"
-                  onChange={(e) => setRePass(e.target.value)}
-                  value={re_pass}
+                  onChange={handleChangeInput}
+                  value={re_password}
                   minLength="6"
                 />
               </Grid>
