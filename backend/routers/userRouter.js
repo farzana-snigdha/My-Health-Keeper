@@ -1,16 +1,25 @@
 const router = require("express").Router();
 
-const signup = require("../controllers/signupController");
-const {postLogin,getLogin} = require("../controllers/loginController");
-const getDashboard = require("../controllers/dashboardController");
-const auth=require("../middleware/auth.middleware")
+const userCtrl = require("../controllers/authControllers");
+const auth=require("../middleware/auth")
 
-router.post("/signup", signup);
-router.post("/login",postLogin)
+
+router.post("/signup", userCtrl.register);
+router.post("/activation", userCtrl.activateEmail);
+
+router.post("/login",userCtrl.login)
+router.post('/refresh_token', userCtrl.getAccessToken)
+router.post('/forgot', userCtrl.forgotPassword)
+router.post('/reset', auth, userCtrl.resetPassword)
+router.get('/infor', auth, userCtrl.getUserInfor)
+router.get('/logout', userCtrl.logout)
+router.patch('/update', auth, userCtrl.updateUser)
+
+// router.get("/login",auth,getLogin)
 router.get('/logout', (req, res)=>  {
  
     res.redirect("/")
-    console.log("ded")
+    console.log("ded") 
   });
-router.get('/dashboard',auth,getDashboard)
+// router.get('/dashboard',auth,getDashboard)
 module.exports = router;
