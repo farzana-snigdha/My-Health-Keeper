@@ -52,6 +52,7 @@ import ForgotPassword from './auth/ForgotPassword'
 import {useSelector} from 'react-redux'
 import ResetPassword from './auth/ResetPassword'
 import Profile from './profile/Profile'
+import Home from './home/Home'
 
 
 export default function Body() {
@@ -60,7 +61,7 @@ export default function Body() {
     return (
         <section>
             <Switch>
-                 {/* <Route path="/" component={Home} exact /> */}
+                 <Route path="/" component={Home} exact />
                    <Route path="/login" component={isLogged ? NotFound : Login} exact /> 
                   <Route path="/signup" component={isLogged ? NotFound : Signup} exact />
                  <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
