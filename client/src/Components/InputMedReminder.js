@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { Grid, Paper, TextField, Button } from "@material-ui/core";
+import React, { useState } from 'react';
+import { Grid, Paper, TextField, Button, Container, IconButton } from "@material-ui/core";
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
 
 function addTimeField() {
   return (
@@ -14,40 +17,50 @@ function addTimeField() {
   );
 }
 
-function inputMedReminder() {
+function InputMedReminder() {
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
 
-  const [inputList, setInputList] = useState([{ firstName: "", lastName: "" }]);
+  const [inputFields, setInputFields] = useState([
+    { time: '' },
+  ]);
 
-  // handle input change
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...inputList];
-    list[index][name] = value;
-    setInputList(list);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("InputFields", inputFields);
   };
 
-  // handle click event of the Remove button
-  const handleRemoveClick = (index) => {
-    const list = [...inputList];
-    list.splice(index, 1);
-    setInputList(list);
-  };
+  const handleChangeInput = (index, event) => {
+    const values = [...inputFields];
+    values[index][event.target.name] = event.target.value;
+    setInputFields(values)
+    // const newInputFields = inputFields.map(i => {
+    //   if(id === i.id) {
+    //     i[event.target.name] = event.target.value
+    //   }
+    //   return i;
+    // })
+  }
 
-  // handle click event of the Add button
-  const handleAddClick = () => {
-    setInputList([...inputList, {  lastName: "" }]);
-  };
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { time: '' }])
+  }
 
-  {inputList.map((x, i) => {
+  const handleRemoveFields = (index) => {
+    const values  = [...inputFields];
+    values.splice(index, 1);
+    setInputFields(values);
+  }
+
+  
   return (
+    <Container>
     <Grid>
       <Paper elevation={20} style={paperStyle}>
         <Grid align="center">
           <h2 style={headerStyle}>Add Medicine</h2>
         </Grid>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
             label="Medicine name"
@@ -71,19 +84,39 @@ function inputMedReminder() {
             }}
           />
 
-          <Button onClick={addTimeField} color="primary">
-            Add Time
-          </Button>
+          { inputFields.map((inputField, index) => (
+            <div key={index}>
+              <TextField
+               name="time"
+               label="Time"
+               type="time"
+               InputLabelProps={{
+                shrink: true,
+              }}
+               //variant="filled"
+               value={inputField.time}
+               onChange={event => handleChangeInput(index, event)}
+              />
 
-          <Button type="submit" variant="contained" color="primary">
+            <IconButton disabled={inputFields.length === 1} onClick={() => handleRemoveFields(index)}>
+              <RemoveIcon />
+            </IconButton>
+            <IconButton onClick={handleAddFields}>
+              <AddIcon />
+            </IconButton>
+              </div>
+              
+          ))}
+
+          <Button type="submit" variant="contained" onClick={handleSubmit} color="primary">
             Add
           </Button>
         </form>
       </Paper>
     </Grid>
+    </Container>
   );
-  }
-}
+
 }
 
-export default inputMedReminder;
+export default InputMedReminder;
