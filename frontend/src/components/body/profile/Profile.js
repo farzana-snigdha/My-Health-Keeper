@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {isLength, isMatch} from '../../utils/validation/Validation'
 import {showSuccessMsg, showErrMsg} from '../../utils/notification/Notification'
 import {fetchAllUsers, dispatchGetAllUsers} from '../../../redux/actions/usersAction'
@@ -41,7 +41,7 @@ function Profile() {
     const [loading, setLoading] = useState(false)
     const [callback, setCallback] = useState(false)
 
-    
+    const [accountUpdated, setAccountUpdated] = useState(false);
 
   
 
@@ -103,13 +103,14 @@ function Profile() {
         if(name || avatar||phone||gender) updateInfor()
         console.log(gender)
       
+      
     }
 
     const useStyles = makeStyles((theme) => ({
       
         formControl: {
           minWidth: 300,
-          background: "#fee",
+          background: "rgb(223, 221, 221)",
         },
       
       
@@ -117,7 +118,6 @@ function Profile() {
     
       const classes = useStyles();
     
-
     return (
         <>
         <div>
