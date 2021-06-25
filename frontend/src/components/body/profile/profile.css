@@ -37,8 +37,9 @@
     text-align: center;
     font-weight: 400;
     text-transform: uppercase;
-    color: rgb(255, 140, 45);
+    color: rgb(63, 62, 61);
     transition: 0.3s ease-in-out;
+  
 }
 .profile_page .col-left .avatar:hover span{
     bottom: -15%;
@@ -70,8 +71,9 @@
     margin: 5px 0;
     border: none;
     outline: none;
-    background: #fee;
+    background: rgb(223, 221, 221);
     padding: 0 5px;
+    /* color: white; */
 }
 .profile_page button{
     background: #333;
