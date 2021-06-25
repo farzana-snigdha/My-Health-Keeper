@@ -1,8 +1,0 @@
-POST http://localhost:5000/app/signup
-Content-Type: application/json
-
-{
-    "fullName" : "Susmi",
-    "email" : "s@gmail.com",
-    "password" : "pass123"
-}
