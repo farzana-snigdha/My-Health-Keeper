@@ -49,7 +49,7 @@ function Login() {
       localStorage.setItem("firstLogin", true);
 
       dispatch(dispatchLogin());
-      history.push("/")
+      history.push("/home")
     } catch (err) {
       err.response.data.msg &&
         setUser({ ...user, err: err.response.data.msg, success: "" });
@@ -64,7 +64,7 @@ function Login() {
       localStorage.setItem('firstLogin', true)
 
       dispatch(dispatchLogin())
-      history.push('/')
+      history.push('/home')
   } catch (err) {
       err.response.data.msg && 
       setUser({...user, err: err.response.data.msg, success: ''})
