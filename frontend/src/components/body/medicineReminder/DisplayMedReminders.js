@@ -1,5 +1,8 @@
 import React from 'react'
-import './medicineReminder.css'
+import './medicineReminder.css';
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import red from "@material-ui/core/colors/red";
 
 function displayMedicineReminders() {
     return (
@@ -10,10 +13,12 @@ function displayMedicineReminders() {
           {
             
               <div className="reminder_card" >
-                <h2>HEHEHEHHEH</h2>
-                <h3>Work should be done by:</h3>
-                <p>uhuisgdufegforgp4igigbh</p>
-                <div className="button" >Delete</div>
+                <h2>MEDICINE NAME</h2>
+                <h3>Description</h3>
+                <p>Time:  </p>
+                <IconButton className="btn" >
+                <DeleteIcon style={{ color: "red" }} />
+               </IconButton>
               </div>
               
             
@@ -21,22 +26,26 @@ function displayMedicineReminders() {
           {
             
             <div className="reminder_card" >
-              <h2>HEHEHEHHEH</h2>
-              <h3>Work should be done by:</h3>
-              <p>uhuisgdufegforgp4igigbh</p>
-              <div className="button" >Delete</div>
-            </div>
+            <h2>MEDICINE NAME</h2>
+            <h3>Description</h3>
+            <p>Time:  </p>
+            <IconButton className="btn" >
+            <DeleteIcon style={{ color: "red" }} />
+           </IconButton>
+          </div>
             
           
         }
         {
             
             <div className="reminder_card" >
-              <h2>HEHEHEHHEH</h2>
-              <h3>Work should be done by:</h3>
-              <p>uhuisgdufegforgp4igigbh</p>
-              <div className="button" >Delete</div>
-            </div>
+                <h2>MEDICINE NAME</h2>
+                <h3>Description</h3>
+                <p>Time:  </p>
+                <IconButton className="btn" >
+                <DeleteIcon style={{ color: "red" }} />
+               </IconButton>
+              </div>
             
           
         }
