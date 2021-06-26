@@ -119,11 +119,7 @@ function Login() {
      
       justifyContent: "center",
       width: "60%",
-      background: "#232327",
-      color: "white",
-      "&:hover": {
-        background: "#122221",
-      },
+     
     },
   }));
 
@@ -191,13 +187,15 @@ function Login() {
                 justify="center"
               >
                 <Grid item xs={4}>
-                  <Link href="/forgot_password" variant="body2">
+                  <Link href="/forgot_password" variant="body2"><font  className="link-color" >
                     Forgot password?
+                    </font>
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
+                  <Link href="/signup" variant="body2"><font  className="link-color" >
                     {"New? Sign Up"}
+                    </font>
                   </Link>
                 </Grid>
               </Grid>
@@ -216,23 +214,16 @@ function Login() {
             </Grid>
             <Typography align="center">
               <GoogleLogin
-                className={classes.google}
+               
                 theme="dark"
-                clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
+                className={classes.google}
+                 clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
                 buttonText="Continue with Google"
                 onSuccess={responseGoogle}
                 cookiePolicy={"single_host_origin"}
               />
             </Typography>
-            {/* <Button
-              type="submit"
-              variant="outlined"
-              color="primary"
-              className={classes.google}
-              onClick={continueWithGoogle}
-            >
-              Continue With Google
-            </Button> */}
+          
           </form>
         </div>
         {err && showErrMsg(err)}
