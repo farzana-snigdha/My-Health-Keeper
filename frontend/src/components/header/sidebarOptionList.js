@@ -84,7 +84,7 @@ export const mainListItems = (
           <AddAlertIcon />
         </font>
       </ListItemIcon>
-      <Link to="/medicine-reminder" component={NavLink}>
+      <Link to="/display-medicine-reminderList" component={NavLink}>
         <font color="white">
           <ListItemText primary="Medicine Reminder" />
         </font>

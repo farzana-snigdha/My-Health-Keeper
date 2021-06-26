@@ -52,7 +52,7 @@ const authControllers={
 
             const check = await User.findOne({email})
             if(check) return res.status(400).json({msg:"This email already exists."})
-
+// phone={1,2,3}
             const newUser = new User({
                 name, email, password, gender,phone
             })

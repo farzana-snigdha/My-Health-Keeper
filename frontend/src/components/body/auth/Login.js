@@ -17,7 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from "react-google-login";
 
 import { dispatchLogin } from "../../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
@@ -32,8 +32,8 @@ const initialState = {
 function Login() {
   const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
-  const history = useHistory()
-   const { email, password, err, success } = user;
+  const history = useHistory();
+  const { email, password, err, success } = user;
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -49,29 +49,30 @@ function Login() {
       localStorage.setItem("firstLogin", true);
 
       dispatch(dispatchLogin());
-      history.push("/home")
+      history.push("/home");
     } catch (err) {
       err.response.data.msg &&
         setUser({ ...user, err: err.response.data.msg, success: "" });
     }
   };
 
-  const responseGoogle =async (response) => {
+  const responseGoogle = async (response) => {
     try {
-      const res = await axios.post('/user/google_login', {tokenId: response.tokenId})
+      const res = await axios.post("/user/google_login", {
+        tokenId: response.tokenId,
+      });
 
-      setUser({...user, error:'', success: res.data.msg})
-      localStorage.setItem('firstLogin', true)
+      setUser({ ...user, error: "", success: res.data.msg });
+      localStorage.setItem("firstLogin", true);
 
-      dispatch(dispatchLogin())
-      history.push('/home')
-  } catch (err) {
-      err.response.data.msg && 
-      setUser({...user, err: err.response.data.msg, success: ''})
-  }
-  }
-  
- 
+      dispatch(dispatchLogin());
+      history.push("/home");
+    } catch (err) {
+      err.response.data.msg &&
+        setUser({ ...user, err: err.response.data.msg, success: "" });
+    }
+  };
+
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100vh",
@@ -102,7 +103,8 @@ function Login() {
       marginTop: theme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(4, 14, 1),
+      marginTop: "24px",
+      // margin: theme.spacing(4, 14, 1),
       width: "60%",
       background: "#232327",
       color: "white",
@@ -110,13 +112,12 @@ function Login() {
         background: "#122221",
       },
     },
-    fontColor:{
-      color:"#122221"
+    fontColor: {
+      color: "#122221",
     },
     google: {
-      marginLeft:"113px",
-      // margin: theme.spacing(4, 14, 1),
-     justifyContent:"center",
+     
+      justifyContent: "center",
       width: "60%",
       background: "#232327",
       color: "white",
@@ -170,37 +171,37 @@ function Login() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
             /> */}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onSubmit={handleSubmit}
-            >
-              Sign In
-            </Button>
-            
-              <Typography className={classes.fontColor}>
+            <Typography align="center">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onSubmit={handleSubmit}
+              >
+                Sign In
+              </Button>
+            </Typography>
+            <Typography className={classes.fontColor}>
               <Grid
-              container
-              spacing={0}
-              direction="row"
-              alignItems="center"
-              justify="center"
-            >
-              <Grid item xs={3}>
-                <Link href="/forgot_password" variant="body2" >
-                  Forgot password?
-                </Link>
+                container
+                spacing={0}
+                direction="row"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item xs={4}>
+                  <Link href="/forgot_password" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"New? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"New? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-              </Typography>
-             
+            </Typography>
             <Grid
               container
               spacing={0}
@@ -213,13 +214,16 @@ function Login() {
                 OR
               </Grid>
             </Grid>
-            <GoogleLogin className={classes.google}  theme="dark"
-    clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
-    buttonText="Continue with Google"
-    onSuccess={responseGoogle}
-
-    cookiePolicy={'single_host_origin'}
-  />
+            <Typography align="center">
+              <GoogleLogin
+                className={classes.google}
+                theme="dark"
+                clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
+                buttonText="Continue with Google"
+                onSuccess={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </Typography>
             {/* <Button
               type="submit"
               variant="outlined"
