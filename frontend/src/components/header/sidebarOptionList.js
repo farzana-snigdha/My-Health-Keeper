@@ -90,18 +90,6 @@ export const mainListItems = (
         </font>
       </Link>
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <font color="white">
-          <BubbleChartIcon />
-        </font>
-      </ListItemIcon>
-      <Link to="/" component={NavLink}>
-        <font color="white">
-        <ListItemText primary="Menstrual Cycle" />
-        </font>
-      </Link>
-     
-    </ListItem>
+   
   </div>
 );
