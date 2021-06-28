@@ -3,34 +3,43 @@ import { Grid, Paper, TextField, Button, Container, IconButton } from "@material
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
+import axios from "axios";
+import {showErrMsg, showSuccessMsg} from '../../utils/notification/Notification';
+const auth = useSelector(state => state.auth);
+const {user, isLogged}=auth;
 
-function addTimeField() {
-  return (
-    <TextField
-      label="time"
-      fullWidth
-      type="time"
-      InputLabelProps={{
-        shrink: true,
-      }}
-    />
-  );
+const initialState = {
+  username : '',
+  medName : '',
+  description : '',
+  startdate : '',
+  enddate : '',
+  doses : [],
+  err: '',
+  success: ''
 }
 
+
 function InputMedReminder() {
+
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
+
+  const [medicine, setMedicine] = useState(initialState);
+
+  const {username,medName,description,startdate,enddate,doses,err,success} = medicine;
 
   const [inputFields, setInputFields] = useState([
     { time: '' },
   ]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("InputFields", inputFields);
-  };
 
-  const handleChangeInput = (index, event) => {
+  const handleChangeInput = e => {
+    const {name, value} = e.target
+    setMedicine({...medicine, [name]:value, err: '', success: ''})
+}
+
+  const handleChangeInputTime = (index, event) => {
     const values = [...inputFields];
     values[index][event.target.name] = event.target.value;
     setInputFields(values)
@@ -51,6 +60,14 @@ function InputMedReminder() {
     values.splice(index, 1);
     setInputFields(values);
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log("InputFields", inputFields);
+
+    username = user.name;
+
+  };
 
   
   return (
@@ -95,7 +112,7 @@ function InputMedReminder() {
               }}
                //variant="filled"
                value={inputField.time}
-               onChange={event => handleChangeInput(index, event)}
+               onChange={event => handleChangeInputTime(index, event)}
               />
 
             <IconButton disabled={inputFields.length === 1} onClick={() => handleRemoveFields(index)}>
