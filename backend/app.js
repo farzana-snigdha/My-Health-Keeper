@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const router = require("./routers/userRouter");
 const imgRouter = require("./routers/upload");
+const medReminderRouter = require('./routers/medReminder.route');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
@@ -20,6 +21,7 @@ app.use(
   })
 );
 
+app.use(medReminderRouter);
 app.use("/user", router);
 app.use("/api", imgRouter);
 app.get("/", (req, res) => res.send(`API Running`));
