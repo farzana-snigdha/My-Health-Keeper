@@ -11,6 +11,7 @@ import Profile from './profile/Profile'
 import Home from './home/Home'
 import MedicineInput from './medicineReminder/InputMedReminder'
 import DisplayMedicineReminders from './medicineReminder/DisplayMedReminders'
+import HealthInfo from './genHealthInfo/HealthInfo'
 export default function Body() {
     const auth = useSelector(state => state.auth)
         const {isLogged} = auth
@@ -27,7 +28,7 @@ export default function Body() {
                  <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
                  <Route path="/medicine-reminder" component={isLogged ? MedicineInput : NotFound} exact />
                  <Route path= "/display-medicine-reminderList" component={isLogged? DisplayMedicineReminders:NotFound} exact />
-             
+                 <Route path="/general-health-information" component={isLogged ?  HealthInfo : NotFound} exact />
              </Switch>
          </section>
     )

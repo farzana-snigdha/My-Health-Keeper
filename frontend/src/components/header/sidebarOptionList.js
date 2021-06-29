@@ -21,7 +21,7 @@ export const mainListItems = (
           <FitnessCenterIcon />
         </font>
       </ListItemIcon>
-      <Link to="/" component={NavLink}>
+      <Link to="/general-health-information" component={NavLink}>
         <font color="white">
           <ListItemText primary="General Health Information" />
         </font>
