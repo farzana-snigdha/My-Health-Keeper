@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const CycleSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    required: "users",
+    ref: "users",
   },
   startDate: {
     type: Date,
@@ -35,4 +35,4 @@ const CycleSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("CycleSchema", CycleSchema);
+module.exports = mongoose.model("Cycle_Schema", CycleSchema);

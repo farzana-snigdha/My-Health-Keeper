@@ -1,13 +1,16 @@
-const cycle = require("../models/periodTracker");
+const Cycle = require("../models/periodTracker.model");
 
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
     try {
       let user = req.user.id;
+
       const { eventDate } = req.body;
-      const data = await cycle.find({ user });
-      const notedata = JSON.parse(data);
-      res.send(notedata.notes);
+      const { flow } = req.body;
+      const data = await Cycle.findOne({ user });
+      console.log(data);
+      console.log(data.notes.find((note) => note.flow == flow));
+      res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
     } catch (err) {
       return res.status(500).json({ displayNotes: err.message });
     }
@@ -24,12 +27,12 @@ const cycleTrackerControllers = {
     try {
       let user = req.user.id;
       const { mood, symptoms, flow, eventDate } = req.body;
-      const check = await cycle.findOne({
+      const check = await Cycle.findOne({
         user,
       });
 
       if (check) {
-        await cycle.findOneAndUpdate(
+        await Cycle.findOneAndUpdate(
           { user },
           {
             $push: {
@@ -61,7 +64,7 @@ const cycleTrackerControllers = {
       const { startDate, endDate, duration, cycleLength } = req.body;
       if (!startDate || !endDate || !duration || !cycleLength)
         return res.status(400).json({ msg: "Please fill in all fields." });
-      const check = await cycle.findOne({
+      const check = await Cycle.findOne({
         user,
       });
       if (check) {
@@ -70,7 +73,7 @@ const cycleTrackerControllers = {
           .status(400)
           .json({ msg: "You have already provided the data" });
       }
-      const initialinfo = new cycle({
+      const initialinfo = new Cycle({
         user,
         startDate,
         endDate,
