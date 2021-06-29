@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
 const userCtrl = require("../controllers/authControllers");
-const cycleTrackerCtrl=require("../controllers/cycleTrackerControllers")
 const auth=require("../middleware/auth")
 
 
@@ -17,9 +16,7 @@ router.get('/logout', userCtrl.logout)
 router.patch('/update', auth, userCtrl.updateUser)
 router.post('/google_login', userCtrl.googleLogin)
 
-router.post('/setup-initial-data',auth,cycleTrackerCtrl.setupInitialData)
-router.post('/cycleTracker-notes',auth,cycleTrackerCtrl.createNotes)
-router.get('/cycleTracker-display-notes',auth,cycleTrackerCtrl.displayNotes)
+
 
 
 module.exports = router;
