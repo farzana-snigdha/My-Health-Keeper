@@ -1,4 +1,4 @@
-const Cycle = require("../models/periodTracker");
+const Cycle = require("../models/periodTracker.model");
 
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
