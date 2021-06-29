@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import colors from '../../colors.css'
 import {
   Link,
   Grid,
@@ -221,20 +222,12 @@ function Signup() {
             >
               Sign Up
             </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              // onClick={continueWithGoogle}
-            >
-              Continue With Google
-            </Button>
+         
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2" color="#122221">
+                <Link href="/login" variant="body2"><font  className="link-color" >
                   Already have an account? Sign in
+                  </font>
                 </Link>
               </Grid>
             </Grid>

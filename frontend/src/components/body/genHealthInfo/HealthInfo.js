@@ -62,7 +62,7 @@ function generalHealthInfo() {
      </div>
          </CardContent>
        </div>
-       
+
      </Card>
 }
 {
@@ -90,8 +90,8 @@ function generalHealthInfo() {
       </Card>
 }
       </div>
-    
+
     );
 }
 
-export default generalHealthInfo;
+export default generalHealthInfo; 

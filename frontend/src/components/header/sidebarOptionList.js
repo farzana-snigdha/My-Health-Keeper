@@ -17,36 +17,36 @@ export const mainListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <FitnessCenterIcon />
         </font>
       </ListItemIcon>
       <Link to="/general-health-information" component={NavLink}>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <ListItemText primary="General Health Information" />
         </font>
       </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <FastfoodIcon />
         </font>
       </ListItemIcon>
       <Link to="/" component={NavLink}>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <ListItemText primary="Diet Plan" />
         </font>
       </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <LocalHospitalIcon />
         </font>
       </ListItemIcon>
       <Link to="/" component={NavLink}>
-        <font color="white">
+      <font  className="sidebar-options-color" >
         <ListItemText primary="Specialized Health Information" />
         </font>
       </Link>
@@ -54,12 +54,12 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <AssessmentIcon />
         </font>
       </ListItemIcon>
       <Link to="/" component={NavLink}>
-        <font color="white">
+      <font  className="sidebar-options-color" >
         <ListItemText primary="Reports" />
         </font>
       </Link>
@@ -67,12 +67,12 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <HealingIcon />
         </font>
       </ListItemIcon>
       <Link to="/" component={NavLink}>
-        <font color="white">
+      <font  className="sidebar-options-color" >
         <ListItemText primary="Disease Prediction" />
         </font>
       </Link>
@@ -80,28 +80,16 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <AddAlertIcon />
         </font>
       </ListItemIcon>
       <Link to="/display-medicine-reminderList" component={NavLink}>
-        <font color="white">
+      <font  className="sidebar-options-color" >
           <ListItemText primary="Medicine Reminder" />
         </font>
       </Link>
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <font color="white">
-          <BubbleChartIcon />
-        </font>
-      </ListItemIcon>
-      <Link to="/" component={NavLink}>
-        <font color="white">
-        <ListItemText primary="Menstrual Cycle" />
-        </font>
-      </Link>
-     
-    </ListItem>
+   
   </div>
 );
