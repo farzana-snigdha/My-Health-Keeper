@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Grid,
   Paper,
@@ -15,8 +16,6 @@ import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
-const auth = useSelector((state) => state.auth);
-const { user, isLogged } = auth;
 
 const initialState = {
   username: "",
@@ -32,6 +31,9 @@ const initialState = {
 function InputMedReminder() {
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
+
+  const auth = useSelector((state) => state.auth);
+  const { user, isLogged } = auth;
 
   const [medicine, setMedicine] = useState(initialState);
 
@@ -50,7 +52,7 @@ function InputMedReminder() {
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setMedicine({...medicine, [name]: value, err: "", success: "" });
+    setMedicine({ ...medicine, [name]: value, err: "", success: "" });
   };
 
   const handleChangeInputTime = (index, event) => {
@@ -75,25 +77,26 @@ function InputMedReminder() {
     setInputFields(values);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("InputFields", inputFields);
 
-    username = user.name;
-    doses = inputFields;
+    //username = user.name;
+    //doses = inputFields;
     try {
       const res = await axios.post("/medReminder", {
-        username,
+        username : user.name,
         medname,
-        descripstartdate,
+        descriptionmed,
+        startdate,
         enddate,
-        doses
+        doses: inputFields,
       });
 
-      setMedicine({...medicine, err: "", success: res.data.msg });
+      setMedicine({ ...medicine, err: "", success: res.data.msg });
     } catch (err) {
       err.response.data.msg &&
-      setMedicine({...medicine, err: err.response.data.msg, success: "" });
+        setMedicine({ ...medicine, err: err.response.data.msg, success: "" });
     }
   };
 
@@ -161,7 +164,6 @@ function InputMedReminder() {
                 <TextField
                   variant="outlined"
                   required
-                  fullWidth
                   id="time"
                   label="Time"
                   name="time"

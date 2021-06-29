@@ -18,7 +18,8 @@ const postMedicine = (req, res) => {
     })
     med.save()
     .then(data => {
-        res.json(data)
+        res.json(data);
+        console.log(data);
     })
     .catch(error => {
         res.json(error)
