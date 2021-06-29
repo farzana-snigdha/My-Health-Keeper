@@ -239,7 +239,7 @@ function Header() {
                 <BubbleChartIcon />
               </font>
             </ListItemIcon>
-            <Link to="/" component={NavLink}>
+            <Link to="/menstrual-cycle" component={NavLink}>
               <font color="white">
                 <ListItemText primary="Menstrual Cycle" />
               </font>
