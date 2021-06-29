@@ -76,7 +76,7 @@ function InputMedReminder() {
             }}
           />
           <TextField
-            label="Start date"
+            label="End date"
             fullWidth
             type="date"
             InputLabelProps={{
