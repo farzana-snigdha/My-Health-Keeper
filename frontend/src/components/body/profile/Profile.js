@@ -31,7 +31,7 @@ function Profile() {
     const auth = useSelector(state => state.auth)
     const token = useSelector(state => state.token)
 
-    const users = useSelector(state => state.users)
+    // const users = useSelector(state => state.users)
 
     const {user} = auth
     const [data, setData] = useState(initialState)
@@ -101,7 +101,7 @@ function Profile() {
 
     const handleUpdate = () => {
         if(name || avatar||phone||gender) updateInfor()
-        console.log(gender)
+        // console.log(gender)
       
       
     }
@@ -123,7 +123,7 @@ function Profile() {
         <div>
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
-            {loading && <h3>Loading.....</h3>}
+           
         </div>
         <div className="profile_page">
             <div className="col-left">
@@ -137,7 +137,7 @@ function Profile() {
                         <input type="file" name="file" id="file_up" onChange={changeAvatar} />
                     </span>
                 </div>
-
+                {loading && <h3>Loading.....</h3>}
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
                     <input type="text" name="name" id="name" defaultValue={user.name}
