@@ -17,7 +17,7 @@ import HeightIcon from '@material-ui/icons/Height';
 
 export default function MenstrualCycle() {
     return (
-        <div className=" body ">
+        <div className=" card_body ">
         {
  <Card className="root">
  <div className="details">
