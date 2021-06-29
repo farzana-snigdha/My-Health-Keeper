@@ -6,7 +6,7 @@ const getMedicine = (req,res) => {
 }
 
 const postMedicine = (req, res) => {
-    const {username, medname, descriptionmed,startdate, enddate, time} = req.body;
+    const {username, medname, descriptionmed,startdate, enddate, doses} = req.body;
 
     const med = new medReminder ({
         username : username,
@@ -14,7 +14,7 @@ const postMedicine = (req, res) => {
         descriptionmed : descriptionmed,
         startdate : startdate,
         enddate : enddate,
-        time : time
+        time : doses
     })
     med.save()
     .then(data => {
