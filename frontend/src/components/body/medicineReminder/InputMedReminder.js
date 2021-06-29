@@ -29,6 +29,8 @@ const initialState = {
 };
 
 function InputMedReminder() {
+  const token = useSelector(state => state.token)
+
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
 
@@ -91,7 +93,9 @@ function InputMedReminder() {
         startdate,
         enddate,
         doses: inputFields,
-      });
+      },{
+        headers: {Authorization: token}
+    });
 
       setMedicine({ ...medicine, err: "", success: res.data.msg });
     } catch (err) {
