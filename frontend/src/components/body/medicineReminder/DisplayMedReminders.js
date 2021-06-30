@@ -8,15 +8,20 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import red from "@material-ui/core/colors/red";
 
 
+
 function displayMedicineReminders() {
   const [ medname, setMedName ] = useState("")
   const [ descriptionmed, setDescriptionMed] =  useState("")
   const [ time, setRemindAt ] = useState([])
-  const [ reminderList, setReminderList ] = useState([])
+  const [ reminderList, setReminderList ] = useState([]);
+
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { time: "" }]);
+  }; 
 
   useEffect(() => {
-      axios.get("http://localhost:5000/medReminder").then( res => setReminderList(res.data))
-  }, [])
+      axios.get("http://localhost:5000/medReminder").then( res => setReminderList([...reminderList, res.data]))
+  });
 
     return (
            
