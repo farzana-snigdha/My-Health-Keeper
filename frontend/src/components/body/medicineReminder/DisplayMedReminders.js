@@ -7,6 +7,10 @@ import { IconButton,Link } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import red from "@material-ui/core/colors/red";
 
+const initialState = {
+  medicineReminders : []
+};
+
 const med = props => (
   <tr>
     <td>{props.med.name}</td>
@@ -20,17 +24,21 @@ const med = props => (
 )
 
 
-
 function DisplayMedicineReminders() {
-  const [ medname, setMedName ] = useState("")
-  const [ descriptionmed, setDescriptionMed] =  useState("")
-  const [ time, setRemindAt ] = useState([])
-  const [ reminderList, setReminderList ] = useState([]);
+
+  const [ reminderList, setReminderList ] = useState(initialState);
 
 
-  useEffect(() => {
-      axios.get("http://localhost:5000/medReminder").then( res => setReminderList([...reminderList, res.data]))
-  });
+  useEffect(async () => {
+      await axios.get("http://localhost:5000/medReminder").then( res => {
+        setReminderList(res.data)
+  }).catch((error) => {
+    console.log(error);
+  })
+
+      // const res = await axios.get("http://localhost:5000/medReminder");
+      // setReminderList(res.data);
+    });
 
     return (
            
