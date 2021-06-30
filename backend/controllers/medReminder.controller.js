@@ -1,13 +1,28 @@
 const medReminder = require('../models/medReminder.model')
 
 
+// const getMedicine = async (req,res) => {
+//      medReminder.find()
+//      .then(reminderList => {
+//          res.send(reminderList);
+//          console.log(reminderList);
+//      })
+//      .catch(err => res.status(400).json('Error: ' + err));
+// }
+
 const getMedicine = async (req,res) => {
-     medReminder.find()
-     .then(medList => {
-         res.json(medList);
-         console.log(medList);
-     })
-     .catch(err => res.status(400).json('Error: ' + err));
+    let user = req.user.id;
+
+    medReminder.find({user}, (err,reminderList)=> {
+        if(err){
+            console.log(user)
+            console.log("Test :" + err)
+        }
+        if(reminderList){
+            res.send(reminderList)
+            console.log(reminderList);
+        }
+    })
 }
 
 const postMedicine =async (req, res) => {
