@@ -20,7 +20,7 @@ export default function Body() {
     return (
         <section>
             <Switch>
-                 <Route path="/" component={Login} exact />
+                 {/* <Route path="/" component={Login} exact /> */}
                  <Route path="/home" component={Home} exact />
                    <Route path="/login" component={isLogged ? NotFound : Login} exact /> 
                   <Route path="/signup" component={isLogged ? NotFound : Signup} exact />

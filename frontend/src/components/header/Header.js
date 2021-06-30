@@ -211,21 +211,7 @@ function Header() {
     );
   };
 
-  const authLink = () => {
-    return (
-      <div>
-        <Link component={NavLink} to="/signup"><font  className="link-color" >
-        <i class="fas fa-user-plus"></i> Sign up
-        </font>
-          
-        </Link>
-        <Link component={NavLink} className={classes.authStyle} to="/login"><font  className="link-color" >
-          <i class="fas fa-sign-in-alt"></i> Sign in
-          </font>
-        </Link>
-      </div>
-    );
-  };
+ 
   const genderOfTheUser = () => {
     if (user.gender == "Male") {
       return <List>{mainListItems}</List>;
@@ -294,7 +280,8 @@ function Header() {
               </Link>
             </Typography>
             <Typography className={classes.signinTitle} color="inherit">
-              <ul style={transForm}>{isLogged ? userLink() : authLink()}</ul>
+              
+              <ul style={transForm}>{ userLink() }</ul>
             </Typography>
           </Toolbar>
         </AppBar>
