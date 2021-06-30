@@ -1,24 +1,22 @@
 import React from 'react'
 import './menstrualCycle.css'
-import DateTimePicker from "react-datetime-picker"
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FullCalendar from '@fullcalendar/react' 
-import dayGridPlugin from '@fullcalendar/daygrid' 
-import bootstrapPlugin from '@fullcalendar/bootstrap';
-import LocalHospitalRoundedIcon from '@material-ui/icons/LocalHospitalRounded';
-import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import HeightIcon from '@material-ui/icons/Height';
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction' 
 
 
 
 export default function MenstrualCycle() {
+ const handleDateClick = (arg) => {
+      
+    alert(arg.dateStr)
+  };
+  
     return (
       <div className="main">
         <div className=" card_body ">
@@ -108,12 +106,18 @@ export default function MenstrualCycle() {
                </div>
                <FullCalendar
                 
-        plugins={[ dayGridPlugin, bootstrapPlugin ]}
+        plugins={[ dayGridPlugin, interactionPlugin ]}
         initialView="dayGridMonth"
+        editable={true}
+        dateClick={handleDateClick} 
+                
+        //eventClick={this.handleEventClick}
   
       />
         </div>
         
         </div>
     )
-}
+    
+  }
+
