@@ -9,15 +9,12 @@ import red from "@material-ui/core/colors/red";
 
 
 
-function displayMedicineReminders() {
+function DisplayMedicineReminders() {
   const [ medname, setMedName ] = useState("")
   const [ descriptionmed, setDescriptionMed] =  useState("")
   const [ time, setRemindAt ] = useState([])
   const [ reminderList, setReminderList ] = useState([]);
 
-  const handleAddFields = () => {
-    setInputFields([...inputFields, { time: "" }]);
-  }; 
 
   useEffect(() => {
       axios.get("http://localhost:5000/medReminder").then( res => setReminderList([...reminderList, res.data]))
@@ -55,4 +52,4 @@ function displayMedicineReminders() {
     );
 }
 
-export default displayMedicineReminders;
+export default DisplayMedicineReminders;

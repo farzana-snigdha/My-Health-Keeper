@@ -11,6 +11,10 @@ import {
   Select,
   Avatar,
 } from "@material-ui/core";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import BubbleChartIcon from "@material-ui/icons/BubbleChart";
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
@@ -25,12 +29,13 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { NavLink } from "react-router-dom";
-import { mainListItems, secondaryListItems } from "./sidebarOptionList";
+import { mainListItems } from "./sidebarOptionList";
 
 import Body from "../body/Body";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
+import colors from '../colors.css'
 
 const drawerWidth = 330;
 
@@ -153,6 +158,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   authStyle: {
+    // color: colors.link-color,
     marginLeft: "20px",
   },
 }));
@@ -181,11 +187,14 @@ function Header() {
   };
 
   const userLink = () => {
+    console.log(user._id);
     return (
       <div>
         <Link to="/profile" component={NavLink}>
-          {<img className={classes.imageIcon} src={user.avatar} alt="" />}
+          {<img className={classes.imageIcon} src={user.avatar} alt="" />}<font  className="link-color" >
           {user.name}{" "}
+          </font>
+        
         </Link>
 
         <Link
@@ -193,9 +202,10 @@ function Header() {
           component={NavLink}
           to="/"
           onClick={handleLogout}
-        >
+        ><font  className="link-color" >
           <i className="fas fa-sign-out-alt"></i>Logout
           {""}
+          </font>
         </Link>
       </div>
     );
@@ -204,14 +214,40 @@ function Header() {
   const authLink = () => {
     return (
       <div>
-        <Link component={NavLink} to="/signup">
-          <i class="fas fa-user-plus"></i> Sign up
+        <Link component={NavLink} to="/signup"><font  className="link-color" >
+        <i class="fas fa-user-plus"></i> Sign up
+        </font>
+          
         </Link>
-        <Link component={NavLink} className={classes.authStyle} to="/login">
+        <Link component={NavLink} className={classes.authStyle} to="/login"><font  className="link-color" >
           <i class="fas fa-sign-in-alt"></i> Sign in
+          </font>
         </Link>
       </div>
     );
+  };
+  const genderOfTheUser = () => {
+    if (user.gender == "Male") {
+      return <List>{mainListItems}</List>;
+    } else {
+      return (
+        <div>
+          <List>{mainListItems}</List>
+          <ListItem button>
+            <ListItemIcon>
+              <font color="white">
+                <BubbleChartIcon />
+              </font>
+            </ListItemIcon>
+            <Link to="/menstrual-cycle" component={NavLink}>
+              <font color="white">
+                <ListItemText primary="Menstrual Cycle" />
+              </font>
+            </Link>
+          </ListItem>
+        </div>
+      );
+    }
   };
 
   const transForm = {
@@ -279,11 +315,8 @@ function Header() {
             </IconButton>
           </div>
           <Divider />
-          {isLogged ? (
-            <List>{mainListItems}</List>
-          ) : (
-            <font size="5">sign in first</font>
-          )}
+          {console.log(user.gender)}
+          {isLogged ? genderOfTheUser() : <font size="5">sign in first</font>}
         </Drawer>
 
         <main className={classes.content}>
