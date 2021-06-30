@@ -1,15 +1,6 @@
 const medReminder = require('../models/medReminder.model')
 
 
-// const getMedicine = async (req,res) => {
-//      medReminder.find()
-//      .then(reminderList => {
-//          res.send(reminderList);
-//          console.log(reminderList);
-//      })
-//      .catch(err => res.status(400).json('Error: ' + err));
-// }
-
 const getMedicine = async (req,res) => {
     let user = req.user.id;
 

@@ -1,30 +1,42 @@
 import React from "react";
-import "./medicineReminder.css";
-import { Switch, Route } from "react-router-dom";
+//import "./medicineReminder.css";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { IconButton, Link } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
-import red from "@material-ui/core/colors/red";
+import MedProps from "./MedProps";
 
-const Medicine = (props) => (
-  <div>
-    <h2>{props.medicine.medname}</h2>
-    <p>{props.medicine.descriptionmed}</p>
-    <p>Start Date : {props.medicine.startdate.substring(0, 10)}</p>
-    <p>End Date : {props.medicine.enddate.substring(0, 10)}</p>
-    <IconButton className="btn">
-      <DeleteIcon style={{ color: "red" }} />
-    </IconButton>
-  </div>
-);
+const initialState = {
+  meds : [],
+}
+
+// const Medicine = (props) => (
+//   <div>
+//     <h2>{props.medicine.medname}</h2>
+//     <p>{props.medicine.descriptionmed}</p>
+//     <p>Start Date : {props.medicine.startdate.substring(0, 10)}</p>
+//     <p>End Date : {props.medicine.enddate.substring(0, 10)}</p>
+//     <IconButton className="btn">
+//       <DeleteIcon style={{ color: "red" }} />
+//     </IconButton>
+//   </div>
+//   // <tr>
+//   //   <td>{props.medicine.medname}</td>
+//   //   <td>{props.medicine.descriptionmed}</td>
+//   //   <td>{props.medicine.startdate.substring(0, 10)}</td>
+//   //   <td>{props.medicine.enddate.substring(0, 10)}</td>
+//   // </tr>
+// );
 
 function DisplayMedicineReminders() {
-  const auth = useSelector((state) => state.auth);
+  //const auth = useSelector((state) => state.auth);
   const token = useSelector((state) => state.token);
 
   const [reminderList, setReminderList] = useState([]);
+
+  const {meds} = reminderList;
 
   useEffect(async () => {
     await axios
@@ -32,7 +44,7 @@ function DisplayMedicineReminders() {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setReminderList(res.data);
       })
       .catch((error) => {
@@ -40,9 +52,14 @@ function DisplayMedicineReminders() {
       });
   }, []);
 
-  // const medList = (currentmedicine) => {
-  //   <Medicine medicine={currentmedicine} key={currentmedicine._id} />
-  // }
+  //console.log(reminderList);
+
+  const medList = () => {
+    return reminderList.map((currentmedicine) => {
+      //console.log(currentmedicine);
+       return  <MedProps medicine={currentmedicine} />;
+    })
+  }
 
   return (
     <div className="reminder">
@@ -54,12 +71,28 @@ function DisplayMedicineReminders() {
         </Link>
       </div>
 
-      <div className="reminder_body"></div>
-      {reminderList.map((currentmedicine, i) => {
-        <div className="reminder_card" key={i}>
+      <IconButton onClick={medList}>
+                  <AddIcon />
+                </IconButton>
+
+      <div >
+      </div>
+      
+
+      {/* <table className="table">
+        <thead className="thead-light">
+          <tr>
+            <th>Username</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>{reminderList.map((currentmedicine) => {
           <Medicine medicine={currentmedicine} key={currentmedicine._id} />
-        </div>;
-      })}
+      })}</tbody>
+      </table> */}
     </div>
   );
 }
