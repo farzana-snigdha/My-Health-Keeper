@@ -7,6 +7,18 @@ import { IconButton,Link } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import red from "@material-ui/core/colors/red";
 
+const med = props => (
+  <tr>
+    <td>{props.med.name}</td>
+    <td>{props.med.description}</td>
+    <td>{props.med.duration}</td>
+    <td>{props.med.date}</td>
+    <td>
+      <Link to={"/edit/"+props.med._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
+    </td>
+  </tr>
+)
+
 
 
 function DisplayMedicineReminders() {
