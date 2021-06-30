@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import FullCalendar from '@fullcalendar/react' 
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' 
+import { formatDate } from '@fullcalendar/react';
 
 
 
@@ -16,6 +17,14 @@ export default function MenstrualCycle() {
       
     alert(arg.dateStr)
   };
+
+  let str = formatDate(new Date(), {
+    month: 'long',
+    year: 'numeric',
+    day: 'numeric'
+  });
+  
+  console.log(str);
   
     return (
       <div className="main">
