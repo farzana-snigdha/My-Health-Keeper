@@ -1,7 +1,7 @@
 const medReminder = require('../models/medReminder.model')
 
 
-const getMedicine = aync (req,res) => {
+const getMedicine = async (req,res) => {
      medReminder.find({}, (err,reminderList)=> {
          if(err){
              consol.log(err)
