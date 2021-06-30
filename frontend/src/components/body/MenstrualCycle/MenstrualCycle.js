@@ -8,6 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import FullCalendar from '@fullcalendar/react' 
+import dayGridPlugin from '@fullcalendar/daygrid' 
+import bootstrapPlugin from '@fullcalendar/bootstrap';
 import LocalHospitalRoundedIcon from '@material-ui/icons/LocalHospitalRounded';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -17,6 +20,7 @@ import HeightIcon from '@material-ui/icons/Height';
 
 export default function MenstrualCycle() {
     return (
+      <div className="main">
         <div className=" card_body ">
         {
  <Card className="root">
@@ -97,6 +101,19 @@ export default function MenstrualCycle() {
 </Card>
 }
 
+        </div>
+        <div className="calendar_body" >
+             <div className="H2">
+               <h2> <i> Tracking Period At a glance with Notes 📝 </i> </h2>
+               </div>
+               <FullCalendar
+                
+        plugins={[ dayGridPlugin, bootstrapPlugin ]}
+        initialView="dayGridMonth"
+  
+      />
+        </div>
+        
         </div>
     )
 }
