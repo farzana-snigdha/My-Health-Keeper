@@ -1,5 +1,5 @@
 import React from 'react';
-import "./medicineReminder.css";
+import "../../../static/Styling/medicineReminder.css";
 
 
 const MedProps = (props) => (

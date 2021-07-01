@@ -16,7 +16,7 @@ import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
-
+import "../../../static/Styling/medicineReminder.css"
 const initialState = {
   username: "",
   medName: "",

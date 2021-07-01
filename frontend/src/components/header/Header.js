@@ -35,8 +35,8 @@ import Body from "../body/Body";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
-import colors from '../colors.css'
-
+import colors from '../../static/Styling/colors.css'
+// import Headers from '../../static/Styling/header.css  '
 const drawerWidth = 330;
 
 const useStyles = makeStyles((theme) => ({

@@ -17,7 +17,14 @@ const cycleTrackerControllers = {
   },
 
   removeNotes: async (req, res) => {
-    try {
+    try {let user = req.user.id;
+
+      const { eventDate } = req.body;
+      const { flow } = req.body;
+      const data = await Cycle.find({ user,notes:{flow:flow} });
+      console.log(data);
+      // console.log(data.notes.findAndDelete((note) => note.flow == flow));
+
     } catch (err) {
       return res.status(500).json({ removeNotes: err.message });
     }

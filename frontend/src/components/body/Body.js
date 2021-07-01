@@ -21,16 +21,19 @@ export default function Body() {
         <section>
             <Switch>
                  {/* <Route path="/" component={Login} exact /> */}
-                 <PrivateRoute path="/home" component={Home } exact />
+                 <Route path="/home" component={isLogged? Home:Login } exact />
                  
                  <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
-                 <Route path="/forgot_password" component={isLogged ? NotFound : ForgotPassword} exact />
-                 <Route path="/user/reset/:token" component={isLogged ? NotFound : ResetPassword} exact />
-                 <PrivateRoute path="/profile" component={Profile} exact />
-                 <PrivateRoute path="/medicine-reminder" component={ MedicineInput } exact />
-                 <PrivateRoute path= "/display-medicine-reminderList" component={DisplayMedicineReminders} exact />
+                  <Route path="/profile" component={isLogged? Profile:Login} exact />
+                 <Route path="/medicine-reminder" component={ isLogged? MedicineInput:Login } exact />
+                 <Route path= "/display-medicine-reminderList" component={isLogged? DisplayMedicineReminders:Login} exact />
+                 <Route path="/menstrual-cycle" component={isLogged? MenstrualCycle:Login} exact />
+                 <Route path="/general-health-information" component={  isLogged? HealthInfo:Login } exact />
+
+
+                 {/* <PrivateRoute path= "/display-medicine-reminderList" component={DisplayMedicineReminders} exact />
                  <PrivateRoute path="/menstrual-cycle" component={MenstrualCycle} exact />
-                 <PrivateRoute path="/general-health-information" component={  HealthInfo } exact />
+                 <PrivateRoute path="/general-health-information" component={  HealthInfo } exact /> */}
 
              </Switch>
          </section>

@@ -1,6 +1,6 @@
 import React from 'react'
 // import { sidebar } from '../../header/Sidebar'
-import './home.css'
+import '../../../static/Styling/home.css'
 import {Container} from '@material-ui/core'
 
 function Home() {

@@ -268,8 +268,6 @@ function Login() {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+
 
 export default Login;

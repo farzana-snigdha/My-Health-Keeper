@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import colors from '../../colors.css'
+import colors from '../../../static/Styling/colors.css'
 import {
   Link,
   Grid,
