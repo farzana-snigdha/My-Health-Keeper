@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "../../../static/Styling/menstrualCycle.css";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,9 +9,13 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "@fullcalendar/react";
-import $ from "jquery";
+
 import { useSelector } from "react-redux";
 import axios from "axios";
+import AddNotesModal from "./AddNotesModal";
+import { Modal } from "@material-ui/core";
+
+
 
 const initialState = {
   startdate: "",
@@ -72,8 +76,7 @@ export default function MenstrualCycle() {
 
 
 
-
-
+  const [show,setShow] = useState(false)
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -81,8 +84,9 @@ export default function MenstrualCycle() {
   };
 
   const handleDateClick = (arg) => {
-    alert("Event added");
     setDate(arg.dateStr);
+    setShow(true)
+    
   };
 
   const getEvent = () => {
@@ -238,7 +242,9 @@ export default function MenstrualCycle() {
             <i> Tracking Period At a glance with Notes 📝 </i>{" "}
           </h2>
         </div>
+        
         <FullCalendar
+         
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           editable={true}
@@ -247,6 +253,10 @@ export default function MenstrualCycle() {
           eventContent={renderEventContent}
         />
       </div>
+      <AddNotesModal
+        show={show}
+        onClose={()=>setShow(false)}
+        />
     </div>
   );
 }
