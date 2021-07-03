@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const medReminderRouter = require('./routers/medReminder.route');
-const cycleTracker =require('./routers/cycleTracker')
+const cycleTracker =require('./routers/cycleTracker.routers')
 const path = require("path");
 
 const app = express();

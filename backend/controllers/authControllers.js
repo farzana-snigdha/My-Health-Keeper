@@ -92,7 +92,7 @@ const authControllers={
         try {
             const rf_token = req.cookies.refreshtoken
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-console.log("dwdwdw  ",rf_token)
+// console.log("dwdwdw  ",rf_token)
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if(err) return res.status(400).json({msg: "Please login now!"})
 

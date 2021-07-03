@@ -187,7 +187,7 @@ function Header() {
   };
 
   const userLink = () => {
-    console.log(user._id);
+    // console.log(user._id);
     return (
       <div>
         <Link to="/profile" component={NavLink}>
@@ -316,7 +316,7 @@ function Header() {
             </IconButton>
           </div>
           <Divider />
-          {console.log(user.gender)}
+          {/* {console.log(user.gender)} */}
           {isLogged ? genderOfTheUser() : <font size="5">sign in first</font>}
         </Drawer>
 

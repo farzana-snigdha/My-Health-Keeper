@@ -89,11 +89,28 @@ const cycleTrackerControllers = {
       return res.status(500).json({ setupData: err.message });
     }
   },
+  isInitialDataAvailable:async (req,res)=>{
+    try{
+      let user=req.headers['userid']
+    // console.log(JSON.stringify(req.headers['userid'])) 
+      console.log("check ",user)
+      const check = await Cycle.find({
+        user,
+      });
+      // console.log(check)
+      if (check){
+        // console.log(check)
+        return res.json(check)
+      }
+    }catch (err) {
+      return res.status(500).json({ setupData: err.message });
+    }
+  },
 
   setupInitialData: async (req, res) => {
     try {
       let user = req.user.id;
-      console.log(user);
+      // console.log(user);
 
       const { startDate, endDate, duration, cycleLength } = req.body;
       if (!startDate || !endDate || !duration || !cycleLength)
@@ -101,8 +118,9 @@ const cycleTrackerControllers = {
       const check = await Cycle.findOne({
         user,
       });
+       console.log("bbb ",check)
       if (check) {
-        // console.log(check)
+       
         const {startDate, endDate,} = req.body
         await User.findOneAndUpdate({user}, {
           startDate, endDate
