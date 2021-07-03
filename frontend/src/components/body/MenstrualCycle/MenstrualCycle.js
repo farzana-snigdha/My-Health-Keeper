@@ -13,10 +13,22 @@ import { formatDate } from '@fullcalendar/react';
 
 
 export default function MenstrualCycle() {
+
  const handleDateClick = (arg) => {
-      
-    alert(arg.dateStr)
-  };
+  var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+  var date = new Date(dateStr); // will be in local time
+  getDate(date);
+ }
+
+ const getEvent=()=>{
+   var x = 'Event 1'
+   return x;
+ }
+
+ const getDate=(date)=>{
+  return date;
+}
+
 
   let str = formatDate(new Date(), {
     month: 'long',
@@ -24,7 +36,7 @@ export default function MenstrualCycle() {
     day: 'numeric'
   });
   
-  console.log(str);
+  
   
     return (
       <div className="main">
@@ -119,8 +131,11 @@ export default function MenstrualCycle() {
         initialView="dayGridMonth"
         editable={true}
         dateClick={handleDateClick} 
+        events={[
+          { title: getEvent(), date: getDate() }
+        ]}
+      
                 
-        //eventClick={this.handleEventClick}
   
       />
         </div>
