@@ -8,16 +8,30 @@ const cycleTrackerControllers = {
       const { eventDate } = req.body;
       const { flow } = req.body;
       const data = await Cycle.findOne({ user });
-      console.log(data);
-      console.log(data.notes.find((note) => note.flow == flow));
-      res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
+      // console.log(data);
+      const noteData = data.notes.find((note) => note.eventDate == eventDate);
+      res.json(noteData);
+      console.log(noteData.mood);
+      // res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
     } catch (err) {
       return res.status(500).json({ displayNotes: err.message });
     }
   },
 
+  //doesn't work
   removeNotes: async (req, res) => {
     try {
+      let user = req.user.id;
+
+      const { eventDate } = req.body;
+      const { flow } = req.body;
+      const { mood } = req.body;
+      const data = await Cycle.findOne({ user });
+      const noteData = data.notes.find((note) => note.flow == flow);
+      console.log(noteData);
+
+      // console.log(Cycle.findOneAndUpdate({ notes: noteData }, { mood }));
+      res.json({ msg: "k" });
     } catch (err) {
       return res.status(500).json({ removeNotes: err.message });
     }

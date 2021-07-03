@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import colors from '../../colors.css'
+import colors from '../../../static/Styling/colors.css'
 import {
   Link,
   Grid,
@@ -16,10 +16,12 @@ import {
   Button,
   CssBaseline,
   TextField,
+  Toolbar
 } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 import {showErrMsg, showSuccessMsg} from '../../utils/notification/Notification'
 import {isEmpty, isEmail, isLength, isMatch} from '../../utils/validation/Validation'
-
+import Header from '../../header/Header'
 require("dotenv").config();
 const URL = process.env.URL;
 
@@ -112,7 +114,30 @@ function Signup() {
 
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
+       <CssBaseline />
+    <Toolbar className={classes.toolbar}>
+          {" "}
+         
+          <Typography
+            variant="h5"
+            color="inherit"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            <Link
+              component={NavLink}
+              to="/"
+              underline="none"
+              color="textPrimary"
+            >
+              My HealthKeeper
+            </Link>
+          </Typography>
+          
+        </Toolbar>
+        <Container component="main" maxWidth="xs">
+      {/* <Header /> */}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
@@ -235,7 +260,9 @@ function Signup() {
         </form>
       </div>
     </Container>
-  );
+ 
+    </div>
+ );
 }
 
 export default Signup;

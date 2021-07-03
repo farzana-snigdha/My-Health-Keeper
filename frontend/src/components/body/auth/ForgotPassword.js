@@ -9,7 +9,8 @@ import {
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+import {Link,Toolbar} from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -84,12 +85,41 @@ function ForgotPassword() {
       "&:hover": {
         background: "#232327",
       },  },
+
+      gridstyle:{
+        marginTop:"2%"
+      }
  
   }));
   const classes = useStyles();
   return (
-    <Grid container component="main" maxwidth="xs">
+    <div>
       <CssBaseline />
+        <Toolbar className={classes.toolbar}>
+          {" "}
+         
+          <Typography
+            variant="h5"
+            color="inherit"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            <Link
+              component={NavLink}
+              to="/"
+              underline="none"
+              color="textPrimary"
+            >
+              My HealthKeeper
+            </Link>
+          </Typography>
+          
+        </Toolbar>
+
+
+   <Grid className={classes.gridstyle}
+   container component="main" maxwidth="xs">
+      
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
@@ -127,7 +157,9 @@ function ForgotPassword() {
         {success && showSuccessMsg(success)}
       </Grid>
     </Grid>
-    // <div className="fg_pass">
+  
+    </div>
+   // <div className="fg_pass">
     //     <h2>Forgot Your Password?</h2>
 
     //     <div className="row">

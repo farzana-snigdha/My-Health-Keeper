@@ -1,49 +1,66 @@
-import React, {useEffect} from 'react';
-import {BrowserRouter as Router} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
-import {dispatchLogin, fetchUser, dispatchGetUser} from './redux/actions/authAction'
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  dispatchLogin,
+  fetchUser,
+  dispatchGetUser,
+} from "./redux/actions/authAction";
+import Login from "./components/body/auth/Login";
 
+import Header from "./components/header/Header";
 
-import Header from './components/header/Header'
-
-import axios from 'axios';
+import axios from "axios";
+import Signup from "./components/body/auth/Signup";
+import Landing from "./components/LandingPage";
+import Home from "./components/body/home/Home";
+import PrivateRoute from "./PrivateRoute";
+import ForgotPassword from "./components/body/auth/ForgotPassword";
+import ResetPassword from "./components/body/auth/ResetPassword";
 
 function App() {
-  const dispatch = useDispatch()
-  const token = useSelector(state => state.token)
-  const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const firstLogin = localStorage.getItem('firstLogin')
-    if(firstLogin){
+    const firstLogin = localStorage.getItem("firstLogin");
+    if (firstLogin) {
       const getToken = async () => {
-        const res = await axios.post('/user/refresh_token', null)
-        dispatch({type: 'GET_TOKEN', payload: res.data.access_token})
-      }
-      getToken()
+        const res = await axios.post("/user/refresh_token", null);
+        dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
+      };
+      getToken();
     }
-  },[auth.isLogged, dispatch])
+  }, [auth.isLogged, dispatch]);
 
   useEffect(() => {
-    if(token){
+    if (token) {
       const getUser = () => {
-        dispatch(dispatchLogin())
+        dispatch(dispatchLogin());
 
-        return fetchUser(token).then(res => {
-          dispatch(dispatchGetUser(res))
-        })
-      }
-      getUser()
+        return fetchUser(token).then((res) => {
+          dispatch(dispatchGetUser(res));
+        });
+      };
+      getUser();
     }
-  },[token, dispatch])
+  }, [token, dispatch]);
 
-
+  const { isLogged } = auth;
   return (
     <Router>
       <div className="App">
-        <Header />
-       
-        
+        <Switch>
+          <Route path="/" component={isLogged ? Header : Landing} exact />
+          {/* <Route path="/my-healtKeeper" component={Landing} exact />  */}
+          <Route path="/forgot_password" component={ ForgotPassword} exact />
+                 <Route path="/user/reset/:token" component={ResetPassword} exact />
+             
+          <Route path="/login" component={Login} exact />
+          <Route path="/signup" component={Signup} exact />
+          <Header />
+        </Switch>
       </div>
     </Router>
   );
