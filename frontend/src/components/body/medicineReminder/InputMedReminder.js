@@ -98,6 +98,7 @@ function InputMedReminder() {
     });
 
       setMedicine({ ...medicine, err: "", success: res.data.msg });
+      
     } catch (err) {
       err.response.data.msg &&
         setMedicine({ ...medicine, err: err.response.data.msg, success: "" });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../../static/Styling/menstrualCycle.css";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,10 +9,100 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "@fullcalendar/react";
+import $ from "jquery";
+import { useSelector } from "react-redux";
+import axios from "axios";
+
+const initialState = {
+  startdate: "",
+  enddate: "",
+  duration: "",
+  cycleLength: "",
+  err: "",
+  success: "",
+};
 
 export default function MenstrualCycle() {
+  const token = useSelector((state) => state.token);
+  const auth = useSelector((state) => state.auth);
+  const { user, isLogged } = auth;
+
+  const [initialData, setInitialData] = useState(initialState);
+
+  const { startDate, endDate, duration, cycleLength, err, success } =
+    initialData;
+
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      // console.log("InputFields", inputFields);
+  
+      //username = user.name;
+      //doses = inputFields;
+      try {
+        const res = await axios.post("http://localhost:5000/user/setup-initial-data", {
+          startDate,
+          endDate,
+          duration,
+          cycleLength,
+          
+        },{
+          headers: {Authorization: token}
+      });
+  
+        setInitialData({ ...initialData, err: "", success: res.data.msg });
+        console.log("nn ",err.response.data.msg)
+      } catch (err) {
+        err.response.data.msg &&
+          setInitialData({ ...initialData, err: err.response.data.msg, success: "" });
+          // console.log("nn ",err.response.data.msg)
+      }
+    };
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setInitialData({ ...initialData, [name]: value, err: "", success: "" });
+  };
+
   const handleDateClick = (arg) => {
-    alert(arg.dateStr);
+    alert("Event added");
+    setDate(arg.dateStr);
+  };
+
+  const getEvent = () => {
+    var x = "Event 1";
+    return x;
+  };
+
+  const setDate = (date) => {
+    let clicked = date;
+    console.log("dxsd", clicked);
+    return clicked;
+  };
+
+  const renderEventContent = (eventInfo) => {
+    return (
+      <div>
+        <b>{eventInfo.timeText}</b>
+        <i>{eventInfo.event.title}</i>
+      </div>
+    );
   };
 
   let str = formatDate(new Date(), {
@@ -20,8 +110,6 @@ export default function MenstrualCycle() {
     year: "numeric",
     day: "numeric",
   });
-
-  console.log(str);
 
   return (
     <div className="main">
@@ -35,9 +123,16 @@ export default function MenstrualCycle() {
                 </Typography>
                 <div className="margin">
                   <Grid container spacing={1} alignItems="center">
+                  
                     <TextField
                       fullWidth
+                      required
                       type="date"
+                      id="startDate"
+                      
+                      name="startDate"
+                      onChange={handleChangeInput}
+                      value={startDate}
                       InputLabelProps={{
                         shrink: false,
                       }}
@@ -60,6 +155,13 @@ export default function MenstrualCycle() {
                     <TextField
                       fullWidth
                       type="date"
+                      required
+                     
+                      id="endDate"
+                      
+                      name="endDate"
+                      onChange={handleChangeInput}
+                      value={endDate}
                       InputLabelProps={{
                         shrink: false,
                       }}
@@ -82,7 +184,12 @@ export default function MenstrualCycle() {
                     <TextField
                       fullWidth
                       label="Duration"
+                      id="duration"
+                      
+                      name="duration"
                       placeholder="Duration"
+                      onChange={handleChangeInput}
+                      value={duration}
                     />
                   </Grid>
                 </div>
@@ -101,8 +208,13 @@ export default function MenstrualCycle() {
                   <Grid container spacing={1} alignItems="center">
                     <TextField
                       fullWidth
+                      id="cycleLength"
+                      
+                      name="cycleLength"
                       label="Approximate number of days for next period to come"
                       placeholder="Gap between each period cycle to come"
+                      onChange={handleChangeInput}
+                      value={cycleLength}
                     />
                   </Grid>
                 </div>
@@ -110,6 +222,14 @@ export default function MenstrualCycle() {
             </div>
           </Card>
         }
+        <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}}>
+    {<button className="save_button" onClick={handleSubmit} type={onsubmit}>Save Initial Information</button>}
+</div>
+       
       </div>
       <div className="calendar_body">
         <div className="H2">
@@ -123,8 +243,8 @@ export default function MenstrualCycle() {
           initialView="dayGridMonth"
           editable={true}
           dateClick={handleDateClick}
-
-          //eventClick={this.handleEventClick}
+          events={[{ title: getEvent(), date: setDate() }]}
+          eventContent={renderEventContent}
         />
       </div>
     </div>
