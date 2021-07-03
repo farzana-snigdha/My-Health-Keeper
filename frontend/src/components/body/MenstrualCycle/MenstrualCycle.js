@@ -12,6 +12,11 @@ import { formatDate } from "@fullcalendar/react";
 import $ from "jquery";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import {
+  showErrMsg,
+  showSuccessMsg,
+} from "../../utils/notification/Notification";
+
 
 const initialState = {
   startdate: "",
@@ -60,22 +65,7 @@ export default function MenstrualCycle() {
     };
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const handleChangeInput = (e) => {
+const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
   };
@@ -113,6 +103,8 @@ export default function MenstrualCycle() {
 
   return (
     <div className="main">
+       {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
       <div className=" card_body ">
         {
           <Card className="root">
