@@ -96,7 +96,7 @@ function InputMedReminder() {
         headers: {Authorization: token}
     });
 
-      setMedicine({ ...medicine, err: "", success: "med added!" });
+      setMedicine({ ...medicine, err: "", success: "Medicine added Successfully!" });
     } catch (err) {
       err.response.data.msg &&
         setMedicine({ ...medicine, err: err.response.data.msg, success: "" });
@@ -110,6 +110,8 @@ function InputMedReminder() {
           <Grid align="center">
             <h2 style={headerStyle}>Add Medicine</h2>
           </Grid>
+          {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
           <form onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
