@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   IconButton,
+  Link,
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
@@ -202,6 +203,16 @@ function InputMedReminder() {
             >
               Add
             </Button>
+
+            <Link href="/display-medicine-reminderList">
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+            >
+              Back
+            </Button>
+        </Link>
           </form>
         </Paper>
       </Grid>
