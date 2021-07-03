@@ -9,15 +9,44 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' 
 import { formatDate } from '@fullcalendar/react';
-import $ from 'jquery';
+import { useState } from 'react';
+import { Modal, Button } from '@material-ui/core';
+
 
 
 
 export default function MenstrualCycle() {
 
  const handleDateClick = (arg) => {
-  alert('Event added');
-  setDate(arg.dateStr);
+  //alert('Event added');
+  //setDate(arg.dateStr);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return(
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  )
  }
 
  const getEvent=()=>{
