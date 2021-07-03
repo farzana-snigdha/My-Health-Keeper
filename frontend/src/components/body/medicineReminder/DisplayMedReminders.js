@@ -9,8 +9,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MedProps from "./MedProps";
 
 const initialState = {
-  meds : [],
-}
+  meds: [],
+};
 
 // const Medicine = (props) => (
 //   <div>
@@ -36,7 +36,7 @@ function DisplayMedicineReminders() {
 
   const [reminderList, setReminderList] = useState([]);
 
-  const {meds} = reminderList;
+  //const {meds} = reminderList;
 
   useEffect(async () => {
     await axios
@@ -57,9 +57,9 @@ function DisplayMedicineReminders() {
   const medList = () => {
     return reminderList.map((currentmedicine) => {
       //console.log(currentmedicine);
-       return  <MedProps medicine={currentmedicine} />;
-    })
-  }
+      return <MedProps medicine={currentmedicine} />;
+    });
+  };
 
   return (
     <div className="reminder">
@@ -71,13 +71,22 @@ function DisplayMedicineReminders() {
         </Link>
       </div>
 
-      <IconButton onClick={medList}>
+      {/* <IconButton onClick={medList}>
                   <AddIcon />
-                </IconButton>
+                </IconButton> */}
 
-      <div >
+      <div>
+        <h2>hello</h2>
+        {reminderList.map((currentmedicine) => {
+          console.log(currentmedicine);
+          <div className="reminder_card" key={currentmedicine._id}>
+            <h2>{currentmedicine.medname}</h2>
+            <p>{currentmedicine.descriptionmed}</p>
+            <p>Start Date : {currentmedicine.startdate.substring(0, 10)}</p>
+            <p>End Date : {currentmedicine.enddate.substring(0, 10)}</p>
+          </div>;
+        })}
       </div>
-      
 
       {/* <table className="table">
         <thead className="thead-light">
