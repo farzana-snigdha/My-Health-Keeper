@@ -40,4 +40,11 @@ const postMedicine =async (req, res) => {
     })
 };
 
-module.exports = { getMedicine, postMedicine };
+const deleteMedicine = (req,res) => {
+    let user = req.user.id;
+    medReminder.findByIdAndDelete({user}, req.params.id)
+    .then(() => res.json('Reminder deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+}
+
+module.exports = { getMedicine, postMedicine, deleteMedicine };
