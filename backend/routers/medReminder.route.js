@@ -6,6 +6,6 @@ const {getMedicine,postMedicine,deleteMedicine} = require('../controllers/medRem
 
 router.get('/medReminder', auth, getMedicine);
 router.post('/medReminder', auth, postMedicine);
-router.delete('/medReminder/delete/:id',auth, deleteMedicine);
+router.delete('/medReminder/delete/:id', auth, deleteMedicine);
 
 module.exports=router;
