@@ -10,7 +10,7 @@ import ResetPassword from './auth/ResetPassword'
 import Profile from './profile/Profile'
 import Home from './home/Home'
 import MedicineInput from './medicineReminder/InputMedReminder'
-import DisplayMedicineReminders from './medicineReminder/DisplayMedReminders'
+import DisplayMedicineReminders from './medicineReminder/DisplayMed'
 import MenstrualCycle from './MenstrualCycle/MenstrualCycle'
 import HealthInfo from './genHealthInfo/HealthInfo'
 
