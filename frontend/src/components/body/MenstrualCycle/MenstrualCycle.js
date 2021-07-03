@@ -9,15 +9,15 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' 
 import { formatDate } from '@fullcalendar/react';
+import $ from 'jquery';
 
 
 
 export default function MenstrualCycle() {
 
  const handleDateClick = (arg) => {
-  var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-  var date = new Date(dateStr); // will be in local time
-  getDate(date);
+  alert('Event added');
+  setDate(arg.dateStr);
  }
 
  const getEvent=()=>{
@@ -25,8 +25,16 @@ export default function MenstrualCycle() {
    return x;
  }
 
- const getDate=(date)=>{
-  return date;
+ const setDate=(date)=>{
+  return date='2021-07-07';
+}
+const renderEventContent=(eventInfo)=>{
+  return (
+<div>
+  <b>{eventInfo.timeText}</b>
+  <i>{eventInfo.event.title}</i>
+</div>
+  )
 }
 
 
@@ -132,13 +140,15 @@ export default function MenstrualCycle() {
         editable={true}
         dateClick={handleDateClick} 
         events={[
-          { title: getEvent(), date: getDate() }
+          { title: getEvent(), date: setDate() }
         ]}
-      
-                
-  
+        eventContent={renderEventContent}
       />
+      
         </div>
+        
+      
+   
         
         </div>
     )
