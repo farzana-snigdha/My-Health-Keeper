@@ -50,7 +50,7 @@ const deleteMedicine = async (req, res) => {
     }
     if (reminderList) {
       medReminder
-        .findByIdAndDelete(req.data.medId)
+        .findByIdAndDelete(req.params.id)
         .then(() => res.json("Reminder deleted."))
         .catch((err) => res.status(400).json("Error: " + err));
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../../static/Styling/menstrualCycle.css";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,13 +9,14 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "@fullcalendar/react";
-import $ from "jquery";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
+import AddNotesModal from "./AddNotesModal";
+import { Modal } from "@material-ui/core";
 
 const initialState = {
   startdate: "",
@@ -76,7 +77,7 @@ export default function MenstrualCycle() {
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
   };
 
-  useEffect(() => {
+  const getInitialData = async () => {
     console.log(user._id);
     const id = user._id;
     axios
@@ -91,6 +92,9 @@ export default function MenstrualCycle() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  useEffect(() => {
+    getInitialData();
   }, []);
 
   const visibility = () => {
@@ -191,10 +195,11 @@ export default function MenstrualCycle() {
       );
     }
   };
-
+  const [show, setShow] = useState(false);
   const handleDateClick = (arg) => {
-    alert("Event added");
+    // alert("Event added");
     setDate(arg.dateStr);
+    setShow(true);
   };
 
   const getEvent = () => {
@@ -283,7 +288,6 @@ export default function MenstrualCycle() {
           </Card>
         }
         {visibility()}
-       
       </div>
       <div className="calendar_body">
         <div className="H2">
@@ -301,6 +305,7 @@ export default function MenstrualCycle() {
           eventContent={renderEventContent}
         />
       </div>
+      <AddNotesModal show={show} onClose={() => setShow(false)} />
     </div>
   );
 }
