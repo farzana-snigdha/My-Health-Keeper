@@ -1,5 +1,5 @@
 import React from "react";
-import "./medicineReminder.css"
+import "../../../static/Styling/medicineReminder.css"
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -22,12 +22,9 @@ function DisplayMedReminders () {
         headers: { Authorization: token },
       })
         .then(response => { console.log(response.data)});
-  
-        const values = [...reminderList];
-        values.splice(id, 1);
-        setReminderList(values);
-        }
 
+      reminderList.filter(el => el._id !== id);
+    }
     return(
         <div className="reminder">
       <div className="reminder_header">
@@ -42,12 +39,13 @@ function DisplayMedReminders () {
           {
             reminderList.map(medicines=>(
               <div className="reminder_card" >
+              
                 <h2>{medicines.medname}</h2>
-                <p>{medicines.descriptionmed}</p>
-                <p>{medicines.startdate.substring(0, 10)}</p>
-                <p>{medicines.enddate.substring(0, 10)}</p>
+                <p>Description: {medicines.descriptionmed}</p>
+                <p>Starting Date: {medicines.startdate.substring(0, 10)}</p>
+                <p>Ending Date: {medicines.enddate.substring(0, 10)}</p>
                 <IconButton className="btn" onClick={() => deleteReminder(medicines._id)} >
-                <DeleteIcon style={{ color: "red" }} />
+                <DeleteIcon  />
                </IconButton>
               </div>
             ))

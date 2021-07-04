@@ -17,7 +17,7 @@ import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
-
+import "../../../static/Styling/medicineReminder.css"
 const initialState = {
   username: "",
   medName: "",
@@ -30,7 +30,8 @@ const initialState = {
 };
 
 function InputMedReminder() {
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token)
+
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
 
@@ -97,7 +98,8 @@ function InputMedReminder() {
         headers: {Authorization: token}
     });
 
-      setMedicine({ ...medicine, err: "", success: "Medicine added Successfully!" });
+    setMedicine({ ...medicine, err: "", success: "Medicine added Successfully!" });
+      
     } catch (err) {
       err.response.data.msg &&
         setMedicine({ ...medicine, err: err.response.data.msg, success: "" });
@@ -203,7 +205,6 @@ function InputMedReminder() {
             >
               Add
             </Button>
-
             <Link href="/display-medicine-reminderList">
             <Button
               type="button"

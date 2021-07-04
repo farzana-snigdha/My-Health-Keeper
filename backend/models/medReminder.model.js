@@ -4,7 +4,7 @@ const medReminderSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
-    },
+      },
     username: {
         type: String,
         required: true

@@ -49,13 +49,10 @@ const deleteMedicine = async (req, res) => {
       console.log("Test :" + err);
     }
     if (reminderList) {
-        console.log("entered");
-        console.log(req.params.id);
       medReminder
         .findByIdAndDelete(req.params.id)
         .then(() => res.json("Reminder deleted."))
         .catch((err) => res.status(400).json("Error: " + err));
-    console.log("exited");
     }
   });
 };

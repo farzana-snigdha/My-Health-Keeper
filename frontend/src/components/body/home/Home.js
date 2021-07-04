@@ -1,11 +1,18 @@
 import React from 'react'
-import './home.css'
+// import { sidebar } from '../../header/Sidebar'
+import '../../../static/Styling/home.css'
+import {Container} from '@material-ui/core'
 
 function Home() {
     return (
-        <div className="home_page">
+        <Container>
+  <div className="home_page">
+            {/* <sidebar/> */}
            home
         </div>
+        </Container>
+
+      
     )
 }
 

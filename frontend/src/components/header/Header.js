@@ -35,8 +35,8 @@ import Body from "../body/Body";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
-import colors from '../colors.css'
-
+import colors from '../../static/Styling/colors.css'
+// import Headers from '../../static/Styling/header.css  '
 const drawerWidth = 330;
 
 const useStyles = makeStyles((theme) => ({
@@ -187,7 +187,7 @@ function Header() {
   };
 
   const userLink = () => {
-    console.log(user._id);
+    // console.log(user._id);
     return (
       <div>
         <Link to="/profile" component={NavLink}>
@@ -294,6 +294,7 @@ function Header() {
               </Link>
             </Typography>
             <Typography className={classes.signinTitle} color="inherit">
+              
               <ul style={transForm}>{isLogged ? userLink() : authLink()}</ul>
             </Typography>
           </Toolbar>
@@ -315,7 +316,7 @@ function Header() {
             </IconButton>
           </div>
           <Divider />
-          {console.log(user.gender)}
+          {/* {console.log(user.gender)} */}
           {isLogged ? genderOfTheUser() : <font size="5">sign in first</font>}
         </Drawer>
 

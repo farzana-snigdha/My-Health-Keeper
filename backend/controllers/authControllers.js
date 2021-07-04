@@ -6,6 +6,7 @@ const sendMail = require('./sendMail')
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
 const fetch = require('node-fetch')
+const moment = require('moment')
 
 const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 
@@ -52,7 +53,7 @@ const authControllers={
 
             const check = await User.findOne({email})
             if(check) return res.status(400).json({msg:"This email already exists."})
-
+// phone={1,2,3}
             const newUser = new User({
                 name, email, password, gender,phone
             })
@@ -91,7 +92,7 @@ const authControllers={
         try {
             const rf_token = req.cookies.refreshtoken
             if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-console.log("dwdwdw  ",rf_token)
+// console.log("dwdwdw  ",rf_token)
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if(err) return res.status(400).json({msg: "Please login now!"})
 
@@ -187,7 +188,7 @@ console.log(passwordHash)
                     path: '/user/refresh_token',
                     maxAge: 7*24*60*60*1000 // 7 days
                 })
-
+                res.json({"aa": moment(user.dateOfBirth).format('L')})
                 res.json({msg: "Login success!"})
             }else{
                 const newUser = new User({
