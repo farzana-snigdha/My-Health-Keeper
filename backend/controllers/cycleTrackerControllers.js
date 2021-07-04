@@ -70,23 +70,65 @@ const cycleTrackerControllers = {
     }
   },
 
-  setupInitialData: async (req, res) => {
+  updateInitialData: async (req, res) => {
     try {
       let user = req.user.id;
-      console.log(user);
+   
+      
+        // console.log(check)
+        const {startDate, endDate,} = req.body
+        await User.findOneAndUpdate({user}, {
+          startDate, endDate
+        })
 
-      const { startDate, endDate, duration, cycleLength } = req.body;
-      if (!startDate || !endDate || !duration || !cycleLength)
-        return res.status(400).json({ msg: "Please fill in all fields." });
+       return res.json({msg: "Update Success!"})
+        
+
+    
+    } catch (err) {
+      return res.status(500).json({ setupData: err.message });
+    }
+  },
+  isInitialDataAvailable:async (req,res)=>{
+    try{
+      let user=req.headers['userid']
+    // console.log(JSON.stringify(req.headers['userid'])) 
+      console.log("check ",user)
       const check = await Cycle.findOne({
         user,
       });
-      if (check) {
-        // console.log(check)
-        return res
-          .status(400)
-          .json({ msg: "You have already provided the data" });
+      // console.log(check)
+      if (check){
+        console.log(check)
+        return res.json(check)
       }
+    }catch (err) {
+      return res.status(500).json({ setupData: err.message });
+    }
+  },
+
+  setupInitialData: async (req, res) => {
+    try {
+      let user=req.headers['userid']
+      // console.log(user);
+
+      const { startDate, endDate, duration, cycleLength } = req.body;
+      if (!startDate || !endDate || !duration || !cycleLength)
+        return res.json({ msg: "Please fill in all fields." });
+      // const check = await Cycle.findOne({
+      //   user,
+      // });
+      //  console.log("bbb ",check)
+      // if (check) {
+       
+      //   // const {startDate, endDate,} = req.body
+      //   // await User.findOneAndUpdate({user}, {
+      //   //   startDate, endDate
+      //   // })
+
+      //  return res.json({msg: "Update Success!"})
+        
+      // }
       const initialinfo = new Cycle({
         user,
         startDate,
@@ -96,9 +138,9 @@ const cycleTrackerControllers = {
       });
 
       await initialinfo.save();
-      res.json({ setupData: "saved" });
+    return  res.json({ msg: "Initial data is saved" });
     } catch (err) {
-      return res.status(500).json({ setupData: err.message });
+      return res.status(500).json({ msg: err.message });
     }
   },
 };

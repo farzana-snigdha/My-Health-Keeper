@@ -49,13 +49,13 @@
   .reminder_card {
     display: flex;
     flex-direction: column;
-    /* display: inline-block; */
+    display: inline-block;
     background: rgb(201, 199, 199);
     border-radius: 8px;
     margin: 2rem;
     margin-top: 1rem;
     padding: 0.5rem;
-    max-width:250px;
+    max-width:350px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 
   }
@@ -70,4 +70,5 @@
     color: rgb(63, 43, 43);
     font-weight: bold;;
     margin-bottom: 0.5rem;
+    
   }

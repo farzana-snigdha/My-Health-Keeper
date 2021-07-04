@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   IconButton,
+  Link,
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
@@ -97,7 +98,7 @@ function InputMedReminder() {
         headers: {Authorization: token}
     });
 
-      setMedicine({ ...medicine, err: "", success: res.data.msg });
+    setMedicine({ ...medicine, err: "", success: "Medicine added Successfully!" });
       
     } catch (err) {
       err.response.data.msg &&
@@ -112,6 +113,8 @@ function InputMedReminder() {
           <Grid align="center">
             <h2 style={headerStyle}>Add Medicine</h2>
           </Grid>
+          {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
           <form onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
@@ -202,6 +205,15 @@ function InputMedReminder() {
             >
               Add
             </Button>
+            <Link href="/display-medicine-reminderList">
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+            >
+              Back
+            </Button>
+        </Link>
           </form>
         </Paper>
       </Grid>
