@@ -94,12 +94,12 @@ const cycleTrackerControllers = {
       let user=req.headers['userid']
     // console.log(JSON.stringify(req.headers['userid'])) 
       console.log("check ",user)
-      const check = await Cycle.find({
+      const check = await Cycle.findOne({
         user,
       });
       // console.log(check)
       if (check){
-        // console.log(check)
+        console.log(check)
         return res.json(check)
       }
     }catch (err) {
@@ -109,26 +109,26 @@ const cycleTrackerControllers = {
 
   setupInitialData: async (req, res) => {
     try {
-      let user = req.user.id;
+      let user=req.headers['userid']
       // console.log(user);
 
       const { startDate, endDate, duration, cycleLength } = req.body;
       if (!startDate || !endDate || !duration || !cycleLength)
         return res.json({ msg: "Please fill in all fields." });
-      const check = await Cycle.findOne({
-        user,
-      });
-       console.log("bbb ",check)
-      if (check) {
+      // const check = await Cycle.findOne({
+      //   user,
+      // });
+      //  console.log("bbb ",check)
+      // if (check) {
        
-        const {startDate, endDate,} = req.body
-        await User.findOneAndUpdate({user}, {
-          startDate, endDate
-        })
+      //   // const {startDate, endDate,} = req.body
+      //   // await User.findOneAndUpdate({user}, {
+      //   //   startDate, endDate
+      //   // })
 
-       return res.json({msg: "Update Success!"})
+      //  return res.json({msg: "Update Success!"})
         
-      }
+      // }
       const initialinfo = new Cycle({
         user,
         startDate,
@@ -138,9 +138,9 @@ const cycleTrackerControllers = {
       });
 
       await initialinfo.save();
-      res.json({ setupData: "saved" });
+    return  res.json({ msg: "Initial data is saved" });
     } catch (err) {
-      return res.status(500).json({ setupData: err.message });
+      return res.status(500).json({ msg: err.message });
     }
   },
 };

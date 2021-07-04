@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../../../static/Styling/menstrualCycle.css";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -17,7 +17,6 @@ import {
   showSuccessMsg,
 } from "../../utils/notification/Notification";
 
-
 const initialState = {
   startdate: "",
   enddate: "",
@@ -33,153 +32,165 @@ export default function MenstrualCycle() {
   const { user, isLogged } = auth;
 
   const [initialData, setInitialData] = useState(initialState);
-const [visible,setVisible]=useState(true)
+  const [visible, setVisible] = useState(true);
   const { startDate, endDate, duration, cycleLength, err, success } =
     initialData;
 
- 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      // console.log("InputFields", inputFields);
-  
-      //username = user.name;
-      //doses = inputFields;
-      try {
-        const res = await axios.post("http://localhost:5000/user/setup-initial-data", {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("InputFields", inputFields);
+
+    //username = user.name;
+    //doses = inputFields;
+    console.log(user._id);
+    const id = user._id;
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/user/setup-initial-data",
+        {
           startDate,
           endDate,
           duration,
           cycleLength,
-          
-        },{
-          headers: {Authorization: token}
-      });
-  
-        setInitialData({ ...initialData, err: "", success: res.data.msg });
-        console.log("nn ",err.response.data.msg)
-      } catch (err) {
-        err.response.data.msg &&
-          setInitialData({ ...initialData, err: err.response.data.msg, success: "" });
-          // console.log("nn ",err.response.data.msg)
-      }
-    };
-  
+        },
+        {
+          headers: { Authorization: token, userid: id },
+        }
+      );
 
-const handleChangeInput = (e) => {
+      setInitialData({ ...initialData, err: "", success: res.data.msg });
+      console.log("nn ", res.data.msg);
+    } catch (err) {
+      err.response.data.msg &&
+        setInitialData({
+          ...initialData,
+          err: err.response.data.msg,
+          success: "",
+        });
+      // console.log("nn ",err.response.data.msg)
+    }
+  };
+
+  const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
   };
 
- useEffect(()=>{
-   console.log(user._id)
-   const id=user._id
-  axios.get(`http://localhost:5000/user/is-initial-data-available`,{
-    headers: {Authorization: token, userid:id}
-}).then((response)=>{
-    const data1=response.data
-  console.log(data1)
-  setVisible(false)
-  }).catch((err)=>{
-    console.log(err)
-  })
- },[])
+  useEffect(() => {
+    console.log(user._id);
+    const id = user._id;
+    axios
+      .get(`http://localhost:5000/user/is-initial-data-available`, {
+        headers: { Authorization: token, userid: id },
+      })
+      .then((response) => {
+        const data1 = response.data;
+        console.log(data1);
+        setVisible(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-const visibility=()=>{
-  if(visible){
-    return (
-      <div>
+  const visibility = () => {
+    if (visible) {
+      return (
+        <>
           {
-          <Card className="root">
-            <div className="details">
-              <CardContent className="content">
-                <Typography component="h5" variant="h5">
-                  ⌚ Duration of each Period cycle
-                </Typography>
-                <div className="margin">
-                  <Grid container spacing={1} alignItems="center">
-                    <TextField
-                      fullWidth
-                      label="Duration"
-                      id="duration"
-                      
-                      name="duration"
-                      placeholder="Duration"
-                      onChange={handleChangeInput}
-                      value={duration}
-                    />
-                  </Grid>
-                </div>
-              </CardContent>
-            </div>
-          </Card>
-        }
-        {
-          <Card className="root">
-            <div className="details">
-              <CardContent className="content">
-                <Typography component="h5" variant="h5">
-                  ⏳ Gap between each period cycle
-                </Typography>
-                <div className="margin">
-                  <Grid container spacing={1} alignItems="center">
-                    <TextField
-                      fullWidth
-                      id="cycleLength"
-                      
-                      name="cycleLength"
-                      label="Approximate number of days for next period to come"
-                      placeholder="Gap between each period cycle to come"
-                      onChange={handleChangeInput}
-                      value={cycleLength}
-                    />
-                  </Grid>
-                </div>
-              </CardContent>
-            </div>
-          </Card>
-        }
-        
-        <div></div>
-        <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-}}>
-    {<button className="save_button" onClick={handleSubmit} type={onsubmit}>Save Initial Information</button>}
-</div>
-      </div>
-    )
-  }else{
-    return (
-      <div >
-        <div></div>
-        <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-}}>
-    {<button className="save_button" onClick={handleSubmit} type={onsubmit}>update Initial Information</button>}
-</div>
-      </div>
-      
-    )
-  }
-}
+            <Card className="root">
+              <div className="details">
+                <CardContent className="content">
+                  <Typography component="h5" variant="h5">
+                    ⌚ Duration of each Period cycle
+                  </Typography>
+                  <div className="margin">
+                    <Grid container spacing={1} alignItems="center">
+                      <TextField
+                        fullWidth
+                        label="Duration"
+                        id="duration"
+                        name="duration"
+                        placeholder="Duration"
+                        onChange={handleChangeInput}
+                        value={duration}
+                      />
+                    </Grid>
+                  </div>
+                </CardContent>
+              </div>
+            </Card>
+          }
+          {
+            <Card className="root">
+              <div className="details">
+                <CardContent className="content">
+                  <Typography component="h5" variant="h5">
+                    ⏳ Gap between each period cycle
+                  </Typography>
+                  <div className="margin">
+                    <Grid container spacing={1} alignItems="center">
+                      <TextField
+                        fullWidth
+                        id="cycleLength"
+                        name="cycleLength"
+                        label="Approximate number of days for next period to come"
+                        placeholder="Gap between each period cycle to come"
+                        onChange={handleChangeInput}
+                        value={cycleLength}
+                      />
+                    </Grid>
+                  </div>
+                </CardContent>
+              </div>
+            </Card>
+          }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          <div></div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+          >
+            {
+              <button
+                className="save_button"
+                onClick={handleSubmit}
+                type={onsubmit}
+              >
+                Save Initial Information
+              </button>
+            }
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div></div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+          >
+            {
+              <button
+                className="save_button"
+                onClick={handleSubmit}
+                type={onsubmit}
+              >
+                update Initial Information
+              </button>
+            }
+          </div>
+        </>
+      );
+    }
+  };
 
   const handleDateClick = (arg) => {
     alert("Event added");
@@ -214,9 +225,9 @@ const visibility=()=>{
 
   return (
     <div className="main">
-       {err && showErrMsg(err)}
-            {success && showSuccessMsg(success)}
-      <div className=" card_body ">
+      {err && showErrMsg(err)}
+      {success && showSuccessMsg(success)}
+      <div className="card_body ">
         {
           <Card className="root">
             <div className="details">
@@ -226,13 +237,11 @@ const visibility=()=>{
                 </Typography>
                 <div className="margin">
                   <Grid container spacing={1} alignItems="center">
-                  
                     <TextField
                       fullWidth
                       required
                       type="date"
                       id="startDate"
-                      
                       name="startDate"
                       onChange={handleChangeInput}
                       value={startDate}
@@ -259,9 +268,7 @@ const visibility=()=>{
                       fullWidth
                       type="date"
                       required
-                     
                       id="endDate"
-                      
                       name="endDate"
                       onChange={handleChangeInput}
                       value={endDate}
@@ -275,7 +282,7 @@ const visibility=()=>{
             </div>
           </Card>
         }
-      {visibility()}
+        {visibility()}
        
       </div>
       <div className="calendar_body">
