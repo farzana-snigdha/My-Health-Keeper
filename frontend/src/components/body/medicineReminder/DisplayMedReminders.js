@@ -30,12 +30,13 @@ function DisplayMed () {
           {
             reminderList.map(medicines=>(
               <div className="reminder_card" >
+              
                 <h2>{medicines.medname}</h2>
                 <p>Description: {medicines.descriptionmed}</p>
                 <p>Starting Date: {medicines.startdate.substring(0, 10)}</p>
                 <p>Ending Date: {medicines.enddate.substring(0, 10)}</p>
                 <IconButton className="btn" >
-                <DeleteIcon style={{ color: "red" }} />
+                <DeleteIcon  />
                </IconButton>
               </div>
             ))
