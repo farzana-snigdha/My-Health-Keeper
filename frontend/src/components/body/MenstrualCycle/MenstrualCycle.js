@@ -18,6 +18,7 @@ import {
 import AddNotesModal from "./AddNotesModal";
 import { Modal } from "@material-ui/core";
 
+
 const initialState = {
   startdate: "",
   enddate: "",
@@ -86,19 +87,44 @@ export default function MenstrualCycle() {
       })
       .then((response) => {
         const data1 = response.data;
-        console.log(data1);
+        // console.log(data1);
         setVisible(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const showDurationAndCycleLength = async () => {};
+
+  const showUpdateInitialButton = async () => {};
   useEffect(() => {
     getInitialData();
   }, []);
 
+  const calendarVisibility=()=>{
+    if(!visible){
+   return ( <>
+    <div className="H2">
+    <h2>
+      {" "}
+      <i> Tracking Period At a glance with Notes 📝 </i>{" "}
+    </h2>
+  </div>
+  <FullCalendar
+    plugins={[dayGridPlugin, interactionPlugin]}
+    initialView="dayGridMonth"
+    editable={true}
+    dateClick={handleDateClick}
+    // events={[{ title: getEvent(), date: setDate() }]}
+    eventContent={renderEventContent}
+  />
+  </>)
+    }
+  }
   const visibility = () => {
     if (visible) {
+      //  showDurationAndCycleLength()
       return (
         <>
           {
@@ -171,6 +197,7 @@ export default function MenstrualCycle() {
         </>
       );
     } else {
+      //  showUpdateInitialButton()
       return (
         <>
           <div></div>
@@ -198,19 +225,8 @@ export default function MenstrualCycle() {
   const [show, setShow] = useState(false);
   const handleDateClick = (arg) => {
     // alert("Event added");
-    setDate(arg.dateStr);
+
     setShow(true);
-  };
-
-  const getEvent = () => {
-    var x = "Event 1";
-    return x;
-  };
-
-  const setDate = (date) => {
-    let clicked = date;
-    // console.log("dxsd", clicked);
-    return clicked;
   };
 
   const renderEventContent = (eventInfo) => {
@@ -290,20 +306,7 @@ export default function MenstrualCycle() {
         {visibility()}
       </div>
       <div className="calendar_body">
-        <div className="H2">
-          <h2>
-            {" "}
-            <i> Tracking Period At a glance with Notes 📝 </i>{" "}
-          </h2>
-        </div>
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          editable={true}
-          dateClick={handleDateClick}
-          events={[{ title: getEvent(), date: setDate() }]}
-          eventContent={renderEventContent}
-        />
+    { calendarVisibility()}
       </div>
       <AddNotesModal show={show} onClose={() => setShow(false)} />
     </div>
