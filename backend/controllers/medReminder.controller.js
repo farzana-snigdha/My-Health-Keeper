@@ -30,15 +30,22 @@ const postMedicine = async (req, res) => {
     enddate: enddate,
     time: doses,
   });
-  med
-    .save()
-    .then((data) => {
-      res.json(data);
-      console.log(data);
-    })
-    .catch((error) => {
-      res.json(error);
-    });
+  // med
+  //   .save()
+  //   .then((data) => {
+  //     res.json(data);
+  //     console.log(data);
+  //   })
+  //   .catch((error) => {
+  //     res.json(error);
+  //   });
+
+  const date1 = new Date(startdate);
+  const date2 = new Date(enddate);
+  
+  const days = ((Math.abs(date2 - date1))/ (1000 * 60 * 60 * 24));
+  console.log(doses[0]);
+  //console.log(startdate);
 };
 
 const deleteMedicine = async (req, res) => {
