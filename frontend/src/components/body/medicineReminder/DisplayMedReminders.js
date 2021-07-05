@@ -23,7 +23,9 @@ function DisplayMedReminders () {
       })
         .then(response => { console.log(response.data)});
 
-      reminderList.filter(el => el._id !== id);
+        const values = [...reminderList];
+        values.splice(id, 1);
+        setReminderList(values);
     }
     return(
         <div className="reminder">
