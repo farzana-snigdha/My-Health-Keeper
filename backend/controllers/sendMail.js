@@ -34,6 +34,9 @@ const sendEmail = (to, url, txt) => {
       refreshToken: MAILING_SERVICE_REFRESH_TOKEN,
       accessToken: accessToken,
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 
   const mailOptions = {
