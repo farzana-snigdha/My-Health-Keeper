@@ -17,7 +17,7 @@ import {
 } from "../../utils/notification/Notification";
 import AddNotesModal from "./AddNotesModal";
 import { Modal } from "@material-ui/core";
-
+import { useHistory } from "react-router-dom";
 
 const initialState = {
   startdate: "",
@@ -37,41 +37,7 @@ export default function MenstrualCycle() {
   const [visible, setVisible] = useState(true);
   const { startDate, endDate, duration, cycleLength, err, success } =
     initialData;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // console.log("InputFields", inputFields);
-
-    //username = user.name;
-    //doses = inputFields;
-    console.log(user._id);
-    const id = user._id;
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/user/setup-initial-data",
-        {
-          startDate,
-          endDate,
-          duration,
-          cycleLength,
-        },
-        {
-          headers: { Authorization: token, userid: id },
-        }
-      );
-
-      setInitialData({ ...initialData, err: "", success: res.data.msg });
-      console.log("nn ", res.data.msg);
-    } catch (err) {
-      err.response.data.msg &&
-        setInitialData({
-          ...initialData,
-          err: err.response.data.msg,
-          success: "",
-        });
-      // console.log("nn ",err.response.data.msg)
-    }
-  };
+  let history = useHistory();
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -101,27 +67,64 @@ export default function MenstrualCycle() {
   useEffect(() => {
     getInitialData();
   }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("InputFields", inputFields);
 
-  const calendarVisibility=()=>{
-    if(!visible){
-   return ( <>
-    <div className="H2">
-    <h2>
-      {" "}
-      <i> Tracking Period At a glance with Notes 📝 </i>{" "}
-    </h2>
-  </div>
-  <FullCalendar
-    plugins={[dayGridPlugin, interactionPlugin]}
-    initialView="dayGridMonth"
-    editable={true}
-    dateClick={handleDateClick}
-    // events={[{ title: getEvent(), date: setDate() }]}
-    eventContent={renderEventContent}
-  />
-  </>)
+    //username = user.name;
+    //doses = inputFields;
+    console.log(user._id);
+    const id = user._id;
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/user/setup-initial-data",
+        {
+          startDate,
+          endDate,
+          duration,
+          cycleLength,
+        },
+        {
+          headers: { Authorization: token, userid: id },
+        }
+      );
+
+      setInitialData({ ...initialData, err: "", success: res.data.msg });
+      console.log("nn ", res.data.msg);
+      history.push("/menstrual-cycle");
+    } catch (err) {
+      err.response.data.msg &&
+        setInitialData({
+          ...initialData,
+          err: err.response.data.msg,
+          success: "",
+        });
+      // console.log("nn ",err.response.data.msg)
     }
-  }
+  };
+
+  const calendarVisibility =  () => {
+    if (!visible) {
+      return (
+        <>
+          <div className="H2">
+            <h2>
+              {" "}
+              <i> Tracking Period At a glance with Notes 📝 </i>{" "}
+            </h2>
+          </div>
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            editable={true}
+            dateClick={handleDateClick}
+            // events={[{ title: getEvent(), date: setDate() }]}
+            eventContent={renderEventContent}
+          />
+        </>
+      );
+    }
+  };
   const visibility = () => {
     if (visible) {
       //  showDurationAndCycleLength()
@@ -305,9 +308,7 @@ export default function MenstrualCycle() {
         }
         {visibility()}
       </div>
-      <div className="calendar_body">
-    { calendarVisibility()}
-      </div>
+      <div className="calendar_body">{calendarVisibility()}</div>
       <AddNotesModal show={show} onClose={() => setShow(false)} />
     </div>
   );
