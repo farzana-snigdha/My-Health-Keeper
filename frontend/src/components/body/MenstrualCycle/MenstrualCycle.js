@@ -69,12 +69,10 @@ export default function MenstrualCycle() {
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("InputFields", inputFields);
-
-    //username = user.name;
-    //doses = inputFields;
-    console.log(user._id);
-    const id = user._id;
+  
+      const id = user._id;
+   let userEmail=user.email
+   
     try {
       const res = await axios.post(
         "http://localhost:5000/user/setup-initial-data",
@@ -83,6 +81,7 @@ export default function MenstrualCycle() {
           endDate,
           duration,
           cycleLength,
+          userEmail,
         },
         {
           headers: { Authorization: token, userid: id },
