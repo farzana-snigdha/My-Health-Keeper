@@ -67,12 +67,45 @@ export default function MenstrualCycle() {
   useEffect(() => {
     getInitialData();
   }, []);
+
+  const handleUpdate=async (e)=>{
+    e.preventDefault()
+
+    const id = user._id;
+    let userEmail = user.email;
+
+    try {
+      const res = await axios.patch(
+        "http://localhost:5000/user/update-menstrual-data",
+        {
+          startDate,
+          endDate,
+         
+        },
+        {
+          headers: { Authorization: token, userid: id },
+        }
+      );
+
+      setInitialData({ ...initialData, err: "", success: res.data.msg });
+      console.log("nn ", res.data.msg);
+      history.push("/menstrual-cycle");
+    } catch (err) {
+      err.response.data.msg &&
+        setInitialData({
+          ...initialData,
+          err: err.response.data.msg,
+          success: "",
+        });
+      // console.log("nn ",err.response.data.msg)
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-      const id = user._id;
-   let userEmail=user.email
-   
+
+    const id = user._id;
+    let userEmail = user.email;
+
     try {
       const res = await axios.post(
         "http://localhost:5000/user/setup-initial-data",
@@ -102,7 +135,7 @@ export default function MenstrualCycle() {
     }
   };
 
-  const calendarVisibility =  () => {
+  const calendarVisibility = () => {
     if (!visible) {
       return (
         <>
@@ -215,7 +248,7 @@ export default function MenstrualCycle() {
             {
               <button
                 className="save_button"
-                onClick={handleSubmit}
+                onClick={handleUpdate}
                 type={onsubmit}
               >
                 update Initial Information

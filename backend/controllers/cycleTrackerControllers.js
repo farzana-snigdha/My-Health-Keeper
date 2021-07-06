@@ -129,19 +129,22 @@ const cycleTrackerControllers = {
 
   updateInitialData: async (req, res) => {
     try {
-      let user = req.user.id;
-
-      // console.log(check)
+      let user = req.headers["userid"];
+   
       const { startDate, endDate } = req.body;
-      await User.findOneAndUpdate(
-        { user },
+      await Cycle.findOneAndUpdate(
+       {user: user},
         {
-          startDate,
-          endDate,
+          startDate:startDate,
+          endDate:endDate,
+          isReminded:false,
         }
-      );
-
-      return res.json({ msg: "Update Success!" });
+      ).then(()=>{
+        console.log("updateInitialData ", startDate)
+        return res.json({ msg: "Update Success!" });
+      });
+   
+     
     } catch (err) {
       return res.status(500).json({ setupData: err.message });
     }
@@ -149,12 +152,12 @@ const cycleTrackerControllers = {
   isInitialDataAvailable: async (req, res) => {
     try {
       let user = req.headers["userid"];
-      // console.log(JSON.stringify(req.headers['userid']))
+    
       console.log("check ", user);
       const check = await Cycle.findOne({
         user,
       });
-      // console.log(check)
+     
       if (check) {
         console.log(check.startDate);
         return res.json(check);
@@ -167,25 +170,11 @@ const cycleTrackerControllers = {
   setupInitialData: async (req, res) => {
     try {
       let user = req.headers["userid"];
-      // console.log(user);
-
+     
       const { startDate, endDate, duration, cycleLength, userEmail } = req.body;
       if (!startDate || !endDate || !duration || !cycleLength)
         return res.json({ msg: "Please fill in all fields." });
-      // const check = await Cycle.findOne({
-      //   user,
-      // });
-      //  console.log("bbb ",check)
-      // if (check) {
-
-      //   // const {startDate, endDate,} = req.body
-      //   // await User.findOneAndUpdate({user}, {
-      //   //   startDate, endDate
-      //   // })
-
-      //  return res.json({msg: "Update Success!"})
-
-      // }
+     
       const initialinfo = new Cycle({
         user: user,
         startDate: startDate,
