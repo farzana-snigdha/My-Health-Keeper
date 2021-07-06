@@ -20,12 +20,6 @@ setInterval(() => {
             lastEndDate.setTime(lastEndDate.getTime() + nextDay * 86400000)
           );
 
-          console.log(
-            "cycle tracker controller setinterval",
-            reminder[i].userEmail,
-            "   ",
-            periodDate
-          );
 
           if (periodDate - now < 0) {
             Cycle.findByIdAndUpdate(
@@ -97,7 +91,7 @@ const cycleTrackerControllers = {
   createNotes: async (req, res) => {
     try {
       let user = req.headers["userid"];
-      const { mood, symptoms, flow, eventDate } = req.body;
+      const {eventDate,mood, symptoms, flow } = req.body;
       const check = await Cycle.findOne({
         user,
       });
@@ -117,8 +111,8 @@ const cycleTrackerControllers = {
           }
         );
         // cycle.findOne({user}).insert({"notes":[{"mood":mood,"symptoms":symptoms,"flow":flow}]})
-
-        res.status(200).json({ createNotes: "saved" });
+        
+        return res.status(200).json({ msg: "saved" });
       } else {
         return res.status(400).json({ msg: "provide the initial data first" });
       }
