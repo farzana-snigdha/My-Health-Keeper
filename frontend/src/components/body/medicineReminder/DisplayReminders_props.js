@@ -40,7 +40,7 @@ function DisplayMedicineReminders() {
 
   useEffect(async () => {
     await axios
-      .get("/medReminder", {
+      .get("http://localhost:5000/medReminder", {
         headers: { Authorization: token },
       })
       .then((res) => {

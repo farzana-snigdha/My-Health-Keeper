@@ -22,8 +22,15 @@ const getMedicine = async (req, res) => {
 const postMedicine = async (req, res) => {
   let user = req.user.id;
 
-  const { username, medname, descriptionmed, startdate, enddate, doses } =
-    req.body;
+  const {
+    username,
+    medname,
+    descriptionmed,
+    startdate,
+    enddate,
+    doses,
+    userEmail,
+  } = req.body;
 
   const med = new medReminder({
     user,
@@ -58,6 +65,7 @@ const postMedicine = async (req, res) => {
             meddate: incrementDate,
             medtime: doses[j].time,
             isTaken: "false",
+            userEmail: userEmail,
           });
           medDose
             .save()

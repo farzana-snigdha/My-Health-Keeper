@@ -14,17 +14,17 @@ function MedDoses() {
 
   useEffect(async () => {
     await axios
-      .get("/medDose", {
+      .get("http://localhost:5000/medDose", {
         headers: { Authorization: token },
       })
       .then((res) => setDoseList(res.data));
   }, []);
 
   const confirmReminder = async (id) => {
-    await axios.post('/medDose/'+id,
-    {
-      headers: { Authorization: token, userId : user._id },
-    })
+    await axios
+      .post("http://localhost:5000/medDose/" + id, {
+        headers: { Authorization: token, userId: user._id },
+      })
       .then((response) => {
         console.log(response.data);
       })

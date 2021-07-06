@@ -17,7 +17,7 @@ import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
-import "../../../static/Styling/medicineReminder.css"
+import "../../../static/Styling/medicineReminder.css";
 const initialState = {
   username: "",
   medName: "",
@@ -30,7 +30,7 @@ const initialState = {
 };
 
 function InputMedReminder() {
-  const token = useSelector(state => state.token)
+  const token = useSelector((state) => state.token);
 
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
@@ -87,19 +87,27 @@ function InputMedReminder() {
     //username = user.name;
     //doses = inputFields;
     try {
-      const res = await axios.post("/medReminder", {
-        username : user.name,
-        medname,
-        descriptionmed,
-        startdate,
-        enddate,
-        doses: inputFields,
-      },{
-        headers: {Authorization: token}
-    });
+      const res = await axios.post(
+        "http://localhost:5000/medReminder",
+        {
+          username: user.name,
+          medname,
+          descriptionmed,
+          startdate,
+          enddate,
+          doses: inputFields,
+          userEmail: user.email,
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
 
-    setMedicine({ ...medicine, err: "", success: "Medicine added Successfully!" });
-      
+      setMedicine({
+        ...medicine,
+        err: "",
+        success: "Medicine added Successfully!",
+      });
     } catch (err) {
       err.response.data.msg &&
         setMedicine({ ...medicine, err: err.response.data.msg, success: "" });
@@ -114,7 +122,7 @@ function InputMedReminder() {
             <h2 style={headerStyle}>Add Medicine</h2>
           </Grid>
           {err && showErrMsg(err)}
-            {success && showSuccessMsg(success)}
+          {success && showSuccessMsg(success)}
           <form onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
@@ -206,14 +214,10 @@ function InputMedReminder() {
               Add
             </Button>
             <Link href="/display-medicine-reminderList">
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-            >
-              Back
-            </Button>
-        </Link>
+              <Button type="button" variant="contained" color="primary">
+                Back
+              </Button>
+            </Link>
           </form>
         </Paper>
       </Grid>
