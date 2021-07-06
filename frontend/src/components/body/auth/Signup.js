@@ -61,7 +61,7 @@ function Signup() {
             return setUser({...user, err: "Password did not match.", success: ''})
 
         try {
-            const res = await axios.post('/user/signup', {
+            const res = await axios.post('http://localhost:5000/user/signup', {
                 name, email, password,gender,phone
             })
 

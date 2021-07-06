@@ -18,7 +18,7 @@ const medDoseSchema = new mongoose.Schema({
         required: true
     },
     medtime: {
-        type: Date,
+        type: String,
         required: true
     },
     isTaken: {

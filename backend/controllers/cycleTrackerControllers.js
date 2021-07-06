@@ -20,12 +20,12 @@ setInterval(() => {
             lastEndDate.setTime(lastEndDate.getTime() + nextDay * 86400000)
           );
 
-          console.log(
-            "cycle tracker controller setinterval",
-            reminder[i].userEmail,
-            "   ",
-            periodDate
-          );
+          // console.log(
+          //   "cycle tracker controller setinterval",
+          //   reminder[i].userEmail,
+          //   "   ",
+          //   periodDate
+          // );
 
           if (periodDate - now < 0) {
             Cycle.findByIdAndUpdate(

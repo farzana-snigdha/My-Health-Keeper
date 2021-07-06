@@ -23,7 +23,9 @@ function DisplayMedReminders () {
       })
         .then(response => { console.log(response.data)});
 
-      reminderList.filter(el => el._id !== id);
+        const values = [...reminderList];
+        values.splice(id, 1);
+        setReminderList(values);
     }
     return(
         <div className="reminder">
@@ -32,6 +34,13 @@ function DisplayMedReminders () {
         <Link href="/medicine-reminder" className="button">
           {" "}
           Add to List
+        </Link>
+      </div>
+
+      <div className="reminder_header">
+        <Link href="/medicine-doses" className="button">
+          {" "}
+          Medicines Today
         </Link>
       </div>
 
