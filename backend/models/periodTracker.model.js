@@ -15,7 +15,7 @@ const CycleSchema = new mongoose.Schema({
     type: String,
   },
   cycleLength: {
-    type: String,
+    type: Number,
   },
   notes: [
     {

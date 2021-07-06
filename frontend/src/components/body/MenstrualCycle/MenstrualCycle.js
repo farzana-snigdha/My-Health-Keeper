@@ -140,6 +140,7 @@ export default function MenstrualCycle() {
                     <Grid container spacing={1} alignItems="center">
                       <TextField
                         fullWidth
+                        type="number"
                         label="Duration"
                         id="duration"
                         name="duration"
@@ -164,6 +165,7 @@ export default function MenstrualCycle() {
                     <Grid container spacing={1} alignItems="center">
                       <TextField
                         fullWidth
+                        type="number"
                         id="cycleLength"
                         name="cycleLength"
                         label="Approximate number of days for next period to come"
