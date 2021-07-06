@@ -12,10 +12,22 @@ setInterval(() => {
       //for loop reminder.size,
       for (i = 0; i < reminder.length; i++) {
         if (!reminder[i].isReminded) {
-       
           const now = new Date();
-          if ((new Date(reminder[i].startDate)) - now < 0) {
-            // console.log(reminder[i].userEmail)
+          const lastEndDate = new Date(reminder[i].endDate);
+
+          const nextDay = reminder[i].cycleLength - 5;
+          const periodDate = new Date(
+            lastEndDate.setTime(lastEndDate.getTime() + nextDay * 86400000)
+          );
+
+          console.log(
+            "cycle tracker controller setinterval",
+            reminder[i].userEmail,
+            "   ",
+            periodDate
+          );
+
+          if (periodDate - now < 0) {
             Cycle.findByIdAndUpdate(
               reminder[i]._id,
               { isReminded: true },
@@ -23,23 +35,28 @@ setInterval(() => {
                 if (err) {
                   console.log(err);
                 }
-                // console.log(remind.userEmail)
+
+                const nextDate = new Date(
+                  remind.endDate.setTime(
+                    remind.endDate.getTime() + remind.cycleLength * 86400000
+                  )
+                );
+                console.log(nextDate);
                 sendMail(
                   remind.userEmail,
                   null,
-                  "get ready for your period"
+                  `Get ready for your PERIOD !!  \n Your probable date : ${nextDate}`,
+                  null,
+                  null
                 );
-
               }
             );
-            // console.log(new Date(reminder[i].startDate));
           }
         }
       }
-      // console.log(reminder.length);
     }
   });
-}, 1000);
+}, 6000);
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
     try {
