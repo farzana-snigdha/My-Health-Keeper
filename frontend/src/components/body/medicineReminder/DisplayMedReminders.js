@@ -37,6 +37,13 @@ function DisplayMedReminders () {
         </Link>
       </div>
 
+      <div className="reminder_header">
+        <Link href="/medicine-doses" className="button">
+          {" "}
+          Medicines Today
+        </Link>
+      </div>
+
         <div className="reminder_body">
           {
             reminderList.map(medicines=>(

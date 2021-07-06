@@ -2,10 +2,12 @@ const medConfirmation = require("../models/medicineConfirmation.model");
 
 const getDoses = async (req, res) => {
     let user = req.user.id;
+    const date1 = new Date();
+    console.log(new Date(date1.toISOString().slice(0,10)));
 
     medConfirmation.find({
         "user": user,
-        "meddate": Date.now,
+        "meddate": "/^"+new Date(date1.toISOString().slice(0,10))+"/",
         "isTaken": false
       }, (err, doseList) => {
         if (err) {
