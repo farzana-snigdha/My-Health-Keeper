@@ -356,14 +356,33 @@ export default function MenstrualCycle() {
       centered
       show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add Notes 🗒</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+        <form className="center">
+            <div>
+              <label for="date">Date : </label>
+              <input type="date" name="date" />
+            </div>
+            <div>
+            <label for="mood">Mood : </label>
+            <input type="mood" name="mood" />
+            </div>
+            <div>
+            <label for="symptoms">Symptoms : </label>
+            <input type="symptoms" name="symptoms" />
+            </div>
+            <div>
+            <label for="flow">Flow : </label>
+            <input type="flow" name="flow" />
+            </div>
+            </form>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" type="submit" onClick={handleClose}>
             Save
           </Button>
         </Modal.Footer>
