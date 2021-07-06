@@ -8,6 +8,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 function MedDoses() {
   const token = useSelector((state) => state.token);
+  const auth = useSelector((state) => state.auth);
+  const { user } = auth;
   const [doseList, setDoseList] = useState([]);
 
   useEffect(async () => {
@@ -21,7 +23,7 @@ function MedDoses() {
   const confirmReminder = async (id) => {
     await axios.post('/medDose/'+id,
     {
-      headers: { Authorization: token },
+      headers: { Authorization: token, userId : user._id },
     })
       .then((response) => {
         console.log(response.data);

@@ -5,6 +5,6 @@ const auth=require("../middleware/auth");
 const { getDoses, doseConfirmUpdate } = require("../controllers/medDose.controller");
 
 router.get('/medDose',auth, getDoses);
-router.post('/medDose/:id',auth, doseConfirmUpdate);
+router.post('/medDose/:id', doseConfirmUpdate);
 
 module.exports=router;

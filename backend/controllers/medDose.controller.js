@@ -25,21 +25,18 @@ const getDoses = async (req, res) => {
 };
 
 const doseConfirmUpdate = async (req, res) => {
-  let user = req.user.id;
+  let user = req.headers['userid'];
   medConfirmation.find({ user }, (err, doseList) => {
     if (err) {
       console.log(user);
       console.log("Test :" + err);
     }
     if (doseList) {
+        var query = { _id: req.params.id };
       var newvalue = { $set: { isTaken: true } };
-      medConfirmation.updateOne(req.params.id, newvalue, function (err, res) {
-        if (err) {
-          res.status(400).json("Error: " + err);
-        } else {
-          res.json("Dose Confirmed.");
-        }
-      });
+      medConfirmation.updateOne(query, newvalue)
+      .then(() => res.json("Confirmed."))
+        .catch((err) => res.status(400).json("Error: " + err));
     }
   });
 };
