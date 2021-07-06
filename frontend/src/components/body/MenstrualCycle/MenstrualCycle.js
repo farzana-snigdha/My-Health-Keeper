@@ -15,9 +15,13 @@ import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
-import AddNotesModal from "./AddNotesModal";
-import { Modal } from "@material-ui/core";
+
 import { useHistory } from "react-router-dom";
+
+import Modal from 'react-bootstrap/Modal'
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "@material-ui/core";
+
 
 const initialState = {
   startdate: "",
@@ -260,10 +264,13 @@ export default function MenstrualCycle() {
     }
   };
   const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const handleDateClick = (arg) => {
     // alert("Event added");
 
-    setShow(true);
+    handleShow(true);
   };
 
   const renderEventContent = (eventInfo) => {
@@ -343,7 +350,24 @@ export default function MenstrualCycle() {
         {visibility()}
       </div>
       <div className="calendar_body">{calendarVisibility()}</div>
-      <AddNotesModal show={show} onClose={() => setShow(false)} />
+      <Modal 
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
