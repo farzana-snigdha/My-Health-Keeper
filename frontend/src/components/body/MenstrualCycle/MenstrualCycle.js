@@ -17,6 +17,7 @@ import {
 } from "../../utils/notification/Notification";
 import AddNotesModal from "./AddNotesModal";
 import { Modal } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const initialState = {
   startdate: "",
@@ -36,41 +37,7 @@ export default function MenstrualCycle() {
   const [visible, setVisible] = useState(true);
   const { startDate, endDate, duration, cycleLength, err, success } =
     initialData;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // console.log("InputFields", inputFields);
-
-    //username = user.name;
-    //doses = inputFields;
-    console.log(user._id);
-    const id = user._id;
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/user/setup-initial-data",
-        {
-          startDate,
-          endDate,
-          duration,
-          cycleLength,
-        },
-        {
-          headers: { Authorization: token, userid: id },
-        }
-      );
-
-      setInitialData({ ...initialData, err: "", success: res.data.msg });
-      console.log("nn ", res.data.msg);
-    } catch (err) {
-      err.response.data.msg &&
-        setInitialData({
-          ...initialData,
-          err: err.response.data.msg,
-          success: "",
-        });
-      // console.log("nn ",err.response.data.msg)
-    }
-  };
+  let history = useHistory();
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -86,19 +53,113 @@ export default function MenstrualCycle() {
       })
       .then((response) => {
         const data1 = response.data;
-        console.log(data1);
+        // console.log(data1);
         setVisible(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const showDurationAndCycleLength = async () => {};
+
+  const showUpdateInitialButton = async () => {};
   useEffect(() => {
     getInitialData();
   }, []);
 
+  const handleUpdate=async (e)=>{
+    e.preventDefault()
+
+    const id = user._id;
+    let userEmail = user.email;
+
+    try {
+      const res = await axios.patch(
+        "http://localhost:5000/user/update-menstrual-data",
+        {
+          startDate,
+          endDate,
+         
+        },
+        {
+          headers: { Authorization: token, userid: id },
+        }
+      );
+
+      setInitialData({ ...initialData, err: "", success: res.data.msg });
+      console.log("nn ", res.data.msg);
+      history.push("/menstrual-cycle");
+    } catch (err) {
+      err.response.data.msg &&
+        setInitialData({
+          ...initialData,
+          err: err.response.data.msg,
+          success: "",
+        });
+      // console.log("nn ",err.response.data.msg)
+    }
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const id = user._id;
+    let userEmail = user.email;
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/user/setup-initial-data",
+        {
+          startDate,
+          endDate,
+          duration,
+          cycleLength,
+          userEmail,
+        },
+        {
+          headers: { Authorization: token, userid: id },
+        }
+      );
+
+      setInitialData({ ...initialData, err: "", success: res.data.msg });
+      console.log("nn ", res.data.msg);
+      history.push("/menstrual-cycle");
+    } catch (err) {
+      err.response.data.msg &&
+        setInitialData({
+          ...initialData,
+          err: err.response.data.msg,
+          success: "",
+        });
+      // console.log("nn ",err.response.data.msg)
+    }
+  };
+
+  const calendarVisibility = () => {
+    if (!visible) {
+      return (
+        <>
+          <div className="H2">
+            <h2>
+              {" "}
+              <i> Tracking Period At a glance with Notes 📝 </i>{" "}
+            </h2>
+          </div>
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            editable={true}
+            dateClick={handleDateClick}
+            // events={[{ title: getEvent(), date: setDate() }]}
+            eventContent={renderEventContent}
+          />
+        </>
+      );
+    }
+  };
   const visibility = () => {
     if (visible) {
+      //  showDurationAndCycleLength()
       return (
         <>
           {
@@ -112,6 +173,7 @@ export default function MenstrualCycle() {
                     <Grid container spacing={1} alignItems="center">
                       <TextField
                         fullWidth
+                        type="number"
                         label="Duration"
                         id="duration"
                         name="duration"
@@ -136,6 +198,7 @@ export default function MenstrualCycle() {
                     <Grid container spacing={1} alignItems="center">
                       <TextField
                         fullWidth
+                        type="number"
                         id="cycleLength"
                         name="cycleLength"
                         label="Approximate number of days for next period to come"
@@ -171,6 +234,7 @@ export default function MenstrualCycle() {
         </>
       );
     } else {
+      //  showUpdateInitialButton()
       return (
         <>
           <div></div>
@@ -184,7 +248,7 @@ export default function MenstrualCycle() {
             {
               <button
                 className="save_button"
-                onClick={handleSubmit}
+                onClick={handleUpdate}
                 type={onsubmit}
               >
                 update Initial Information
@@ -198,19 +262,8 @@ export default function MenstrualCycle() {
   const [show, setShow] = useState(false);
   const handleDateClick = (arg) => {
     // alert("Event added");
-    setDate(arg.dateStr);
+
     setShow(true);
-  };
-
-  const getEvent = () => {
-    var x = "Event 1";
-    return x;
-  };
-
-  const setDate = (date) => {
-    let clicked = date;
-    // console.log("dxsd", clicked);
-    return clicked;
   };
 
   const renderEventContent = (eventInfo) => {
@@ -289,22 +342,7 @@ export default function MenstrualCycle() {
         }
         {visibility()}
       </div>
-      <div className="calendar_body">
-        <div className="H2">
-          <h2>
-            {" "}
-            <i> Tracking Period At a glance with Notes 📝 </i>{" "}
-          </h2>
-        </div>
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          editable={true}
-          dateClick={handleDateClick}
-          events={[{ title: getEvent(), date: setDate() }]}
-          eventContent={renderEventContent}
-        />
-      </div>
+      <div className="calendar_body">{calendarVisibility()}</div>
       <AddNotesModal show={show} onClose={() => setShow(false)} />
     </div>
   );

@@ -15,7 +15,7 @@ const CycleSchema = new mongoose.Schema({
     type: String,
   },
   cycleLength: {
-    type: String,
+    type: Number,
   },
   notes: [
     {
@@ -33,6 +33,13 @@ const CycleSchema = new mongoose.Schema({
       },
     },
   ],
+  isReminded:{
+    type:Boolean,
+    default:false
+  },
+  userEmail:{
+    type:String
+  },
 });
 
 module.exports = mongoose.model("Cycle_Schema", CycleSchema);

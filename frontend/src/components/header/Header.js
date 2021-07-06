@@ -286,7 +286,7 @@ function Header() {
             >
               <Link
                 component={NavLink}
-                to="/"
+                to="/home"
                 underline="none"
                 color="textPrimary"
               >
