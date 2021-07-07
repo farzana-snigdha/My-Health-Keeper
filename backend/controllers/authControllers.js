@@ -36,7 +36,7 @@ const authControllers={
             const activation_token = createActivationToken(newUser)
 
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
-            sendMail(email, url, "Verify your email address")
+            sendMail(email, url,"Click the button below to validate your email address.", "Verify your email address","If the button doesn't work for any reason, you can also click on the link below:")
 
 
             res.json({msg: "Register Success! Please activate your email to start."})
@@ -112,7 +112,7 @@ const authControllers={
             const access_token = createAccessToken({id: user._id})
             const url = `${CLIENT_URL}/user/reset/${access_token}`
 
-            sendMail(email, url, "Reset your password")
+            sendMail(email, url,"Click the button below to validate your email address.", "Reset your password","If the button doesn't work for any reason, you can also click on the link below:")
             res.json({msg: "Re-send the password, please check your email."})
         } catch (err) {
             return res.status(500).json({msg: err.message})

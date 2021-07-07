@@ -20,17 +20,17 @@ function MedDosesProps () {
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
   const [doseList, setDoseList] = useState([]);
-  
+
   useEffect(async () => {
     await axios
-      .get("/medDose", {
+      .get("http://localhost:5000/medDose", {
         headers: { Authorization: token },
       })
       .then((res) => setDoseList(res.data));
   }, []);
 
   const confirmReminder = async (id) => {
-    await axios.post('/medDose/'+id,
+    await axios.post('http://localhost:5000/medDose/'+id,
     {
       headers: { Authorization: token, userId : user._id },
     })
@@ -52,4 +52,4 @@ function MedDosesProps () {
 
 }
 
-export default MedDosesProps;
+export default MedDosesProps; 

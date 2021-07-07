@@ -1,9 +1,67 @@
 const Cycle = require("../models/periodTracker.model");
+const sendMail = require("./sendMail");
+
+setInterval(() => {
+  // console.log('ss')
+  // let user = req.headers['userid'];
+  Cycle.find({}, (err, reminder) => {
+    if (err) {
+      console.log("cycle notification: ", err);
+    }
+    if (reminder) {
+      //for loop reminder.size,
+      for (i = 0; i < reminder.length; i++) {
+        if (!reminder[i].isReminded) {
+          const now = new Date();
+          const lastEndDate = new Date(reminder[i].endDate);
+
+          const nextDay = reminder[i].cycleLength - 5;
+          const periodDate = new Date(
+            lastEndDate.setTime(lastEndDate.getTime() + nextDay * 86400000)
+          );
+
+          // console.log(
+          //   "cycle tracker controller setinterval",
+          //   reminder[i].userEmail,
+          //   "   ",
+          //   periodDate
+          // );
+
+          if (periodDate - now < 0) {
+            Cycle.findByIdAndUpdate(
+              reminder[i]._id,
+              { isReminded: true },
+              (err, remind) => {
+                if (err) {
+                  console.log(err);
+                }
+
+                const nextDate = new Date(
+                  remind.endDate.setTime(
+                    remind.endDate.getTime() + remind.cycleLength * 86400000
+                  )
+                );
+                console.log(nextDate);
+                sendMail(
+                  remind.userEmail,
+                  null,
+                  `Get ready for your PERIOD !!  \n Your probable date : ${nextDate}`,
+                  null,
+                  null
+                );
+              }
+            );
+          }
+        }
+      }
+    }
+  });
+}, 6000);
 
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
     try {
-      let user = req.user.id;
+      let user = req.headers["userid"];
 
       const { eventDate } = req.body;
       const { flow } = req.body;
@@ -21,7 +79,7 @@ const cycleTrackerControllers = {
   //doesn't work
   removeNotes: async (req, res) => {
     try {
-      let user = req.user.id;
+      let user = req.headers["userid"];
 
       const { eventDate } = req.body;
       const { flow } = req.body;
@@ -38,110 +96,100 @@ const cycleTrackerControllers = {
   },
 
   createNotes: async (req, res) => {
-    try {
-      let user = req.user.id;
-      const { mood, symptoms, flow, eventDate } = req.body;
-      const check = await Cycle.findOne({
-        user,
-      });
+    let user = req.headers["userid"];
+    const { eventDate, mood, symptoms, flow } = req.body;
+    const check = await Cycle.findOne({
+      user,
+    });
 
-      if (check) {
-        await Cycle.findOneAndUpdate(
-          { user },
-          {
-            $push: {
-              notes: {
-                eventDate: eventDate,
-                mood: mood,
-                symptoms: symptoms,
-                flow: flow,
-              },
+    if (check) {
+      await Cycle.findOneAndUpdate(
+        { user },
+        {
+          $push: {
+            notes: {
+              eventDate: eventDate,
+              mood: mood,
+              symptoms: symptoms,
+              flow: flow,
             },
-          }
-        );
-        // cycle.findOne({user}).insert({"notes":[{"mood":mood,"symptoms":symptoms,"flow":flow}]})
-
-        res.status(200).json({ createNotes: "saved" });
-      } else {
-        return res.status(400).json({ msg: "provide the initial data first" });
-      }
-    } catch (err) {
-      return res.status(500).json({ createNotes: err.message });
+          },
+        }
+      )
+        .then(() => {
+          return res.json({ msg: "saved" });
+        })
+        .catch((err) => {
+          return res.status(500).json({ msg: err.message });
+        });
+    } else {
+      return res.status(400).json({ msg: "provide the initial data first" });
     }
   },
 
   updateInitialData: async (req, res) => {
     try {
-      let user = req.user.id;
-   
-      
-        // console.log(check)
-        const {startDate, endDate,} = req.body
-        await User.findOneAndUpdate({user}, {
-          startDate, endDate
-        })
+      let user = req.headers["userid"];
 
-       return res.json({msg: "Update Success!"})
-        
-
-    
+      const { startDate, endDate } = req.body;
+      await Cycle.findOneAndUpdate(
+        { user: user },
+        {
+          startDate: startDate,
+          endDate: endDate,
+          isReminded: false,
+        }
+      ).then(() => {
+        console.log("updateInitialData ", startDate);
+        return res.json({ msg: "Update Success!" });
+      });
     } catch (err) {
       return res.status(500).json({ setupData: err.message });
     }
   },
-  isInitialDataAvailable:async (req,res)=>{
-    try{
-      let user=req.headers['userid']
-    // console.log(JSON.stringify(req.headers['userid'])) 
-      console.log("check ",user)
+  isInitialDataAvailable: async (req, res) => {
+    try {
+      let user = req.headers["userid"];
+
+      console.log("check ", user);
       const check = await Cycle.findOne({
         user,
       });
-      // console.log(check)
-      if (check){
-        console.log(check)
-        return res.json(check)
+
+      if (check) {
+        console.log(check.startDate);
+        return res.json(check);
       }
-    }catch (err) {
+    } catch (err) {
       return res.status(500).json({ setupData: err.message });
     }
   },
 
   setupInitialData: async (req, res) => {
-    try {
-      let user=req.headers['userid']
-      // console.log(user);
+    let user = req.headers["userid"];
 
-      const { startDate, endDate, duration, cycleLength } = req.body;
-      if (!startDate || !endDate || !duration || !cycleLength)
-        return res.json({ msg: "Please fill in all fields." });
-      // const check = await Cycle.findOne({
-      //   user,
-      // });
-      //  console.log("bbb ",check)
-      // if (check) {
-       
-      //   // const {startDate, endDate,} = req.body
-      //   // await User.findOneAndUpdate({user}, {
-      //   //   startDate, endDate
-      //   // })
+    const { startDate, endDate, duration, cycleLength, userEmail } = req.body;
+    if (!startDate || !endDate || !duration || !cycleLength)
+      return res.json({ msg: "Please fill in all fields." });
 
-      //  return res.json({msg: "Update Success!"})
-        
-      // }
-      const initialinfo = new Cycle({
-        user,
-        startDate,
-        endDate,
-        duration,
-        cycleLength,
+    const initialinfo = new Cycle({
+      user: user,
+      startDate: startDate,
+      endDate: endDate,
+      duration: duration,
+      cycleLength: cycleLength,
+      userEmail: userEmail,
+    });
+
+    await initialinfo
+      .save()
+      .then(() => {
+        return res.json({ msg: "Initial data is saved" });
+      })
+      .catch((err) => {
+        return res.status(500).json({ msg: err.message });
       });
-
-      await initialinfo.save();
-    return  res.json({ msg: "Initial data is saved" });
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
+    // return res.json({ msg: "Initial data is saved" });
   },
 };
 
