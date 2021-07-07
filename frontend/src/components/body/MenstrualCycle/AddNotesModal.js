@@ -11,7 +11,7 @@ const AddNotesModal = (props) => {
     <div className="modal" onClick={props.onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h4 className="modal-title"> Modal Title </h4>
+          <h4 className="modal-title"> Add Your Notes 📝 </h4>
         </div>
         <div className="modal-body">
           <form className="center">
@@ -21,17 +21,32 @@ const AddNotesModal = (props) => {
             </div>
 
             <div>
-              <label for="notes">Notes : </label>
-              <input type="notes" name="notes" />
+              <label for="mood">Mood : </label>
+              <input type="mood" name="mood" />
             </div>
 
             <div>
-              <button type="submit">Save</button>
+              <label for="symptoms">Symptoms : </label>
+              <input type="symptoms" name="symptoms" />
+            </div>
+
+            <div>
+              <label for="flow">Flow : </label>
+              <input type="flow" name="flow" />
+            </div>
+            <div >
             </div>
           </form>
         </div>
         <div className="modal-footer">
-          <button className="button" onClick={props.onClose}>
+        <button type="submit" style={{
+          backgroundColor:'#4CAF50', 
+          fontSize: '16px',}}
+          >Save</button>
+          <button className="button" style={{
+            backgroundColor:'#555555',
+            fontSize: '16px',
+        }} onClick={props.onClose}>
             Close
           </button>
         </div>

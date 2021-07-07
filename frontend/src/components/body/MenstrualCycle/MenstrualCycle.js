@@ -15,9 +15,13 @@ import {
   showErrMsg,
   showSuccessMsg,
 } from "../../utils/notification/Notification";
-import AddNotesModal from "./AddNotesModal";
-import { Modal } from "@material-ui/core";
+
 import { useHistory } from "react-router-dom";
+
+import Modal from 'react-bootstrap/Modal'
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "@material-ui/core";
+
 
 const initialState = {
   startdate: "",
@@ -26,6 +30,10 @@ const initialState = {
   cycleLength: "",
   err: "",
   success: "",
+  eventDate: "",
+  mood: "",
+  symptoms:"",
+  flow:"",
 };
 
 export default function MenstrualCycle() {
@@ -35,7 +43,7 @@ export default function MenstrualCycle() {
 
   const [initialData, setInitialData] = useState(initialState);
   const [visible, setVisible] = useState(true);
-  const { startDate, endDate, duration, cycleLength, err, success } =
+  const { startDate, endDate, duration, cycleLength, err, success ,eventDate,mood,symptoms,flow} =
     initialData;
   let history = useHistory();
 
@@ -100,6 +108,7 @@ export default function MenstrualCycle() {
       // console.log("nn ",err.response.data.msg)
     }
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -260,11 +269,56 @@ export default function MenstrualCycle() {
     }
   };
   const [show, setShow] = useState(false);
-  const handleDateClick = (arg) => {
-    // alert("Event added");
+  const[demo,setDemo] = useState("")
 
-    setShow(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const Demo = (ar) =>{
+    setDemo(ar)
+  }
+
+  const handleDateClick = (arg) => {
+    // e.preventDefault();
+    handleShow(true);
+    Demo(arg.dateStr)
   };
+
+  const saveNotes = async()=>{
+    let x = new Date()
+    let strDate = String(x.getFullYear()) + "-" + String(x.getMonth()) + "-" + String(x.getDate())
+    var eventTime = new Date(new Date(strDate).getTime()+86400000)
+    const id = user._id;
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/user/cycleTracker-notes",
+        {
+         eventDate:demo,
+         mood,
+         symptoms,
+         flow,
+         
+        },
+        {
+          headers: { Authorization: token, userid: id },
+        }
+      );
+
+      setInitialData({ ...initialData, err: "", success: res.data.msg });
+      console.log("nn ", res.data.msg);
+      history.push("/menstrual-cycle");
+      alert("Notes Added")
+    } catch (err) {
+      err.response.data.msg &&
+        setInitialData({
+          ...initialData,
+          err: err.response.data.msg,
+          success: "",
+        });
+      
+    }
+    
+  }
 
   const renderEventContent = (eventInfo) => {
     return (
@@ -275,11 +329,8 @@ export default function MenstrualCycle() {
     );
   };
 
-  let str = formatDate(new Date(), {
-    month: "long",
-    year: "numeric",
-    day: "numeric",
-  });
+ 
+  
 
   return (
     <div className="main">
@@ -343,7 +394,43 @@ export default function MenstrualCycle() {
         {visibility()}
       </div>
       <div className="calendar_body">{calendarVisibility()}</div>
-      <AddNotesModal show={show} onClose={() => setShow(false)} />
+      <Modal 
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Notes 🗒</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <form className="center">
+            <div>
+              <label for="date">Date : </label>
+              <input type="date"  value={demo} onChange={handleChangeInput} name="eventDate" />
+            </div>
+            <div>
+            <label for="mood">Mood : </label>
+            <input type="mood" value={mood} onChange={handleChangeInput} name="mood" />
+            </div>
+            <div>
+            <label for="symptoms">Symptoms : </label>
+            <input type="symptoms"  value={symptoms} onChange={handleChangeInput} name="symptoms" />
+            </div>
+            <div>
+            <label for="flow">Flow : </label>
+            <input type="flow"  value={flow} onChange={handleChangeInput} name="flow" />
+            </div>
+            </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit" onClick={saveNotes}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
