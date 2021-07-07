@@ -1,12 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Login from "./auth/Login";
-import Signup from "./auth/Signup";
 import ActivationEmail from "./auth/ActivationEmail";
-import NotFound from "../utils/NotFound/NotFound";
-import ForgotPassword from "./auth/ForgotPassword";
 import { useSelector } from "react-redux";
-import ResetPassword from "./auth/ResetPassword";
 import Profile from "./profile/Profile";
 import Home from "./home/Home";
 import MedicineInput from "./medicineReminder/InputMedReminder";
@@ -14,7 +10,7 @@ import DisplayMedicineReminders from "./medicineReminder/DisplayMedReminders";
 import MenstrualCycle from "./MenstrualCycle/MenstrualCycle";
 import HealthInfo from "./genHealthInfo/HealthInfo";
 import MedicineDose from "./medicineReminder/MedDoses";
-import PrivateRoute from "../../PrivateRoute";
+
 export default function Body() {
   const auth = useSelector((state) => state.auth);
   const { isLogged } = auth;

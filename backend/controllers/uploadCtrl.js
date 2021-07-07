@@ -12,7 +12,7 @@ const uploadCtrl = {
     try {
       const file = req.files.file;
 
-      cloudinary.v2.uploader.upload(
+      cloudinary.v2.uploader.upload( 
         file.tempFilePath,
         {
           folder: "avatar",

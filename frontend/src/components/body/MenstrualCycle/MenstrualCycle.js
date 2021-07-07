@@ -21,7 +21,7 @@ import { useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "@material-ui/core";
-
+import {useCookies} from 'react-cookie'
 const initialState = {
   startdate: "",
   enddate: "",
@@ -39,6 +39,8 @@ export default function MenstrualCycle() {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
+
+  const [cookies, setCookie] = useCookies(['user']);
 
   const [initialData, setInitialData] = useState(initialState);
   const [visible, setVisible] = useState(true);
@@ -60,22 +62,16 @@ export default function MenstrualCycle() {
     const { name, value } = e.target;
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
   };
-
+ const handle = (id) => {
+      setCookie('UserMenstrualInfo', id, { path: '/menstrual-cycle' });
+      
+   };
   const getInitialData = async () => {
-    console.log(user._id);
-    const id = user._id;
-    axios
-      .get(`http://localhost:5000/user/is-initial-data-available`, {
-        headers: { Authorization: token, userid: id },
-      })
-      .then((response) => {
-        const data1 = response.data;
-        // console.log(data1);
-        setVisible(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if(localStorage.getItem("UserMenstrualInfo")){
+      console.log("sxsx  ", cookies.UserMenstrualInfo)
+      setVisible(false)
+    }
+   
   };
 
   useEffect(() => {
@@ -137,6 +133,8 @@ export default function MenstrualCycle() {
 
       setInitialData({ ...initialData, err: "", success: res.data.msg });
       console.log("nn ", res.data.msg);
+      localStorage.setItem("UserMenstrualInfo",id)
+      handle(id)
       history.push("/menstrual-cycle");
     } catch (err) {
       err.response.data.msg &&
