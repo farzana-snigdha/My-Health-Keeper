@@ -27,7 +27,8 @@ function DisplayMedReminders() {
         console.log(response.data);
       });
 
-    
+    const removedMed = [...reminderList].filter((el) => el._id !== id);
+    setReminderList(removedMed);
   };
   return (
     <div className="reminder">
