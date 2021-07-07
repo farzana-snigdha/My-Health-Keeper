@@ -1,4 +1,8 @@
 const medReminder = require("../models/medReminder.model");
+const medConfirmation = require("../models/medicineConfirmation.model");
+const moment = require("moment");
+
+//const doseId = null;
 
 const getMedicine = async (req, res) => {
   let user = req.user.id;
@@ -18,8 +22,15 @@ const getMedicine = async (req, res) => {
 const postMedicine = async (req, res) => {
   let user = req.user.id;
 
-  const { username, medname, descriptionmed, startdate, enddate, doses } =
-    req.body;
+  const {
+    username,
+    medname,
+    descriptionmed,
+    startdate,
+    enddate,
+    doses,
+    userEmail,
+  } = req.body;
 
   const med = new medReminder({
     user,
@@ -30,22 +41,54 @@ const postMedicine = async (req, res) => {
     enddate: enddate,
     time: doses,
   });
-  // med
-  //   .save()
-  //   .then((data) => {
-  //     res.json(data);
-  //     console.log(data);
-  //   })
-  //   .catch((error) => {
-  //     res.json(error);
-  //   });
+  med
+    .save()
+    .then((data) => {
+      res.json(data);
+      const doseId = data._id;
+      // console.log(data);
+      // console.log(doseId);
 
-  const date1 = new Date(startdate);
-  const date2 = new Date(enddate);
-  
-  const days = ((Math.abs(date2 - date1))/ (1000 * 60 * 60 * 24));
-  console.log(doses[0]);
-  //console.log(startdate);
+      const date1 = new Date(startdate);
+      const date2 = new Date(enddate);
+
+      const days = Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+      const frequency = doses.length;
+
+      for (var i = 0; i <= days; i++) {
+        for (var j = 0; j < frequency; j++) {
+          const incrementDate = new Date(moment(date1).add(i, "days"));
+          const medDose = new medConfirmation({
+            user,
+            doseId,
+            medname: medname,
+            meddate: incrementDate,
+            medtime: doses[j].time,
+            isTaken: "false",
+            userEmail: userEmail,
+          });
+          medDose
+            .save()
+            .then((data) => {
+              //res.json(data);
+              console.log(data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    })
+    .catch((error) => {
+      res.json(error);
+    });
+
+  // const date1 = new Date(startdate);
+  // const date2 = new Date(moment(date1).add(1, "days"));
+  // console.log(date2);
+
+  // console.log(doses[1].time);
+  //console.log(startdate+1);
 };
 
 const deleteMedicine = async (req, res) => {

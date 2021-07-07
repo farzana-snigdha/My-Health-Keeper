@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const medReminderRouter = require('./routers/medReminder.route');
 const cycleTracker =require('./routers/cycleTracker.routers')
+const medDoses = require("./routers/medDose.route");
 const path = require("path");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(
   })
 );
 app.use(medReminderRouter);
+app.use(medDoses);
 app.use("/user", cycleTracker);
 app.use("/user", router);
 app.use("/api", imgRouter);

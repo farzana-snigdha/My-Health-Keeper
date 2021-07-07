@@ -20,6 +20,12 @@ setInterval(() => {
             lastEndDate.setTime(lastEndDate.getTime() + nextDay * 86400000)
           );
 
+          // console.log(
+          //   "cycle tracker controller setinterval",
+          //   reminder[i].userEmail,
+          //   "   ",
+          //   periodDate
+          // );
 
           if (periodDate - now < 0) {
             Cycle.findByIdAndUpdate(
@@ -51,6 +57,7 @@ setInterval(() => {
     }
   });
 }, 6000);
+
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
     try {
@@ -89,56 +96,53 @@ const cycleTrackerControllers = {
   },
 
   createNotes: async (req, res) => {
-    try {
-      let user = req.headers["userid"];
-      const {eventDate,mood, symptoms, flow } = req.body;
-      const check = await Cycle.findOne({
-        user,
-      });
+    let user = req.headers["userid"];
+    const { eventDate, mood, symptoms, flow } = req.body;
+    const check = await Cycle.findOne({
+      user,
+    });
 
-      if (check) {
-        await Cycle.findOneAndUpdate(
-          { user },
-          {
-            $push: {
-              notes: {
-                eventDate: eventDate,
-                mood: mood,
-                symptoms: symptoms,
-                flow: flow,
-              },
+    if (check) {
+      await Cycle.findOneAndUpdate(
+        { user },
+        {
+          $push: {
+            notes: {
+              eventDate: eventDate,
+              mood: mood,
+              symptoms: symptoms,
+              flow: flow,
             },
-          }
-        );
-        // cycle.findOne({user}).insert({"notes":[{"mood":mood,"symptoms":symptoms,"flow":flow}]})
-        
-        return res.status(200).json({ msg: "saved" });
-      } else {
-        return res.status(400).json({ msg: "provide the initial data first" });
-      }
-    } catch (err) {
-      return res.status(500).json({ createNotes: err.message });
+          },
+        }
+      )
+        .then(() => {
+          return res.json({ msg: "saved" });
+        })
+        .catch((err) => {
+          return res.status(500).json({ msg: err.message });
+        });
+    } else {
+      return res.status(400).json({ msg: "provide the initial data first" });
     }
   },
 
   updateInitialData: async (req, res) => {
     try {
       let user = req.headers["userid"];
-   
+
       const { startDate, endDate } = req.body;
       await Cycle.findOneAndUpdate(
-       {user: user},
+        { user: user },
         {
-          startDate:startDate,
-          endDate:endDate,
-          isReminded:false,
+          startDate: startDate,
+          endDate: endDate,
+          isReminded: false,
         }
-      ).then(()=>{
-        console.log("updateInitialData ", startDate)
+      ).then(() => {
+        console.log("updateInitialData ", startDate);
         return res.json({ msg: "Update Success!" });
       });
-   
-     
     } catch (err) {
       return res.status(500).json({ setupData: err.message });
     }
@@ -146,12 +150,12 @@ const cycleTrackerControllers = {
   isInitialDataAvailable: async (req, res) => {
     try {
       let user = req.headers["userid"];
-    
+
       console.log("check ", user);
       const check = await Cycle.findOne({
         user,
       });
-     
+
       if (check) {
         console.log(check.startDate);
         return res.json(check);
@@ -162,27 +166,30 @@ const cycleTrackerControllers = {
   },
 
   setupInitialData: async (req, res) => {
-    try {
-      let user = req.headers["userid"];
-     
-      const { startDate, endDate, duration, cycleLength, userEmail } = req.body;
-      if (!startDate || !endDate || !duration || !cycleLength)
-        return res.json({ msg: "Please fill in all fields." });
-     
-      const initialinfo = new Cycle({
-        user: user,
-        startDate: startDate,
-        endDate: endDate,
-        duration: duration,
-        cycleLength: cycleLength,
-        userEmail: userEmail,
-      });
+    let user = req.headers["userid"];
 
-      await initialinfo.save();
-      return res.json({ msg: "Initial data is saved" });
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
+    const { startDate, endDate, duration, cycleLength, userEmail } = req.body;
+    if (!startDate || !endDate || !duration || !cycleLength)
+      return res.json({ msg: "Please fill in all fields." });
+
+    const initialinfo = new Cycle({
+      user: user,
+      startDate: startDate,
+      endDate: endDate,
+      duration: duration,
+      cycleLength: cycleLength,
+      userEmail: userEmail,
+    });
+
+    await initialinfo
+      .save()
+      .then(() => {
+        return res.json({ msg: "Initial data is saved" });
+      })
+      .catch((err) => {
+        return res.status(500).json({ msg: err.message });
+      });
+    // return res.json({ msg: "Initial data is saved" });
   },
 };
 

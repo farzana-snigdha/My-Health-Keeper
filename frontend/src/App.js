@@ -7,14 +7,10 @@ import {
   dispatchGetUser,
 } from "./redux/actions/authAction";
 import Login from "./components/body/auth/Login";
-
 import Header from "./components/header/Header";
-
 import axios from "axios";
 import Signup from "./components/body/auth/Signup";
 import Landing from "./components/LandingPage";
-import Home from "./components/body/home/Home";
-import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./components/body/auth/ForgotPassword";
 import ResetPassword from "./components/body/auth/ResetPassword";
 
@@ -48,15 +44,31 @@ function App() {
   }, [token, dispatch]);
 
   const { isLogged } = auth;
+
+  const getMenstrualInfo = async () => {
+    const id = auth.user._id;
+    axios
+      .get(`http://localhost:5000/user/is-initial-data-available`, {
+        headers: { Authorization: token, userid: id },
+      })
+      .then((response) => {
+        const data1 = response.data.user;
+        localStorage.setItem("UserMenstrualInfo", data1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  getMenstrualInfo();
+
   return (
     <Router>
       <div className="App">
         <Switch>
           <Route path="/" component={isLogged ? Header : Landing} exact />
           {/* <Route path="/my-healtKeeper" component={Landing} exact />  */}
-          <Route path="/forgot_password" component={ ForgotPassword} exact />
-                 <Route path="/user/reset/:token" component={ResetPassword} exact />
-             
+          <Route path="/forgot_password" component={ForgotPassword} exact />
+          <Route path="/user/reset/:token" component={ResetPassword} exact />
           <Route path="/login" component={Login} exact />
           <Route path="/signup" component={Signup} exact />
           <Header />
