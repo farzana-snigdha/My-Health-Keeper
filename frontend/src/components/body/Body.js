@@ -12,7 +12,7 @@ import DisplayMedicineReminders from "./medicineReminder/DisplayMedReminders";
 import MenstrualCycle from "./MenstrualCycle/MenstrualCycle";
 import HealthInfo from "./genHealthInfo/HealthInfo";
 import MedicineInput from "./medicineReminder/InputMedReminder";
-import MedicineDose from "./medicineReminder/MedDosesProps";
+import MedicineDose from "./medicineReminder/MedDoses";
 import PrivateRoute from "../../PrivateRoute";
 export default function Body() {
   const auth = useSelector((state) => state.auth);
