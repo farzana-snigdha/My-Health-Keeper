@@ -145,9 +145,26 @@ export default function MenstrualCycle() {
       // console.log("nn ",err.response.data.msg)
     }
   };
+
+
+  //------Viewing NoteLists----
+
   const [addModalShow, setNotesModal] = useState(false)
   const handleNotesClose = () => setNotesModal(false)
   const handleNotesShow = () => setNotesModal(true)
+
+  const [noteList, setNoteList] = useState([]);
+  
+
+  useEffect(async () => {
+    const id = user._id;
+    await axios
+      .get("http://localhost:5000/user/cycleTracker-display-notes", {
+        headers: { Authorization: token, userid: id },
+      })
+      .then((res) => setNoteList(res.data));
+  }, []);
+
 
   const calendarVisibility = () => {
     if (!visible) {
@@ -177,9 +194,19 @@ export default function MenstrualCycle() {
               <input
                 type="date"
                 name="eventDate"
+                onChange={handleChangeInput}
               />
             </div>
-            
+            <div className="note_body">
+        {noteList.map((cycle_schemas) => (
+          <div className="note_card">
+            <h2>{cycle_schemas.eventDate.substring(0,10)}</h2>
+            <p>Mood: {cycle_schemas.mood}</p>
+            <p>Symptoms: {cycle_schemas.symptoms}</p>
+            <p>Flow: {cycle_schemas.flow}</p>
+          </div>
+        ))}
+      </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
