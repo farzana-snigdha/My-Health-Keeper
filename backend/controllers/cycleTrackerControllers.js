@@ -63,17 +63,17 @@ const cycleTrackerControllers = {
     try {
       let user = req.headers["userid"];
 
-      // const { eventDate } = req.body;
-      // const { flow } = req.body;
-      const data = await Cycle.findOne(
-        { user },
-        { notes: { flow: 1, eventDate: 1 },_id:0 }
-      );
-      console.log(data);
-      return res.json(data)
-      // const noteData = data.notes.find((note) => note.eventDate == eventDate);
-      // res.json(noteData);
-      // console.log(noteData.mood);
+      const  date  = req.headers['dates']
+      const eventDate=new Date(date)
+      const data = await Cycle.findOne({ user });
+      // console.log("gvg  ", data);
+
+
+      // console.log("note.eventDate: ",note.eventDate)
+      console.log("eventDate: ",typeof(eventDate))
+      const noteData = data.notes.find((note) => note.eventDate === eventDate);
+      // return res.send(noteData);
+      console.log((noteData));
       // res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
     } catch (err) {
       return res.status(500).json({ displayNotes: err.message });

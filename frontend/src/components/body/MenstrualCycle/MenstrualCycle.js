@@ -17,11 +17,10 @@ import {
 } from "../../utils/notification/Notification";
 
 import { useHistory } from "react-router-dom";
-
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "@material-ui/core";
-import {useCookies} from 'react-cookie'
+import { useCookies } from "react-cookie";
 const initialState = {
   startdate: "",
   enddate: "",
@@ -40,7 +39,7 @@ export default function MenstrualCycle() {
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
 
-  const [cookies, setCookie] = useCookies(['user']);
+  const [cookies, setCookie] = useCookies(["user"]);
 
   const [initialData, setInitialData] = useState(initialState);
   const [visible, setVisible] = useState(true);
@@ -62,16 +61,14 @@ export default function MenstrualCycle() {
     const { name, value } = e.target;
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
   };
- const handle = (id) => {
-      setCookie('UserMenstrualInfo', id, { path: '/menstrual-cycle' });
-      
-   };
+  const handle = (id) => {
+    setCookie("UserMenstrualInfo", id, { path: "/menstrual-cycle" });
+  };
   const getInitialData = async () => {
-    if(localStorage.getItem("UserMenstrualInfo")){
-      console.log("sxsx  ", cookies.UserMenstrualInfo)
-      setVisible(false)
+    if (localStorage.getItem("UserMenstrualInfo")) {
+      console.log("sxsx  ", cookies.UserMenstrualInfo);
+      setVisible(false);
     }
-   
   };
 
   useEffect(() => {
@@ -109,7 +106,27 @@ export default function MenstrualCycle() {
       // console.log("nn ",err.response.data.msg)
     }
   };
+  const [noteDate, setnoteDate] = useState("");
+  const handleDateInput = (e) => {
+    const { name, value } = e.target;
+    setnoteDate({ name: value });
+  };
+  const showNotes = async (e) => {
+    e.preventDefault();
+    const noteDates = noteDate.name;
+    const id = user._id;
 
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/user/cycleTracker-display-notes",
+        {
+          headers: { Authorization: token, userid: id, dates: noteDates },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -133,8 +150,8 @@ export default function MenstrualCycle() {
 
       setInitialData({ ...initialData, err: "", success: res.data.msg });
       console.log("nn ", res.data.msg);
-      localStorage.setItem("UserMenstrualInfo",id)
-      handle(id)
+      localStorage.setItem("UserMenstrualInfo", id);
+      handle(id);
       history.push("/menstrual-cycle");
     } catch (err) {
       err.response.data.msg &&
@@ -147,6 +164,14 @@ export default function MenstrualCycle() {
     }
   };
 
+  //------Viewing NoteLists----
+
+  const [addModalShow, setNotesModal] = useState(false);
+  const handleNotesClose = () => setNotesModal(false);
+  const handleNotesShow = () => setNotesModal(true);
+
+  const [noteList, setNoteList] = useState([]);
+
   const calendarVisibility = () => {
     if (!visible) {
       return (
@@ -157,6 +182,56 @@ export default function MenstrualCycle() {
               <i> Tracking Period At a glance with Notes 📝 </i>{" "}
             </h2>
           </div>
+          <Button className="notesButton" onClick={handleNotesShow}>
+            View Your Notes
+          </Button>
+          <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={addModalShow}
+            onHide={handleNotesClose}
+          >
+            <Modal.Header>
+              <Modal.Title>📝 View Notes </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form className="viewNote">
+                <div>
+                  <label for="date">Date : </label>
+                  <input
+                    type="date"
+                    id="noteDate"
+                    type="date"
+                    name="noteDate"
+                    value={noteDate}
+                    onChange={handleDateInput}
+                    InputLabelProps={{
+                      shrink: false,
+                    }}
+                  />
+                  <Button variant="primary" type="submit" onClick={showNotes}>
+                    GO
+                  </Button>
+                </div>
+                {/* <div className="note_body">
+        {noteList.map((cycle_schemas) => (
+          <div className="note_card">
+            <h2>{cycle_schemas.notes.eventDate.substring(0,10)}</h2>
+            <p>Mood: {cycle_schemas.notes.mood}</p>
+            <p>Symptoms: {cycle_schemas.notes.symptoms}</p>
+            <p>Flow: {cycle_schemas.notes.flow}</p>
+          </div>
+        ))}
+      </div> */}
+              </form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleNotesClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>{" "}
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -273,7 +348,6 @@ export default function MenstrualCycle() {
   };
   const [show, setShow] = useState(false);
   const [demo, setDemo] = useState("");
-  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -285,11 +359,10 @@ export default function MenstrualCycle() {
   const handleDateClick = (arg) => {
     // e.preventDefault();
     handleShow(true);
-        Demo(arg.dateStr);
+    Demo(arg.dateStr);
   };
 
   const saveNotes = async () => {
-  
     const id = user._id;
     try {
       const res = await axios.post(
@@ -308,7 +381,7 @@ export default function MenstrualCycle() {
       setInitialData({ ...initialData, err: "", success: res.data.msg });
       console.log("nn ", res.data.msg);
       history.push("/menstrual-cycle");
-    handleClose(true)
+      handleClose(true);
       // alert("Notes Added");
     } catch (err) {
       err.response.data.msg &&
@@ -398,7 +471,7 @@ export default function MenstrualCycle() {
         show={show}
         onHide={handleClose}
       >
-        <Modal.Header >
+        <Modal.Header>
           <Modal.Title>📝 Add Notes </Modal.Title>
         </Modal.Header>
         <Modal.Body>
