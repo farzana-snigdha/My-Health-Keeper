@@ -81,7 +81,8 @@ const cycleTrackerControllers = {
                  
         }
         if(notesdata.length==0){
-          res.send("no notes found")
+         res.send()
+         
         }
         else{
           console.log(notesdata)

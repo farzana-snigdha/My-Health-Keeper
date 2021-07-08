@@ -129,7 +129,7 @@ export default function MenstrualCycle() {
         
           setisNotesAvailable(true);
          
-        } 
+        } else {setisNotesAvailable(false)}
      
        
         
