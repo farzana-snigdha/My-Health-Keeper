@@ -17,7 +17,6 @@ import {
 } from "../../utils/notification/Notification";
 
 import { useHistory } from "react-router-dom";
-
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "@material-ui/core";
@@ -157,6 +156,7 @@ export default function MenstrualCycle() {
               <i> Tracking Period At a glance with Notes 📝 </i>{" "}
             </h2>
           </div>
+         <Button  className="notesButton" >View Your Notes</Button>{" "}
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"

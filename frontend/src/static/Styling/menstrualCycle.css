@@ -68,11 +68,32 @@
      font-weight: bolder;
      color: palevioletred;
      text-shadow: lightsteelblue;
-     margin: 2%;
+     margin: 3%;
   }
+
+  .main > .calendar_body > .notesButton{
+    margin: 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    border: 2px solid #cc4e5c;
+    transition-duration: 0.4s;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .main > .calendar_body > .notesButton:hover{
+  background-color: #cc4e5c; 
+  color: white;
+  }
+
+
   .main > .calendar_body > FullCalendar{
     border-color: royalblue;
     font-size: 12px;
+    margin: 4%;
     
   }
 
