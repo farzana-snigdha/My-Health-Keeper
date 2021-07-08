@@ -320,14 +320,27 @@ export default function MenstrualCycle() {
   const Demo = (ar) => {
     setDemo(ar);
   };
- const viewNotes =()=>{
-   console.log(demo)
-   handleClose()
-   if(isViewEnabled){
-     setisViewEnabled(false)
-   }
-   else setisViewEnabled(true)
- }
+  const viewNotes = async (e) => {
+    e.preventDefault();
+   
+    const id = user._id;
+    await axios
+      .get("http://localhost:5000/user/cycleTracker-display-notes", {
+        headers: { Authorization: token, userid: id, dates: demo },
+      })
+      .then((response) => {
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log(demo);
+    handleClose();
+    if (isViewEnabled) {
+      setisViewEnabled(false);
+    } else setisViewEnabled(true);
+  };
   const handleDateClick = (arg) => {
     // e.preventDefault();
     handleShow(true);
