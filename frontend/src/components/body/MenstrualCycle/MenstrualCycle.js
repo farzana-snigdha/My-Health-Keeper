@@ -163,7 +163,7 @@ export default function MenstrualCycle() {
         headers: { Authorization: token, userid: id },
       })
       .then((res) => setNoteList(res.data));
-  }, []);
+  }, [noteList]);
 
 
   const calendarVisibility = () => {
