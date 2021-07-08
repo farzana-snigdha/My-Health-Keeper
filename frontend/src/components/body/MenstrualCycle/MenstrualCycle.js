@@ -194,6 +194,7 @@ export default function MenstrualCycle() {
               <input
                 type="date"
                 name="eventDate"
+                value={eventDate}
                 onChange={handleChangeInput}
               />
             </div>
