@@ -64,6 +64,7 @@ const cycleTrackerControllers = {
       let user = req.headers["userid"];
 
       const { eventDate } = req.body;
+      console.log(eventDate)
       const { flow } = req.body;
       const data = await Cycle.findOne({ user });
       // console.log(data);

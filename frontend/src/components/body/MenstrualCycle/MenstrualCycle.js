@@ -155,6 +155,11 @@ export default function MenstrualCycle() {
 
   const [noteList, setNoteList] = useState([]);
   
+  const handleDateInput = () =>{
+    const { name, value } = e.target;
+    setInitialData({ ...initialData, [name]: value, err: "", success: "" });
+  }
+  
 
   useEffect(async () => {
     const id = user._id;
@@ -195,8 +200,9 @@ export default function MenstrualCycle() {
                 type="date"
                 name="eventDate"
                 value={eventDate}
-                onChange={handleChangeInput}
+                onChange={handleDateInput}
               />
+            
             </div>
             <div className="note_body">
         {noteList.map((cycle_schemas) => (
