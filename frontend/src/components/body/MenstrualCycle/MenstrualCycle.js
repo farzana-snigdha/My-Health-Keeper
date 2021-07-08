@@ -198,12 +198,12 @@ export default function MenstrualCycle() {
               />
             </div>
             <div className="note_body">
-        {noteList.map((cycle_schemas) => (
+        {noteList.map((notes) => (
           <div className="note_card">
-            <h2>{cycle_schemas.eventDate.substring(0,10)}</h2>
-            <p>Mood: {cycle_schemas.mood}</p>
-            <p>Symptoms: {cycle_schemas.symptoms}</p>
-            <p>Flow: {cycle_schemas.flow}</p>
+            <h2>{notes.eventDate.substring(0,10)}</h2>
+            <p>Mood: {notes.mood}</p>
+            <p>Symptoms: {notes.symptoms}</p>
+            <p>Flow: {notes.flow}</p>
           </div>
         ))}
       </div>
