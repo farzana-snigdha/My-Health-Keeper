@@ -235,7 +235,7 @@ function Header() {
       return <List>{mainListItems}</List>;
     } else {
       return (
-        <div>
+        <div >
           <List>{mainListItems}</List>
           <ListItem button>
             <ListItemIcon>

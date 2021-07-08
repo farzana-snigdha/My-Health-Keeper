@@ -14,7 +14,7 @@ import HealingIcon from "@material-ui/icons/Healing";
 import BubbleChartIcon from "@material-ui/icons/BubbleChart";
 
 export const mainListItems = (
-  <div>
+  <div className="sidebar-color">
     <ListItem button>
       <ListItemIcon>
       <font  className="sidebar-options-color" >
