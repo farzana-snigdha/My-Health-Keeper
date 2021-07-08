@@ -145,6 +145,9 @@ export default function MenstrualCycle() {
       // console.log("nn ",err.response.data.msg)
     }
   };
+  const [addModalShow, setNotesModal] = useState(false)
+  const handleNotesClose = () => setNotesModal(false)
+  const handleNotesShow = () => setNotesModal(true)
 
   const calendarVisibility = () => {
     if (!visible) {
@@ -156,7 +159,36 @@ export default function MenstrualCycle() {
               <i> Tracking Period At a glance with Notes 📝 </i>{" "}
             </h2>
           </div>
-         <Button  className="notesButton" >View Your Notes</Button>{" "}
+         <Button  className="notesButton" onClick={handleNotesShow} >View Your Notes</Button>
+          <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={addModalShow}
+        onHide={handleNotesClose}
+      >
+        <Modal.Header >
+          <Modal.Title>📝 View Notes </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="viewNote">
+            <div>
+              <label for="date">Date : </label>
+              <input
+                type="date"
+                name="eventDate"
+              />
+            </div>
+            
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleNotesClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+         {" "}
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -273,7 +305,6 @@ export default function MenstrualCycle() {
   };
   const [show, setShow] = useState(false);
   const [demo, setDemo] = useState("");
-  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
