@@ -68,7 +68,7 @@ const cycleTrackerControllers = {
       const data = await Cycle.findOne({ user });
       // console.log(data);
       const noteData = data.notes.find((note) => note.eventDate == eventDate);
-      res.json(noteData);
+      return res.json(noteData);
       console.log(noteData.mood);
       // res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
     } catch (err) {
