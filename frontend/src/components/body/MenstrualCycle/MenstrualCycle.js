@@ -11,6 +11,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "@fullcalendar/react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import {
   showErrMsg,
   showSuccessMsg,
@@ -43,6 +44,7 @@ export default function MenstrualCycle() {
 
   const [initialData, setInitialData] = useState(initialState);
   const [visible, setVisible] = useState(true);
+  const [menstrualNotesData, setmenstrualNotesData] = useState([]);
   const {
     startDate,
     endDate,
@@ -56,7 +58,11 @@ export default function MenstrualCycle() {
     flow,
   } = initialData;
   let history = useHistory();
-
+  const [addModalShow, setNotesModal] = useState(false);
+  const handleNotesClose = () => setNotesModal(false);
+  const handleNotesShow = () => setisViewEnabled(false);
+  const [isViewEnabled, setisViewEnabled] = useState(false);
+  const [isNotesAvailable, setisNotesAvailable] = useState(false);
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
@@ -106,27 +112,41 @@ export default function MenstrualCycle() {
       // console.log("nn ",err.response.data.msg)
     }
   };
-  const [noteDate, setnoteDate] = useState("");
-  const handleDateInput = (e) => {
-    const { name, value } = e.target;
-    setnoteDate({ name: value });
-  };
-  const showNotes = async (e) => {
-    e.preventDefault();
-    const noteDates = noteDate.name;
-    const id = user._id;
+  const [noteDate, setnoteDate] = useState(new Date());
 
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/user/cycleTracker-display-notes",
-        {
-          headers: { Authorization: token, userid: id, dates: noteDates },
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+  const viewNotes = async (e) => {
+    e.preventDefault();
+
+    const id = user._id;
+    await axios
+      .get("http://localhost:5000/user/cycleTracker-display-notes", {
+        headers: { Authorization: token, userid: id, dates: demo },
+      })
+      .then((response) => {
+        setmenstrualNotesData(response.data);
+        console.log(typeof(response.data))
+        if (!(response.data).length==0) {
+        
+          setisNotesAvailable(true);
+         
+        } 
+     
+       
+        
+       
+      })
+      .catch((err) => {
+       
+        console.log(err);
+      });
+
+    console.log(demo);
+    handleClose();
+    if (isViewEnabled) {
+      setisViewEnabled(false);
+    } else setisViewEnabled(true);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -164,14 +184,6 @@ export default function MenstrualCycle() {
     }
   };
 
-  //------Viewing NoteLists----
-
-  const [addModalShow, setNotesModal] = useState(false);
-  const handleNotesClose = () => setNotesModal(false);
-  const handleNotesShow = () => setNotesModal(true);
-
-  const [noteList, setNoteList] = useState([]);
-
   const calendarVisibility = () => {
     if (!visible) {
       return (
@@ -182,68 +194,47 @@ export default function MenstrualCycle() {
               <i> Tracking Period At a glance with Notes 📝 </i>{" "}
             </h2>
           </div>
-          <Button className="notesButton" onClick={handleNotesShow}>
-            View Your Notes
-          </Button>
-          <Modal
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            show={addModalShow}
-            onHide={handleNotesClose}
-          >
-            <Modal.Header>
-              <Modal.Title>📝 View Notes </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form className="viewNote">
-                <div>
-                  <label for="date">Date : </label>
-                  <input
-                    type="date"
-                    id="noteDate"
-                    type="date"
-                    name="noteDate"
-                    value={noteDate}
-                    onChange={handleDateInput}
-                    InputLabelProps={{
-                      shrink: false,
-                    }}
-                  />
-                  <Button variant="primary" type="submit" onClick={showNotes}>
-                    GO
-                  </Button>
+          {isViewEnabled ? (
+            <div>
+              <h2>
+                These are the notes of <b>{demo}</b>{" "}
+              </h2>
+              {console.log("wd ",isNotesAvailable)}
+              {isNotesAvailable ? (
+                <div className="reminder_body">
+                  {menstrualNotesData.map((note) => (
+                    <div>
+                      <div className="reminder_card">
+                        <p>Flow: {note.flow}</p>
+                        <p>Mood: {note.mood}</p>
+                        <p>Symptoms: {note.symptoms}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                {/* <div className="note_body">
-        {noteList.map((cycle_schemas) => (
-          <div className="note_card">
-            <h2>{cycle_schemas.notes.eventDate.substring(0,10)}</h2>
-            <p>Mood: {cycle_schemas.notes.mood}</p>
-            <p>Symptoms: {cycle_schemas.notes.symptoms}</p>
-            <p>Flow: {cycle_schemas.notes.flow}</p>
-          </div>
-        ))}
-      </div> */}
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleNotesClose}>
-                Close
+              ) : (
+             "  No notes are created    "           )}
+
+              <Button className="notesButton" onClick={handleNotesShow}>
+                Hide Your Notes
               </Button>
-            </Modal.Footer>
-          </Modal>{" "}
+            </div>
+          ) : (
+            " "
+          )}
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            editable={true}
+            editable={false}
             dateClick={handleDateClick}
-            // events={[{ title: getEvent(), date: setDate() }]}
-            eventContent={renderEventContent}
           />
         </>
       );
     }
   };
+
+  //------Viewing NoteLists----
+
   const visibility = () => {
     if (visible) {
       //  showDurationAndCycleLength()
@@ -393,15 +384,6 @@ export default function MenstrualCycle() {
     }
   };
 
-  const renderEventContent = (eventInfo) => {
-    return (
-      <div>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
-      </div>
-    );
-  };
-
   return (
     <div className="main">
       {err && showErrMsg(err)}
@@ -515,6 +497,7 @@ export default function MenstrualCycle() {
           </form>
         </Modal.Body>
         <Modal.Footer>
+          <Button onClick={viewNotes}> View Notes</Button>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>

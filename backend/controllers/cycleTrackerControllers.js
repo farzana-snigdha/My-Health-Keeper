@@ -60,24 +60,46 @@ setInterval(() => {
 
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
-    try {
-      let user = req.headers["userid"];
+    let user = req.headers["userid"];
 
-      const  date  = req.headers['dates']
-      const eventDate=new Date(date)
-      const data = await Cycle.findOne({ user });
-      // console.log("gvg  ", data);
+    const date = req.headers["dates"];
+    const eventDate = new Date(date);
+    const notesdata = [];
+    await Cycle.findOne({ user })
+      .then((response) => {
+        for (i = 0; i < response.notes.length; i++) {
+          const strDate = String(eventDate);
+          const strNoteDate = String(response.notes[i].eventDate);
 
+          if (strDate == strNoteDate) {
+            console.log("ok ", response.notes[i]);
+            notesdata.push(response.notes[i]) ;
+          } else {
+            console.log("no notes found");
+          }
+          
+                 
+        }
+        if(notesdata.length==0){
+          res.send("no notes found")
+        }
+        else{
+          console.log(notesdata)
+          res.send(notesdata);
+        }
+      })
 
-      // console.log("note.eventDate: ",note.eventDate)
-      console.log("eventDate: ",typeof(eventDate))
-      const noteData = data.notes.find((note) => note.eventDate === eventDate);
-      // return res.send(noteData);
-      console.log((noteData));
-      // res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
-    } catch (err) {
-      return res.status(500).json({ displayNotes: err.message });
-    }
+     
+      .catch((err) => {
+        console.log(err)
+        return res.status(500).json({ msg: err.message });
+      });
+
+    // console.log("gvg  ", data);
+
+    // console.log("note.eventDate: ",note.eventDate)
+
+    // res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
   },
 
   //doesn't work
