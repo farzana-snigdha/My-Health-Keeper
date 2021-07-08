@@ -44,6 +44,7 @@ export default function MenstrualCycle() {
 
   const [initialData, setInitialData] = useState(initialState);
   const [visible, setVisible] = useState(true);
+  const [menstrualNotesData, setmenstrualNotesData] = useState([]);
   const {
     startDate,
     endDate,
@@ -57,7 +58,11 @@ export default function MenstrualCycle() {
     flow,
   } = initialData;
   let history = useHistory();
-
+  const [addModalShow, setNotesModal] = useState(false);
+  const handleNotesClose = () => setNotesModal(false);
+  const handleNotesShow = () => setisViewEnabled(false);
+  const [isViewEnabled, setisViewEnabled] = useState(false);
+  const [isNotesAvailable, setisNotesAvailable] = useState(false);
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setInitialData({ ...initialData, [name]: value, err: "", success: "" });
@@ -108,27 +113,40 @@ export default function MenstrualCycle() {
     }
   };
   const [noteDate, setnoteDate] = useState(new Date());
-  const handleDateInput = (e) => {
-    const { name , value } = e.target;
-    setnoteDate({ [name] : value });
-    //console.log(name)
-  };
-  const showNotes= async (e) => {
-    e.preventDefault();
-    const noteDates = noteDate.name;
-    const id = user._id;
 
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/user/cycleTracker-display-notes",
-        {
-          headers: { Authorization: token, userid: id, dates: noteDates },
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+  const viewNotes = async (e) => {
+    e.preventDefault();
+
+    const id = user._id;
+    await axios
+      .get("http://localhost:5000/user/cycleTracker-display-notes", {
+        headers: { Authorization: token, userid: id, dates: demo },
+      })
+      .then((response) => {
+        setmenstrualNotesData(response.data);
+        console.log(typeof(response.data))
+        if (!(response.data).length==0) {
+        
+          setisNotesAvailable(true);
+         
+        } else setisNotesAvailable(false)
+     
+       
+        
+       
+      })
+      .catch((err) => {
+       
+        console.log(err);
+      });
+
+    console.log(demo);
+    handleClose();
+    if (isViewEnabled) {
+      setisViewEnabled(false);
+    } else setisViewEnabled(true);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -176,23 +194,39 @@ export default function MenstrualCycle() {
               <i> Tracking Period At a glance with Notes 📝 </i>{" "}
             </h2>
           </div>
-          {
-           
-             isViewEnabled?
-             <div>
-             <h1 >These are the notes of ${demo} </h1> 
-             <Button className="notesButton" onClick={handleNotesShow}>
-             Hide Your Notes
-           </Button>
-           </div>: " "
-          
-          }
+          {isViewEnabled ? (
+            <div className="notes_body">
+              <h4>
+                Notes on <b>{demo}</b>
+              </h4>
+              {" "}
+              {isNotesAvailable ? (
+                <div className="notes_data">
+                  {menstrualNotesData.map((note) => (
+                   
+                      <div className="notes_card">
+                        <p>Flow: {note.flow}</p>
+                        <p>Mood: {note.mood}</p>
+                        <p>Symptoms: {note.symptoms}</p>
+                      
+                    </div>
+                  ))}
+                </div>
+              ) : (
+             <h5> No notes are added </h5>          )}
+
+              <Button className="notesButton" onClick={handleNotesShow}>
+                Hide Your Notes
+              </Button>
+            </div>
+          ) : (
+            " "
+          )}
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             editable={false}
             dateClick={handleDateClick}
-           
           />
         </>
       );
@@ -201,14 +235,6 @@ export default function MenstrualCycle() {
 
   //------Viewing NoteLists----
 
-  const [addModalShow, setNotesModal] = useState(false);
-  const handleNotesClose = () => setNotesModal(false);
-  const handleNotesShow = () => setisViewEnabled(false)
-  const [isViewEnabled, setisViewEnabled] = useState(false);
-
-  
-
-  
   const visibility = () => {
     if (visible) {
       //  showDurationAndCycleLength()
@@ -253,8 +279,8 @@ export default function MenstrualCycle() {
                         type="number"
                         id="cycleLength"
                         name="cycleLength"
-                        label="Approximate number of days for next period to come"
-                        placeholder="Gap between each period cycle to come"
+                        label="Approximate Date"
+                        placeholder="Gap between each period cycle"
                         onChange={handleChangeInput}
                         value={cycleLength}
                       />
@@ -303,7 +329,7 @@ export default function MenstrualCycle() {
                 onClick={handleUpdate}
                 type={onsubmit}
               >
-                update Initial Information
+                Update Previous Information
               </button>
             }
           </div>
@@ -320,31 +346,12 @@ export default function MenstrualCycle() {
   const Demo = (ar) => {
     setDemo(ar);
   };
-  const viewNotes = async (e) => {
-    e.preventDefault();
-   
-    const id = user._id;
-    await axios
-      .get("http://localhost:5000/user/cycleTracker-display-notes", {
-        headers: { Authorization: token, userid: id, dates: demo },
-      })
-      .then((response) => {
-        
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
-    console.log(demo);
-    handleClose();
-    if (isViewEnabled) {
-      setisViewEnabled(false);
-    } else setisViewEnabled(true);
-  };
   const handleDateClick = (arg) => {
     // e.preventDefault();
     handleShow(true);
     Demo(arg.dateStr);
+    setisViewEnabled(false);
   };
 
   const saveNotes = async () => {
@@ -377,8 +384,6 @@ export default function MenstrualCycle() {
         });
     }
   };
-
-  
 
   return (
     <div className="main">
@@ -493,7 +498,7 @@ export default function MenstrualCycle() {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={viewNotes} > View Notes</Button>
+          <Button onClick={viewNotes}> View Notes</Button>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
