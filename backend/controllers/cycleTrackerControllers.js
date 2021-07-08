@@ -60,21 +60,28 @@ setInterval(() => {
 
 const cycleTrackerControllers = {
   displayNotes: async (req, res) => {
-    try {
+    
       let user = req.headers["userid"];
 
-      const { eventDate } = req.body;
-      console.log(eventDate)
-      const { flow } = req.body;
-      const data = await Cycle.findOne({ user });
-      // console.log(data);
-      const noteData = data.notes.find((note) => note.eventDate == eventDate);
-      return res.send(noteData);
-      console.log(noteData.mood);
+      const  date  = req.headers['dates']
+      const eventDate=new Date(date)
+      
+      const data = await Cycle.findOne({ user }).then(()=> {
+        console.log("eventDate: ",typeof(eventDate))
+        const noteData = data.notes.find((note) => note.eventDate === eventDate);
+        // return res.send(noteData);
+        console.log((noteData));
+      }).catch((err)=>{
+        return res.status(500).json({ displayNotes: err.message });
+      });
+     
+      // console.log("gvg  ", data);
+
+
+      // console.log("note.eventDate: ",note.eventDate)
+      
       // res.json({ msg: data.notes.find((note) => note.eventDate == eventDate) });
-    } catch (err) {
-      return res.status(500).json({ displayNotes: err.message });
-    }
+    
   },
 
   //doesn't work
