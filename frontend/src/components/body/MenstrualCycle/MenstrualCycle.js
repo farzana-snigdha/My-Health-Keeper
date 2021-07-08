@@ -351,6 +351,7 @@ export default function MenstrualCycle() {
     // e.preventDefault();
     handleShow(true);
     Demo(arg.dateStr);
+    setisViewEnabled(false)
   };
 
   const saveNotes = async () => {
