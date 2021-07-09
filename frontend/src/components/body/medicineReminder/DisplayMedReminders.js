@@ -3,12 +3,14 @@ import "../../../static/Styling/medicineReminder.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { IconButton, Link } from "@material-ui/core";
+import { Button, IconButton, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import MedModal from "./MedModal"
 
 function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
   const [reminderList, setReminderList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(async () => {
     await axios
@@ -30,6 +32,13 @@ function DisplayMedReminders() {
       const removedMed = [...reminderList].filter((el) => el._id !== id);
       setReminderList(removedMed);
   };
+
+  const openModal = () => {
+    setShowModal(prev => !prev);
+  };
+
+
+
   return (
     <div className="reminder">
       <h1>Reminder List 🧭</h1>
@@ -58,6 +67,10 @@ function DisplayMedReminders() {
             >
               <DeleteIcon />
             </IconButton>
+            <div className="med_Details">
+              <Button onClick={openModal}>Details</Button>
+              <MedModal showModal={showModal} setShowModal={setShowModal} />
+            </div>
           </div>
         ))}
       </div>
