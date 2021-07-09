@@ -91,7 +91,9 @@ function DisplayMedReminders() {
             <p>Ending Date: {medicines.enddate.substring(0, 10)}</p>
 
             <IconButton
-              className="delete-button"
+              className="btn"
+              data-toggle="tooltip"
+              title="View Your Missed Medicine"
               onClick={() => {
                 openModal();
                 getmissedMed(medicines._id);
@@ -100,13 +102,15 @@ function DisplayMedReminders() {
               <VisibilityIcon />
             </IconButton>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            <IconButton
-              className="btn"
+            <IconButton  
+              class="btn"
              
-             
+              data-toggle="tooltip"
+              title="Delete the Medicine"
               onClick={() => deleteReminder(medicines._id)}
             >
               <DeleteIcon />
+             
             </IconButton>
 
             <MedModal
