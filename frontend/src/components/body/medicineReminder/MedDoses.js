@@ -30,11 +30,14 @@ function MedDoses() {
       })
       .then((response) => {
         console.log(response.data);
-        getMedDose();
+        
       })
       .catch((error) => {
         console.log(error);
       });
+
+      const removedConfirmed = [...doseList].filter((el) => el._id !== id);
+      setDoseList(removedConfirmed);
   };
 
   return (
