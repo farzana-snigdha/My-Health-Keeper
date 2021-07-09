@@ -67,7 +67,10 @@ const MedModal = ({ showModal, setShowModal, medId }) => {
       .get("http://localhost:5000/medDoseMissed/"+medId, {
         headers: { Authorization: token },
       })
-      .then((res) => setMissedList(res.data));
+      .then((res) => {
+          setMissedList(res.data);
+          console.log(medId);
+      });
   }, []);
 
   const closeModal = (e) => {
