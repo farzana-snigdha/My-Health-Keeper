@@ -3,6 +3,11 @@
   margin-right: 0;
   margin-left: auto;
 }
+.delete-button{
+  background-color: rgb(197, 54, 54);
+  color: rgb(197, 54, 54);
+  align-content: flex-end;
+}
 
 .reminder_buttons>.reminder_buttons_sub {
   width: 20%;
@@ -137,6 +142,7 @@
    color: rgb(197, 54, 54);
    align-content: flex-end;
 }
+
 
 .reminder_body {
   width: 100%;

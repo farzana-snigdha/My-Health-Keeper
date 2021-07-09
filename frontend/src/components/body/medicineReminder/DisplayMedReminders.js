@@ -6,6 +6,7 @@ import axios from "axios";
 import { Button, IconButton, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MedModal from "./MedModal";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Modal from "react-modal";
 function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
@@ -69,14 +70,18 @@ function DisplayMedReminders() {
   };
   return (
     <div className="reminder">
-       <div className="reminder_buttons">
-      <Link href="/medicine-reminder" className="reminder_buttons_sub">{""} Add New</Link>
-      <Link href="/medicine-doses" className="reminder_buttons_sub">{""} Medicines Today</Link>
+      <div className="reminder_buttons">
+        <Link href="/medicine-reminder" className="reminder_buttons_sub">
+          {""} Add New
+        </Link>
+        <Link href="/medicine-doses" className="reminder_buttons_sub">
+          {""} Medicines Today
+        </Link>
       </div>
 
       <div className="reminder_body">
         <div>
-       <h2>Ongoing Medicine</h2>    <hr></hr>
+          <h2>Ongoing Medicine</h2> <hr></hr>
         </div>
         {ongoingMedReminderList.map((medicines) => (
           <div className="reminder_card">
@@ -84,32 +89,36 @@ function DisplayMedReminders() {
             <p>Description: {medicines.descriptionmed}</p>
             <p>Starting Date: {medicines.startdate.substring(0, 10)}</p>
             <p>Ending Date: {medicines.enddate.substring(0, 10)}</p>
+
+            <IconButton
+              className="delete-button"
+              onClick={() => {
+                openModal();
+                getmissedMed(medicines._id);
+              }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
             <IconButton
               className="btn"
+             
+             
               onClick={() => deleteReminder(medicines._id)}
             >
               <DeleteIcon />
             </IconButton>
-            
-              <Button
-                onClick={() => {
-                  openModal();
-                  getmissedMed(medicines._id);
-                }}
-              >
-                Details
-              </Button>
-              <MedModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                list={missedList}
-              />
-            
+
+            <MedModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              list={missedList}
+            />
           </div>
         ))}
 
         <div>
-      <h2>Done</h2>     <hr></hr>
+          <h2>Done</h2> <hr></hr>
         </div>
         {doneMedReminderList.map((medicines) => (
           <div className="reminder_card">
