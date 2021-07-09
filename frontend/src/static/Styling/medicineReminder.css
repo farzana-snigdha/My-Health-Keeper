@@ -1,3 +1,29 @@
+.reminder_buttons {
+  width: 30%;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.reminder_buttons>.reminder_buttons_sub {
+  width: 20%;
+  background-color: #3854f3;
+  color: white;
+  display: inline;
+  margin-left: 1em;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* .reminder_buttons_sub>.button {
+  color: #aec9d4;
+  display: inline;
+  margin: 1em;
+  padding: 8px;
+} */
+
+
 .container{
   display: flex;
   flex-direction: column;
@@ -91,7 +117,7 @@
   align-items: center;
   justify-content: center;
   background-color: white;
-  color: black;
+  color: white;
   border-radius: 20px;
   border: 2px solid #3854f3;
   transition-duration: 0.4s;
