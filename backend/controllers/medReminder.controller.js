@@ -13,7 +13,7 @@ const todayDate=new Date()
       console.log("Test :" + err);
     }
     if (reminderList) {
-      console.log("reminderList: ",reminderList);
+     
       res.send(reminderList);
      
     }
@@ -29,7 +29,7 @@ const todayDate=new Date()
       console.log("Test :" + err);
     }
     if (reminderList) {
-      console.log("reminderList: ",reminderList);
+     
       res.send(reminderList);
      
     }
