@@ -11,7 +11,7 @@ function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
   const [ongoingMedReminderList, setOngoingMedReminderList] = useState([]);
   const [doneMedReminderList, setDoneMedReminderList] = useState([]);
-  
+
   const [showModal, setShowModal] = useState(false);
   const [missedList, setMissedList] = useState([]);
 
@@ -69,21 +69,14 @@ function DisplayMedReminders() {
   };
   return (
     <div className="reminder">
-      <h1>Reminder List 🧭</h1>
-      <div className="reminder_header">
-        <Link href="/medicine-reminder" className="button">
-          {" "}
-          Add to List
-        </Link>
-        <Link href="/medicine-doses" className="button">
-          {" "}
-          Medicines Today
-        </Link>
+       <div className="reminder_buttons">
+      <Link href="/medicine-reminder" className="reminder_buttons_sub">{""} Add New</Link>
+      <Link href="/medicine-doses" className="reminder_buttons_sub">{""} Medicines Today</Link>
       </div>
 
       <div className="reminder_body">
         <div>
-          Ongoing Medicine <hr></hr>
+       <h2>Ongoing Medicine</h2>    <hr></hr>
         </div>
         {ongoingMedReminderList.map((medicines) => (
           <div className="reminder_card">
@@ -97,7 +90,7 @@ function DisplayMedReminders() {
             >
               <DeleteIcon />
             </IconButton>
-            <div className="med_Details">
+            
               <Button
                 onClick={() => {
                   openModal();
@@ -111,12 +104,12 @@ function DisplayMedReminders() {
                 setShowModal={setShowModal}
                 list={missedList}
               />
-            </div>
+            
           </div>
         ))}
 
         <div>
-          Done <hr></hr>
+      <h2>Done</h2>     <hr></hr>
         </div>
         {doneMedReminderList.map((medicines) => (
           <div className="reminder_card">

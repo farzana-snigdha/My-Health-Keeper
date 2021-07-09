@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
+import { Button, IconButton, Link } from "@material-ui/core";
 
 const Background = styled.div`
   width: 100%;
@@ -38,12 +39,7 @@ const ModalContent = styled.div`
   p {
     margin-bottom: 1rem;
   }
-  button {
-    padding: 10px 24px;
-    background: #141414;
-    color: #fff;
-    border: none;
-  }
+  
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -59,10 +55,13 @@ const CloseModalButton = styled(MdClose)`
 
 const MedModal = ({ showModal, setShowModal, list }) => {
   const token = useSelector((state) => state.token);
-  //const [list, setMissedList] = useState([]);
+  const auth = useSelector((state) => state.auth);
+  const { user } = auth;
+  const [disable, setDisable] = React.useState(false);
+  //const [mlist, setMissedList] = useState([]);
   const modalRef = useRef();
 
-
+  //setMissedList(list);
 //   useEffect(async () => {
 //     await axios
 //       .get("http://localhost:5000/medDoseMissed/"+medId, {
@@ -95,18 +94,32 @@ const MedModal = ({ showModal, setShowModal, list }) => {
     return () => document.removeEventListener("keydown", keyPress);
   }, [keyPress]);
 
+  const missedConfirm = async (id) => {
+    await axios
+      .post("http://localhost:5000/medDose/" + id, {
+        headers: { Authorization: token, userId: user._id },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
-            <ModalContent list={list}>
+            <ModalContent >
               <table className="table">
                 <thead className="thead-light">
                   <tr>
                     <th>Date</th>
                     <th>Time</th>
                     <th>Status</th>
+                    <th>Confirm</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -115,6 +128,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                     <td>{doses.meddate.substring(0, 10)}</td>
                     <td>{doses.medtime}</td>
                     <td>Missed</td>
+                    <td><Button onClick={()=> {missedConfirm(doses._id); setDisable(true);}}>Confirm</Button></td>
                   </tr>
                 ))}
                 </tbody>
