@@ -45,33 +45,7 @@ setInterval(() => {
           }
         }
 
-        // if (!reminder[i].isReminded) {
-
-        //   if (periodDate - now < 0) {
-        //     Cycle.findByIdAndUpdate(
-        //       reminder[i]._id,
-        //       { isReminded: true },
-        //       (err, remind) => {
-        //         if (err) {
-        //           console.log(err);
-        //         }
-        //         const nextDate = new Date(
-        //           remind.endDate.setTime(
-        //             remind.endDate.getTime() + remind.cycleLength * 86400000
-        //           )
-        //         );
-        //         console.log(nextDate);
-        //         sendMail(
-        //           remind.userEmail,
-        //           null,
-        //           `Get ready for your PERIOD !!  \n Your probable date : ${nextDate}`,
-        //           null,
-        //           null
-        //         );
-        //       }
-        //     );
-        //   }
-        // }
+      
       }
     }
   });

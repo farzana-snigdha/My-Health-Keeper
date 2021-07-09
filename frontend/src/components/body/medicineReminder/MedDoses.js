@@ -12,12 +12,15 @@ function MedDoses() {
   const { user } = auth;
   const [doseList, setDoseList] = useState([]);
 
-  useEffect(async () => {
+  const getMedDose=async()=>{
     await axios
-      .get("http://localhost:5000/medDose", {
-        headers: { Authorization: token },
-      })
-      .then((res) => setDoseList(res.data));
+    .get("http://localhost:5000/medDose", {
+      headers: { Authorization: token },
+    })
+    .then((res) => setDoseList(res.data));
+  }
+  useEffect(async () => {
+   getMedDose()
   }, []);
 
   const confirmReminder = async (id) => {
@@ -27,6 +30,7 @@ function MedDoses() {
       })
       .then((response) => {
         console.log(response.data);
+        getMedDose()
       })
       .catch((error) => {
         console.log(error);
