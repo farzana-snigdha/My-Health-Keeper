@@ -3,13 +3,15 @@ import "../../../static/Styling/medicineReminder.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { IconButton, Link } from "@material-ui/core";
+import { Button,IconButton, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import MedModal from "./MedModal"
 
 function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
   const [ongoingMedReminderList, setOngoingMedReminderList] = useState([]);
   const [doneMedReminderList, setDoneMedReminderList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const showOngoingMedicineList=async()=>{
     await axios
@@ -26,7 +28,7 @@ function DisplayMedReminders() {
     })
     .then((res) => setDoneMedReminderList(res.data));
   }
-  
+
   useEffect(async () => {
    showOngoingMedicineList()
   }, []);
@@ -34,7 +36,9 @@ function DisplayMedReminders() {
   useEffect(async () => {
     showCompleteMedicineList()
   }, []);
-
+  const openModal = () => {
+    setShowModal(prev => !prev);
+  };
   const deleteReminder = async (id) => {
     await axios
       .delete("http://localhost:5000/medReminder/delete/" + id, {
@@ -76,6 +80,10 @@ function DisplayMedReminders() {
             >
               <DeleteIcon />
             </IconButton>
+            <div className="med_Details">
+              <Button onClick={openModal}>Details</Button>
+              <MedModal showModal={showModal} setShowModal={setShowModal} />
+            </div>
           </div>
         ))}
 
