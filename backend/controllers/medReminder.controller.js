@@ -102,10 +102,15 @@ const deleteMedicine = async (req, res) => {
       medReminder
         .findByIdAndDelete(req.params.id)
         .then(() => {
-          res.json("Reminder deleted.");
-          
+          console.log("Medicine deleted.");
+          medConfirmation
+            .deleteMany({doseId : req.params.id})
+            .then(() =>
+              res
+                .json("Reminders deleted."))
+                .catch((err) => res.status(400).json("reminder delete Error: " + err));
         })
-        .catch((err) => res.status(400).json("Error: " + err));
+        .catch((err) => res.status(400).json("Med delete Error: " + err));
     }
   });
 };
