@@ -8,14 +8,23 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
-  const [reminderList, setReminderList] = useState([]);
+  const [ongoingMedReminderList, setOngoingMedReminderList] = useState([]);
+  const [doneMedReminderList, setDoneMedReminderList] = useState([]);
 
   useEffect(async () => {
     await axios
-      .get("http://localhost:5000/medReminder", {
+      .get("http://localhost:5000/CurrentMedReminder", {
         headers: { Authorization: token },
       })
-      .then((res) => setReminderList(res.data));
+      .then((res) => setOngoingMedReminderList(res.data));
+  }, []);
+
+  useEffect(async () => {
+    await axios
+      .get("http://localhost:5000/CompleteMedReminder", {
+        headers: { Authorization: token },
+      })
+      .then((res) => setDoneMedReminderList(res.data));
   }, []);
 
   const deleteReminder = async (id) => {
@@ -27,8 +36,8 @@ function DisplayMedReminders() {
         console.log(response.data);
       });
 
-      const removedMed = [...reminderList].filter((el) => el._id !== id);
-      setReminderList(removedMed);
+      const removedMed = [...ongoingMedReminderList].filter((el) => el._id !== id);
+      setOngoingMedReminderList(removedMed);
   };
   return (
     <div className="reminder">
@@ -46,7 +55,27 @@ function DisplayMedReminders() {
 
 
       <div className="reminder_body">
-        {reminderList.map((medicines) => (
+        <div>Ongoing Medicine <hr></hr></div>
+        {ongoingMedReminderList.map((medicines) => (
+          <div className="reminder_card">
+            <h2>{medicines.medname}</h2>
+            <p>Description: {medicines.descriptionmed}</p>
+            <p>Starting Date: {medicines.startdate.substring(0, 10)}</p>
+            <p>Ending Date: {medicines.enddate.substring(0, 10)}</p>
+            <IconButton
+              className="btn"
+              onClick={() => deleteReminder(medicines._id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        ))}
+
+
+
+        <div>Done <hr></hr>
+        </div>
+        {doneMedReminderList.map((medicines) => (
           <div className="reminder_card">
             <h2>{medicines.medname}</h2>
             <p>Description: {medicines.descriptionmed}</p>
