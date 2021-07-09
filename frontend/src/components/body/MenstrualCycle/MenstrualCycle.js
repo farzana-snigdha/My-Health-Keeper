@@ -129,7 +129,7 @@ export default function MenstrualCycle() {
         
           setisNotesAvailable(true);
          
-        } else {setisNotesAvailable(false)}
+        } else setisNotesAvailable(false)
      
        
         
@@ -195,25 +195,25 @@ export default function MenstrualCycle() {
             </h2>
           </div>
           {isViewEnabled ? (
-            <div>
-              <h2>
-                These are the notes of <b>{demo}</b>{" "}
-              </h2>
-              {console.log("wd ",isNotesAvailable)}
+            <div className="notes_body">
+              <h4>
+                Notes on <b>{demo}</b>
+              </h4>
+              {" "}
               {isNotesAvailable ? (
-                <div className="reminder_body">
+                <div className="notes_data">
                   {menstrualNotesData.map((note) => (
-                    <div>
-                      <div className="reminder_card">
+                   
+                      <div className="notes_card">
                         <p>Flow: {note.flow}</p>
                         <p>Mood: {note.mood}</p>
                         <p>Symptoms: {note.symptoms}</p>
-                      </div>
+                      
                     </div>
                   ))}
                 </div>
               ) : (
-             "  No notes are created    "           )}
+             <h5> No notes are added </h5>          )}
 
               <Button className="notesButton" onClick={handleNotesShow}>
                 Hide Your Notes
@@ -279,8 +279,8 @@ export default function MenstrualCycle() {
                         type="number"
                         id="cycleLength"
                         name="cycleLength"
-                        label="Approximate number of days for next period to come"
-                        placeholder="Gap between each period cycle to come"
+                        label="Approximate Date"
+                        placeholder="Gap between each period cycle"
                         onChange={handleChangeInput}
                         value={cycleLength}
                       />
@@ -329,7 +329,7 @@ export default function MenstrualCycle() {
                 onClick={handleUpdate}
                 type={onsubmit}
               >
-                update Initial Information
+                Update Previous Information
               </button>
             }
           </div>
@@ -351,7 +351,7 @@ export default function MenstrualCycle() {
     // e.preventDefault();
     handleShow(true);
     Demo(arg.dateStr);
-    setisViewEnabled(false)
+    setisViewEnabled(false);
   };
 
   const saveNotes = async () => {
