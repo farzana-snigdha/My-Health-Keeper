@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     width: drawerWidth,
     color: "white",
-    background: "#424040",
+    background: "#63a8bf",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -194,7 +194,8 @@ function Header() {
     // console.log(user._id);
     return (
       <div>
-        <Link to="/profile" component={NavLink}>
+        <Link to="/profile"   data-toggle="tooltip"
+              title="Profile Settings" component={NavLink}>
           {<img className={classes.imageIcon} src={user.avatar} alt="" />}<font  className="link-color" >
           {user.name}{" "}
           </font>
