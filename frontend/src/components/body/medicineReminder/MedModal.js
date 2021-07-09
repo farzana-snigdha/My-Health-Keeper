@@ -57,21 +57,21 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-const MedModal = ({ showModal, setShowModal, medId }) => {
+const MedModal = ({ showModal, setShowModal, missedList }) => {
   const token = useSelector((state) => state.token);
-  const [missedList, setMissedList] = useState([]);
+  //const [missedList, setMissedList] = useState([]);
   const modalRef = useRef();
 
-  useEffect(async () => {
-    await axios
-      .get("http://localhost:5000/medDoseMissed/"+medId, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-          setMissedList(res.data);
-          console.log(medId);
-      });
-  }, []);
+//   useEffect(async () => {
+//     await axios
+//       .get("http://localhost:5000/medDoseMissed/"+medId, {
+//         headers: { Authorization: token },
+//       })
+//       .then((res) => {
+//           setMissedList(res.data);
+//           console.log(medId);
+//       });
+//   }, []);
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {

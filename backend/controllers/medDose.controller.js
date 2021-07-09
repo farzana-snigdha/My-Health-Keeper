@@ -121,6 +121,7 @@ const getMissedDoses = async (req, res) => {
       if (doseList) {
         res.send(doseList);
         console.log(doseList);
+        console.log("done")
       }
     }
   );

@@ -11,6 +11,7 @@ function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
   const [reminderList, setReminderList] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [missedList, setMissedList] = useState([]);
 
   useEffect(async () => {
     await axios
@@ -36,6 +37,17 @@ function DisplayMedReminders() {
   const openModal = () => {
     setShowModal(prev => !prev);
   };
+
+  const getmissedMed = async (id) => {
+    await axios
+      .get("http://localhost:5000/medDoseMissed/"+id, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+          setMissedList(res.data);
+          console.log(id);
+      });
+  }
 
 
 
@@ -68,8 +80,11 @@ function DisplayMedReminders() {
               <DeleteIcon />
             </IconButton>
             <div className="med_Details">
-              <Button onClick={openModal}>Details</Button>
-              <MedModal showModal={showModal} setShowModal={setShowModal} medId={medicines._id} />
+              <Button onClick={() => {
+          openModal();
+          getmissedMed(medicines._id);
+        }}>Details</Button>
+              <MedModal showModal={showModal} setShowModal={setShowModal} missedList={missedList} />
             </div>
           </div>
         ))}
