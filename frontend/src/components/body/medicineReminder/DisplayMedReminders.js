@@ -11,20 +11,28 @@ function DisplayMedReminders() {
   const [ongoingMedReminderList, setOngoingMedReminderList] = useState([]);
   const [doneMedReminderList, setDoneMedReminderList] = useState([]);
 
-  useEffect(async () => {
+  const showOngoingMedicineList=async()=>{
     await axios
-      .get("http://localhost:5000/CurrentMedReminder", {
-        headers: { Authorization: token },
-      })
-      .then((res) => setOngoingMedReminderList(res.data));
+    .get("http://localhost:5000/CurrentMedReminder", {
+      headers: { Authorization: token },
+    })
+    .then((res) => setOngoingMedReminderList(res.data));
+  }
+
+  const showCompleteMedicineList=async()=>{
+    await axios
+    .get("http://localhost:5000/CompleteMedReminder", {
+      headers: { Authorization: token },
+    })
+    .then((res) => setDoneMedReminderList(res.data));
+  }
+  
+  useEffect(async () => {
+   showOngoingMedicineList()
   }, []);
 
   useEffect(async () => {
-    await axios
-      .get("http://localhost:5000/CompleteMedReminder", {
-        headers: { Authorization: token },
-      })
-      .then((res) => setDoneMedReminderList(res.data));
+    showCompleteMedicineList()
   }, []);
 
   const deleteReminder = async (id) => {
