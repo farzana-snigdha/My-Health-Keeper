@@ -4,17 +4,35 @@ const moment = require("moment");
 
 //const doseId = null;
 
-const getMedicine = async (req, res) => {
+const getOngoingMedicine = async (req, res) => {
   let user = req.user.id;
 
-  medReminder.find({ user }, (err, reminderList) => {
+  const todayDate=new Date()
+  medReminder.find({ user,enddate:{$gte:todayDate} }, (err, reminderList) => {
     if (err) {
       console.log(user);
       console.log("Test :" + err);
     }
     if (reminderList) {
+      console.log("reminderList: ",reminderList);
       res.send(reminderList);
-      console.log(reminderList);
+
+    }
+  });
+};
+
+const getCompleteMedicine = async (req, res) => {
+  let user = req.user.id;
+const todayDate=new Date()
+  medReminder.find({ user,enddate:{$lt:todayDate} }, (err, reminderList) => {
+    if (err) {
+      console.log(user);
+      console.log("Test :" + err);
+    }
+    if (reminderList) {
+      console.log("reminderList: ",reminderList);
+      res.send(reminderList);
+
     }
   });
 };
@@ -115,4 +133,4 @@ const deleteMedicine = async (req, res) => {
   });
 };
 
-module.exports = { getMedicine, postMedicine, deleteMedicine };
+module.exports = { getOngoingMedicine, postMedicine, deleteMedicine, getCompleteMedicine };
