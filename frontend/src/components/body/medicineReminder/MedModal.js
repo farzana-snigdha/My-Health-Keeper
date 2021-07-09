@@ -1,6 +1,8 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { MdClose } from "react-icons/md";
+import axios from "axios";
 
 const Background = styled.div`
   width: 100%;
@@ -9,7 +11,7 @@ const Background = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   position: fixed;
   display: flex;
   justify-content: center;
@@ -24,6 +26,7 @@ const ModalWrapper = styled.div`
   color: #000;
   position: relative;
   border-radius: 10px;
+  padding : 20px;
 `;
 
 const ModalContent = styled.div`
@@ -54,49 +57,70 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-const MedModal = ({ showModal, setShowModal }) => {
+const MedModal = ({ showModal, setShowModal, medId }) => {
+  const token = useSelector((state) => state.token);
+  const [missedList, setMissedList] = useState([]);
   const modalRef = useRef();
 
+  useEffect(async () => {
+    await axios
+      .get("http://localhost:5000/medDoseMissed/"+medId, {
+        headers: { Authorization: token },
+      })
+      .then((res) => setMissedList(res.data));
+  }, []);
 
-  const closeModal = e => {
+  const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
     }
   };
 
   const keyPress = useCallback(
-    e => {
-      if (e.key === 'Escape' && showModal) {
+    (e) => {
+      if (e.key === "Escape" && showModal) {
         setShowModal(false);
-        console.log('I pressed');
+        console.log("I pressed");
       }
     },
     [setShowModal, showModal]
   );
 
-  useEffect(
-    () => {
-      document.addEventListener('keydown', keyPress);
-      return () => document.removeEventListener('keydown', keyPress);
-    },
-    [keyPress]
-  );
+  useEffect(() => {
+    document.addEventListener("keydown", keyPress);
+    return () => document.removeEventListener("keydown", keyPress);
+  }, [keyPress]);
 
   return (
     <>
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
-          
-            <ModalWrapper showModal={showModal}>
-              <ModalContent>
-                
-              </ModalContent>
-              <CloseModalButton
-                aria-label='Close modal'
-                onClick={() => setShowModal(prev => !prev)}
-              />
-            </ModalWrapper>
-          
+          <ModalWrapper showModal={showModal}>
+            <ModalContent>
+              <table className="table">
+                <thead className="thead-light">
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {missedList.map((doses) => (
+                    <tr>
+                    <td>{doses.meddate.substring(0, 10)}</td>
+                    <td>{doses.medtime}</td>
+                    <td>Missed</td>
+                  </tr>
+                ))}
+                </tbody>
+              </table>
+            </ModalContent>
+            <CloseModalButton
+              aria-label="Close modal"
+              onClick={() => setShowModal((prev) => !prev)}
+            />
+          </ModalWrapper>
         </Background>
       ) : null}
     </>

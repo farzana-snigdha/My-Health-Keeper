@@ -69,7 +69,7 @@ function DisplayMedReminders() {
             </IconButton>
             <div className="med_Details">
               <Button onClick={openModal}>Details</Button>
-              <MedModal showModal={showModal} setShowModal={setShowModal} />
+              <MedModal showModal={showModal} setShowModal={setShowModal} medId={medicines._id} />
             </div>
           </div>
         ))}
