@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import "../../../static/Styling/medicineReminder.css";
 import {
   Grid,
   Paper,
@@ -115,15 +116,17 @@ function InputMedReminder() {
   };
 
   return (
-    <Container>
-      <Grid>
-        <Paper elevation={20} style={paperStyle}>
-          <Grid align="center">
-            <h2 style={headerStyle}>Add Medicine</h2>
+    <Container className="container">
+     
+        <div className="paper" >
+          <Grid align="center" >
+            <h2 >Add Medicine</h2>{" "}
           </Grid>
+          {" "}
           {err && showErrMsg(err)}
           {success && showSuccessMsg(success)}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="form_body">
+            <div className="form_inputs">
             <TextField
               variant="outlined"
               required
@@ -174,7 +177,7 @@ function InputMedReminder() {
                 shrink: true,
               }}
             />
-
+                </div>
             {inputFields.map((inputField, index) => (
               <div key={index}>
                 <TextField
@@ -204,8 +207,9 @@ function InputMedReminder() {
                 </IconButton>
               </div>
             ))}
-
+            <div className="form_btns">
             <Button
+                className="add_btn"
               type="submit"
               variant="contained"
               onClick={handleSubmit}
@@ -214,13 +218,14 @@ function InputMedReminder() {
               Add
             </Button>
             <Link href="/display-medicine-reminderList">
-              <Button type="button" variant="contained" color="primary">
-                Back
+              <Button type="button" variant="contained" color="primary" >
+                ↩Back to Display Reminders List
               </Button>
             </Link>
+            </div>
           </form>
-        </Paper>
-      </Grid>
+        </div>
+     
     </Container>
   );
 }

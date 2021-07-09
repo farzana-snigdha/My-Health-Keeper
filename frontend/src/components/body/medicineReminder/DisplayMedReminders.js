@@ -27,26 +27,23 @@ function DisplayMedReminders() {
         console.log(response.data);
       });
 
-    const values = [...reminderList];
-    values.splice(id, 1);
-    setReminderList(values);
+      const removedMed = [...reminderList].filter((el) => el._id !== id);
+      setReminderList(removedMed);
   };
   return (
     <div className="reminder">
+      <h1>Reminder List 🧭</h1>
       <div className="reminder_header">
-        <h1>Reminder List 🧭</h1>
         <Link href="/medicine-reminder" className="button">
           {" "}
           Add to List
         </Link>
-      </div>
-
-      <div className="reminder_header">
         <Link href="/medicine-doses" className="button">
           {" "}
           Medicines Today
         </Link>
       </div>
+
 
       <div className="reminder_body">
         {reminderList.map((medicines) => (
