@@ -31,7 +31,7 @@ function MedDoses() {
       .catch((error) => {
         console.log(error);
       });
-    
+
       const removedConfirmed = [...doseList].filter((el) => el._id !== id);
       setDoseList(removedConfirmed);
   };

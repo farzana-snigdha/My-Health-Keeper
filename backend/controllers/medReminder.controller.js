@@ -60,7 +60,7 @@ const postMedicine = async (req, res) => {
           const incrementDate = new Date(moment(date1).add(i, "days"));
           const medDose = new medConfirmation({
             user,
-            doseID:doseId,
+            doseId,
             medname: medname,
             meddate: incrementDate,
             medtime: doses[j].time,

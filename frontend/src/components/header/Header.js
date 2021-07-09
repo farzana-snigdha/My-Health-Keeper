@@ -11,6 +11,7 @@ import {
   Select,
   Avatar,
 } from "@material-ui/core";
+import { useCookies } from "react-cookie";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -168,6 +169,7 @@ function Header() {
   const classes = useStyles();
   const { user, isLogged } = auth;
   const [open, setOpen] = React.useState(true);
+  const [cookies,  removeCookie] = useCookies(["user"]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -180,6 +182,8 @@ function Header() {
     try {
       await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
+      localStorage.removeItem("UserMenstrualInfo")
+      removeCookie("UserMenstrualInfo");
       window.location.href = "/";
     } catch (err) {
       window.location.href = "/";
@@ -286,7 +290,7 @@ function Header() {
             >
               <Link
                 component={NavLink}
-                to="/"
+                to="/home"
                 underline="none"
                 color="textPrimary"
               >
