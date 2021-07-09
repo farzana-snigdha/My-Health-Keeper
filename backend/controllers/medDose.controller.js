@@ -44,6 +44,34 @@ setInterval(() => {
             );
           }
         }
+
+        // if (!reminder[i].isReminded) {
+
+        //   if (periodDate - now < 0) {
+        //     Cycle.findByIdAndUpdate(
+        //       reminder[i]._id,
+        //       { isReminded: true },
+        //       (err, remind) => {
+        //         if (err) {
+        //           console.log(err);
+        //         }
+        //         const nextDate = new Date(
+        //           remind.endDate.setTime(
+        //             remind.endDate.getTime() + remind.cycleLength * 86400000
+        //           )
+        //         );
+        //         console.log(nextDate);
+        //         sendMail(
+        //           remind.userEmail,
+        //           null,
+        //           `Get ready for your PERIOD !!  \n Your probable date : ${nextDate}`,
+        //           null,
+        //           null
+        //         );
+        //       }
+        //     );
+        //   }
+        // }
       }
     }
   });
@@ -51,18 +79,52 @@ setInterval(() => {
 const getDoses = async (req, res) => {
   let user = req.user.id;
   const date1 = new Date();
-  medConfirmation
-    .find({
+  console.log(new Date(date1.toISOString().slice(0, 10)));
+
+  medConfirmation.find(
+    {
       user: user,
       meddate: "/^" + new Date(date1.toISOString().slice(0, 10)) + "/",
       isTaken: false,
-    })
-    .sort({
-      medtime: 1,
-    })
-    .then((result) => {
-      res.send(result);
-    });
+    },
+    (err, doseList) => {
+      if (err) {
+        console.log(user);
+        console.log("Test :" + err);
+      }
+      if (doseList) {
+        res.send(doseList);
+        //console.log(doseList);
+      }
+    }
+  );
+};
+
+
+const getMissedDoses = async (req, res) => {
+  let user = req.user.id;
+  const date1 = new Date();
+  console.log(new Date(date1.toISOString().slice(0, 10)));
+
+  medConfirmation.find(
+    {
+      user: user,
+      doseId: req.params.id,
+      meddate: {$lt: new Date(date1.toISOString().slice(0, 10))},
+      isTaken: false,
+    },
+    (err, doseList) => {
+      if (err) {
+        console.log(user);
+        console.log("Test :" + err);
+      }
+      if (doseList) {
+        res.send(doseList);
+        console.log(doseList);
+        console.log("done")
+      }
+    }
+  );
 };
 
 const doseConfirmUpdate = async (req, res) => {
@@ -83,4 +145,4 @@ const doseConfirmUpdate = async (req, res) => {
   });
 };
 
-module.exports = { getDoses, doseConfirmUpdate };
+module.exports = { getDoses, doseConfirmUpdate, getMissedDoses };
