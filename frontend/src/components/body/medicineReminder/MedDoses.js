@@ -38,16 +38,37 @@ function MedDoses() {
 
   return (
     <div>
-      {doseList.map((doses) => (
-        <div className="reminder_card">
-          <h2>{doses.medname}</h2>
-          <p>Time: {doses.medtime}</p>
-          <p>Taken: {doses.isTaken}</p>
-          <Button className="btn" onClick={() => confirmReminder(doses._id)}>
-            Confirm
-          </Button>
-        </div>
-      ))}
+      <div>
+        <Link href="/display-medicine-reminderList">
+          <Button type="button" color="primary" size="large">
+            <i class="fas fa-angle-double-left" >
+              {" "}
+              &nbsp; Return
+            </i>
+            </Button>
+            </Link>
+      </div>
+      <div>
+        <p></p>
+      </div>
+      <div>
+        {" "}
+        <p></p>
+      </div>
+      <div>
+        {doseList.map((doses) => (
+          <div className="reminder_card">
+            <h2>{doses.medname}</h2>
+            <hr></hr>
+            <p><b>Time: </b>{doses.medtime}</p>
+            <p><b>Taken:</b> Not Yet</p>
+
+            <Button className="btn"  onClick={() => confirmReminder(doses._id)}>
+              Confirm
+            </Button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

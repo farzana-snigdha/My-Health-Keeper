@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import "../../../static/Styling/medicineReminder.css";
 import {
   Grid,
@@ -32,6 +33,8 @@ const initialState = {
 
 function InputMedReminder() {
   const token = useSelector((state) => state.token);
+
+  const history = useHistory();
 
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
@@ -109,6 +112,7 @@ function InputMedReminder() {
         err: "",
         success: "Medicine added Successfully!",
       });
+      history.push('/display-medicine-reminderList');
     } catch (err) {
       err.response.data.msg &&
         setMedicine({ ...medicine, err: err.response.data.msg, success: "" });
