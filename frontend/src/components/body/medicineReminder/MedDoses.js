@@ -12,15 +12,15 @@ function MedDoses() {
   const { user } = auth;
   const [doseList, setDoseList] = useState([]);
 
-  const getMedDose=async()=>{
+  const getMedDose = async () => {
     await axios
-    .get("http://localhost:5000/medDose", {
-      headers: { Authorization: token },
-    })
-    .then((res) => setDoseList(res.data));
-  }
+      .get("http://localhost:5000/medDose", {
+        headers: { Authorization: token },
+      })
+      .then((res) => setDoseList(res.data));
+  };
   useEffect(async () => {
-   getMedDose()
+    getMedDose();
   }, []);
 
   const confirmReminder = async (id) => {
@@ -30,7 +30,7 @@ function MedDoses() {
       })
       .then((response) => {
         console.log(response.data);
-        getMedDose()
+        getMedDose();
       })
       .catch((error) => {
         console.log(error);
@@ -39,16 +39,37 @@ function MedDoses() {
 
   return (
     <div>
-      {doseList.map((doses) => (
-        <div className="reminder_card">
-          <h2>{doses.medname}</h2>
-          <p>Time: {doses.medtime}</p>
-          <p>Taken: {doses.isTaken}</p>
-          <Button className="btn" onClick={() => confirmReminder(doses._id)}>
-            Confirm
+      <div>
+        <Link href="/display-medicine-reminderList">
+          <Button type="button" color="primary" size="large">
+            <i class="fas fa-angle-double-left" >
+              {" "}
+              &nbsp; Return
+            </i>
           </Button>
-        </div>
-      ))}
+        </Link>
+      </div>
+      <div>
+        <p></p>
+      </div>
+      <div>
+        {" "}
+        <p></p>
+      </div>
+      <div>
+        {doseList.map((doses) => (
+          <div className="reminder_card">
+            <h2>{doses.medname}</h2>
+            <hr></hr>
+            <p><b>Time: </b>{doses.medtime}</p>
+            <p><b>Taken:</b> Not Yet</p>
+            
+            <Button className="btn"  onClick={() => confirmReminder(doses._id)}>
+              Confirm
+            </Button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
