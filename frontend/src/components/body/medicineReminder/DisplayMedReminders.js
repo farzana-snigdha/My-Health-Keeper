@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Button, IconButton, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-//import MedModal from "./MedModal"
-import Modal from 'react-modal';
+import MedModal from "./MedModal"
 
 function DisplayMedReminders() {
   const token = useSelector((state) => state.token);
@@ -36,7 +35,7 @@ function DisplayMedReminders() {
   };
 
   const openModal = () => {
-    setShowModal(true);
+    setShowModal(prev => !prev);
   };
 
   const getmissedMed = async (id) => {
@@ -80,7 +79,13 @@ function DisplayMedReminders() {
             >
               <DeleteIcon />
             </IconButton>
-            
+            <div className="med_Details">
+              <Button onClick={() => {
+          openModal();
+          getmissedMed(medicines._id);
+        }}>Details</Button>
+              <MedModal showModal={showModal} setShowModal={setShowModal} list={missedList} />
+            </div>
           </div>
         ))}
       </div>
