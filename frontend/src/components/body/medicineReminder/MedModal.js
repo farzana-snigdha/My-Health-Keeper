@@ -57,10 +57,11 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-const MedModal = ({ showModal, setShowModal, missedList }) => {
+const MedModal = ({ showModal, setShowModal, list }) => {
   const token = useSelector((state) => state.token);
-  //const [missedList, setMissedList] = useState([]);
+  //const [list, setMissedList] = useState([]);
   const modalRef = useRef();
+
 
 //   useEffect(async () => {
 //     await axios
@@ -99,7 +100,7 @@ const MedModal = ({ showModal, setShowModal, missedList }) => {
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
-            <ModalContent>
+            <ModalContent list={list}>
               <table className="table">
                 <thead className="thead-light">
                   <tr>
@@ -109,7 +110,7 @@ const MedModal = ({ showModal, setShowModal, missedList }) => {
                   </tr>
                 </thead>
                 <tbody>
-                {missedList.map((doses) => (
+                {list.map((doses) => (
                     <tr>
                     <td>{doses.meddate.substring(0, 10)}</td>
                     <td>{doses.medtime}</td>
