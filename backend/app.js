@@ -8,6 +8,7 @@ const fileUpload = require("express-fileupload");
 const medReminderRouter = require('./routers/medReminder.route');
 const cycleTracker =require('./routers/cycleTracker.routers')
 const medDoses = require("./routers/medDose.route");
+const specializedHealthInformation = require('./routers/specializedHealthInformation.routers');
 const path = require("path");
 
 const app = express();
@@ -27,6 +28,7 @@ app.use(medDoses);
 app.use("/user", cycleTracker);
 app.use("/user", router);
 app.use("/api", imgRouter);
-app.get("/", (req, res) => res.send(`API Running`));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api', specializedHealthInformation.routes);
 
 module.exports = app;
