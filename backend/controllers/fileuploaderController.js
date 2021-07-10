@@ -1,7 +1,9 @@
-const MultipleFile = require("../models/multiplefile");
+const MultipleFile = require("../models/multiplefile.models");
 
 const multipleFileUpload = async (req, res, next) => {
   try {
+    let user = req.headers["userid"];
+
     let filesArray = [];
     req.files.forEach((element) => {
       const file = {
@@ -13,22 +15,25 @@ const multipleFileUpload = async (req, res, next) => {
       filesArray.push(file);
     });
     const multipleFiles = new MultipleFile({
+user:user,
       title: req.body.title,
       files: filesArray,
     });
     await multipleFiles.save();
     res.status(201).send("Files Uploaded Successfully");
   } catch (error) {
-    res.status(400).send(error.message);
+    res.send(error.message);
   }
 };
 
 const getallMultipleFiles = async (req, res, next) => {
   try {
-    const files = await MultipleFile.find();
+    let user = req.headers["userid"];
+
+    const files = await MultipleFile.find({user});
     res.status(200).send(files);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.send(error.message);
   }
 };
 

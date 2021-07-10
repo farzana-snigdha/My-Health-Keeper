@@ -6,9 +6,10 @@ const {
   multipleFileUpload,
   getallMultipleFiles,
 } = require("../controllers/fileuploaderController");
+const auth=require("../middleware/auth")
 const router = express.Router();
 
-router.post("/multipleFiles", upload.array("files"), multipleFileUpload);
+router.post("/multipleFiles",auth, upload.array("files"), multipleFileUpload);
 router.get("/getMultipleFiles", getallMultipleFiles);
 
 module.exports = {
