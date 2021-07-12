@@ -138,12 +138,13 @@ color:"#0c3646",
       class="bg_image"
       style={{
         backgroundImage:
-          "url(https://image.freepik.com/free-vector/abstract-blue-bright-background-health-care-icon-pattern-medical-innovation-concept_44392-178.jpg)",
-        backgroundSize: "cover",
+          "url(https://images.pexels.com/photos/4040649/pexels-photo-4040649.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)",
+        backgroundSize: "fit",
         backgroundRepeat: "no-repeat",
         height: "100vh",
         backgroundPosition: "center",
         color: "#f5f5f5",
+        // opacity:'.8',
       }}
     >
       <Toolbar className={classes.toolbar}>
