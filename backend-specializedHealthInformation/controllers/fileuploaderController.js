@@ -33,8 +33,9 @@ const multipleFileUpload = async (req, res) => {
 const getallMultipleFiles = async (req, res, next) => {
   try {
     let user = req.headers["userid"];
+    let title=req.body.title
 
-    const files = await MultipleFile.find({ user });
+    const files = await MultipleFile.find({ user,title });
     res.status(200).send(files);
   } catch (error) {
     res.send(error.message);
