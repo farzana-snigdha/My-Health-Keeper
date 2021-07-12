@@ -11,6 +11,7 @@ import MenstrualCycle from "./MenstrualCycle/MenstrualCycle";
 import HealthInfo from "./genHealthInfo/HealthInfo";
 import MedicineDose from "./medicineReminder/MedDoses";
 import specializedHealthInfo from "./specializedHealthInfo/specializedHealthInfo";
+import ViewFiles from "./specializedHealthInfo/ViewFiles";
 
 export default function Body() {
   const auth = useSelector((state) => state.auth);
@@ -56,6 +57,11 @@ export default function Body() {
 <Route
           path="/specialized-health-information"
           component={isLogged ? specializedHealthInfo : Login}
+          exact
+        />
+        <Route
+          path="/view-files"
+          component={isLogged ? ViewFiles : Login}
           exact
         />
         {/* <PrivateRoute path= "/display-medicine-reminderList" component={DisplayMedicineReminders} exact />
