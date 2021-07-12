@@ -1,10 +1,12 @@
+"use strict";
 const MultipleFile = require("../models/multiplefile.models");
 
-const multipleFileUpload = async (req, res, next) => {
+const multipleFileUpload = async (req, res) => {
   try {
     let user = req.headers["userid"];
-
+    let title = req.body.title;
     let filesArray = [];
+    console.log(req.files);
     req.files.forEach((element) => {
       const file = {
         fileName: element.originalname,
@@ -15,13 +17,15 @@ const multipleFileUpload = async (req, res, next) => {
       filesArray.push(file);
     });
     const multipleFiles = new MultipleFile({
-user:user,
-      title: req.body.title,
+      user: user,
+      title: title,
       files: filesArray,
     });
-    await multipleFiles.save();
-    res.status(201).send("Files Uploaded Successfully");
+    await multipleFiles.save().then(() => {
+      res.status(201).send("Files Uploaded Successfully");
+    });
   } catch (error) {
+    console.log("cqecd ", error.message);
     res.send(error.message);
   }
 };
@@ -30,7 +34,7 @@ const getallMultipleFiles = async (req, res, next) => {
   try {
     let user = req.headers["userid"];
 
-    const files = await MultipleFile.find({user});
+    const files = await MultipleFile.find({ user });
     res.status(200).send(files);
   } catch (error) {
     res.send(error.message);
@@ -52,4 +56,5 @@ const fileSizeFormatter = (bytes, decimal) => {
 module.exports = {
   multipleFileUpload,
   getallMultipleFiles,
+
 };

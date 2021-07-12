@@ -1,10 +1,8 @@
 const connectDB = require('./models/db')
 require('dotenv').config()
 const app = require("./app");
-const path = require('path');
 const PORT = process.env.PORT;
-const express = require('express');
-const specializedHealthInformation = require('../backend-specializedHealthInformation/routers/specializedHealthInformation.routers');
+const specializedHealthInformation = require('./routers/specializedHealthInformation.routers');
 
 // Connect Database
 connectDB();
