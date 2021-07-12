@@ -69,8 +69,8 @@ function DisplayMedReminders() {
     setOngoingMedReminderList(removedMed);
   };
   return (
-    <div className="reminder">
-      <div className="reminder_buttons">
+    <div className="reminder"> &nbsp;
+      <div className="reminder_buttons"> 
         <Link href="/medicine-reminder" className="reminder_buttons_sub">
           {""} Add New
         </Link>
@@ -81,7 +81,7 @@ function DisplayMedReminders() {
 
       <div className="reminder_body">
         <div>
-          <h2>Ongoing Medicine</h2> <hr></hr>
+          <h2> &nbsp;Ongoing Medicine</h2>  <hr></hr>
         </div>
         {ongoingMedReminderList.map((medicines) => (
           <div className="reminder_card">
@@ -122,7 +122,7 @@ function DisplayMedReminders() {
         ))}
 
         <div>
-          <h2>Done</h2> <hr></hr>
+          <h2> &nbsp;Done</h2> <hr></hr>
         </div>
         {doneMedReminderList.map((medicines) => (
           <div className="reminder_card">

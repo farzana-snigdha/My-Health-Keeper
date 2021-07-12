@@ -106,10 +106,10 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     overflow: "auto",
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
+  // container: {
+  //   paddingTop: theme.spacing(4),
+  //   paddingBottom: theme.spacing(4),
+  // },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
@@ -327,9 +327,9 @@ function Header() {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="" className={classes.container}>
+        
             <Body />
-          </Container>
+          
         </main>
       </div>
     </React.Fragment>
