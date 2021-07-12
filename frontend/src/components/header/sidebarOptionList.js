@@ -45,7 +45,7 @@ export const mainListItems = (
           <LocalHospitalIcon />
         </font>
       </ListItemIcon>
-      <Link to="/" component={NavLink}>
+      <Link to="/specialized-health-information" component={NavLink}>
       <font  className="sidebar-options-color" >
         <ListItemText primary="Specialized Health Information" />
         </font>
