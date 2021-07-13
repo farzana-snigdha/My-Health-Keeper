@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     width: drawerWidth,
     color: "white",
-    background: "#008080",
+    background: "#04272f",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
