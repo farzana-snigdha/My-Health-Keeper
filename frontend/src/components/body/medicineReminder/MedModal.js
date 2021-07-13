@@ -141,21 +141,18 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                           }}
                         >
                           <div>
+                            <h6>Alert!</h6>
                             <p>
                               Are you sure want to confirm this missed medicine?
                             </p>
                             <Button
                               onClick={() => {
-                                console.log("modal2 enter"+doses._id);
                                 missedConfirm(doseId);
-                                console.log("modal2 exit"+doses._id);
                                 setShowAlert(false);
+                                setShowModal(false);
                               }}
                             >
                               Yes
-                            </Button>
-                            <Button onClick={() => setShowAlert(false)}>
-                              No
                             </Button>
                           </div>
                         </Modal>

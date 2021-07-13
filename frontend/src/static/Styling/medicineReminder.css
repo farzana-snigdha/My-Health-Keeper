@@ -3,11 +3,11 @@
 }
 .customModal {
   background: #b2dbbf;
-  max-width: 500px;
+  max-width: 400px;
   width: 20%;
   border: #3854f3;
   height: 200px;
-  padding: 30px;
+  padding: 60px;
 }
 
 .reminder_buttons {
