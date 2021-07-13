@@ -36,7 +36,7 @@ import Body from "../body/Body";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
-import colors from '../../static/Styling/colors.css'
+import colors from "../../static/Styling/colors.css";
 // import Headers from '../../static/Styling/header.css  '
 const drawerWidth = 330;
 
@@ -169,7 +169,7 @@ function Header() {
   const classes = useStyles();
   const { user, isLogged } = auth;
   const [open, setOpen] = React.useState(true);
-  const [cookies,  removeCookie] = useCookies(["user"]);
+  const [cookies, removeCookie] = useCookies(["user"]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -182,7 +182,7 @@ function Header() {
     try {
       await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
-      localStorage.removeItem("UserMenstrualInfo")
+      localStorage.removeItem("UserMenstrualInfo");
       removeCookie("UserMenstrualInfo");
       window.location.href = "/";
     } catch (err) {
@@ -194,12 +194,14 @@ function Header() {
     // console.log(user._id);
     return (
       <div>
-        <Link to="/profile"   data-toggle="tooltip"
-              title="Profile Settings" component={NavLink}>
-          {<img className={classes.imageIcon} src={user.avatar} alt="" />}<font  className="link-color" >
-          {user.name}{" "}
-          </font>
-        
+        <Link
+          to="/profile"
+          data-toggle="tooltip"
+          title="Profile Settings"
+          component={NavLink}
+        >
+          {<img className={classes.imageIcon} src={user.avatar} alt="" />}
+          <font className="link-color">{user.name} </font>
         </Link>
 
         <Link
@@ -207,9 +209,10 @@ function Header() {
           component={NavLink}
           to="/"
           onClick={handleLogout}
-        ><font  className="link-color" >
-          <i className="fas fa-sign-out-alt"></i>Logout
-          {""}
+        >
+          <font className="link-color">
+            <i className="fas fa-sign-out-alt"></i>Logout
+            {""}
           </font>
         </Link>
       </div>
@@ -219,13 +222,14 @@ function Header() {
   const authLink = () => {
     return (
       <div>
-        <Link component={NavLink} to="/signup"><font  className="link-color" >
-        <i class="fas fa-user-plus"></i> Sign up
-        </font>
-          
+        <Link component={NavLink} to="/signup">
+          <font className="link-color">
+            <i class="fas fa-user-plus"></i> Sign up
+          </font>
         </Link>
-        <Link component={NavLink} className={classes.authStyle} to="/login"><font  className="link-color" >
-          <i class="fas fa-sign-in-alt"></i> Sign in
+        <Link component={NavLink} className={classes.authStyle} to="/login">
+          <font className="link-color">
+            <i class="fas fa-sign-in-alt"></i> Sign in
           </font>
         </Link>
       </div>
@@ -299,7 +303,6 @@ function Header() {
               </Link>
             </Typography>
             <Typography className={classes.signinTitle} color="inherit">
-              
               <ul style={transForm}>{isLogged ? userLink() : authLink()}</ul>
             </Typography>
           </Toolbar>
@@ -327,9 +330,8 @@ function Header() {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-        
-            <Body />
-          
+
+          <Body />
         </main>
       </div>
     </React.Fragment>

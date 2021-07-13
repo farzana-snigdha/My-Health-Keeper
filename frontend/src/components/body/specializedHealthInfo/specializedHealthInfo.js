@@ -1,17 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import "../../../static/Styling/spHealthInfo.css";
-import { Button, IconButton, Link } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import {
+  Typography,
+  Button,
+  Grid,
+  IconButton,
+  Link,
+  TextField,
+} from "@material-ui/core";
+import {
+  showErrMsg,
+  showSuccessMsg,
+} from "../../utils/notification/Notification";
 
-export default function specializedHealthInfo() {
-    return (
-        <div>
-            &nbsp;
-      <div className="reminder_buttons"> 
-        <Link href="/view-files" className="reminder_buttons_sub">
-          {""} View Your Files
-        </Link>
-       
-      </div>
-        </div>
-    )
+import { useHistory } from "react-router-dom";
+
+import axios from "axios";
+import AddNotes from "./AddNotes";
+
+const initialState = {
+  folder: "",
+  noteDate: "",
+  description: "",
+ };
+
+export default function SpecializedHealthInfo() {
+  const token = useSelector((state) => state.token);
+  const auth = useSelector((state) => state.auth);
+  const { user, isLogged } = auth;
+
+  return (
+    <div>
+{AddNotes()}
+ <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health Diary</h4>
+      <hr></hr>
+    </div>
+ 
+        );
 }

@@ -1,16 +1,21 @@
 const express = require("express");
-const { imageUpload,upload, } = require("../helpers/filehelper");
+const {  upload } = require("../helpers/filehelper");
 const router = express.Router();
 const {
-  multipleFileUpload,
-  getallMultipleFiles
-} = require("../controllers/fileuploaderController");
-const auth=require("../../backend/middleware/auth")
+  saveSpecializedHealthInfo,
+  getallSpecializedHealthInfo,
+  getallMediaFiles,
+  updateSpecializedHealthInfo,
+} = require("../controllers/specializedHealthInfo.controllers");
 
-
-router.post("/multipleFiles",upload.array('files'),  multipleFileUpload);
-router.get("/getMultipleFiles", getallMultipleFiles);
-
+router.post(
+  "/save-specialized-health-info",
+  upload.array("files"),
+  saveSpecializedHealthInfo
+);
+router.get("/get-specializedHealthInfo", getallSpecializedHealthInfo);
+router.get("/getallMediaFiles", getallMediaFiles);
+router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
 module.exports = {
   routes: router,
 };
