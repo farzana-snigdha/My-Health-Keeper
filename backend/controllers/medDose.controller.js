@@ -94,7 +94,34 @@ const getDoses = async (req, res) => {
       }
       if (doseList) {
         res.send(doseList);
+        //console.log(doseList);
+      }
+    }
+  );
+};
+
+
+const getMissedDoses = async (req, res) => {
+  let user = req.user.id;
+  const date1 = new Date();
+  console.log(new Date(date1.toISOString().slice(0, 10)));
+
+  medConfirmation.find(
+    {
+      user: user,
+      doseId: req.params.id,
+      meddate: {$lt: new Date(date1.toISOString().slice(0, 10))},
+      isTaken: false,
+    },
+    (err, doseList) => {
+      if (err) {
+        console.log(user);
+        console.log("Test :" + err);
+      }
+      if (doseList) {
+        res.send(doseList);
         console.log(doseList);
+        console.log("done")
       }
     }
   );
@@ -118,4 +145,4 @@ const doseConfirmUpdate = async (req, res) => {
   });
 };
 
-module.exports = { getDoses, doseConfirmUpdate };
+module.exports = { getDoses, doseConfirmUpdate, getMissedDoses };

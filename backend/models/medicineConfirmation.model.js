@@ -5,7 +5,7 @@ const medDoseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
   },
-  dose: {
+  doseId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "medicines",
   },

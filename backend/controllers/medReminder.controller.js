@@ -4,17 +4,34 @@ const moment = require("moment");
 
 //const doseId = null;
 
-const getMedicine = async (req, res) => {
+const getOngoingMedicine = async (req, res) => {
   let user = req.user.id;
-
-  medReminder.find({ user }, (err, reminderList) => {
+const todayDate=new Date()
+  medReminder.find({ user,enddate:{$gte:todayDate} }, (err, reminderList) => {
     if (err) {
       console.log(user);
       console.log("Test :" + err);
     }
     if (reminderList) {
+     
       res.send(reminderList);
-      console.log(reminderList);
+     
+    }
+  });
+};
+
+const getCompleteMedicine = async (req, res) => {
+  let user = req.user.id;
+const todayDate=new Date()
+  medReminder.find({ user,enddate:{$lt:todayDate} }, (err, reminderList) => {
+    if (err) {
+      console.log(user);
+      console.log("Test :" + err);
+    }
+    if (reminderList) {
+     
+      res.send(reminderList);
+     
     }
   });
 };
@@ -60,7 +77,7 @@ const postMedicine = async (req, res) => {
           const incrementDate = new Date(moment(date1).add(i, "days"));
           const medDose = new medConfirmation({
             user,
-            doseId,
+            doseId: doseId,
             medname: medname,
             meddate: incrementDate,
             medtime: doses[j].time,
@@ -101,10 +118,18 @@ const deleteMedicine = async (req, res) => {
     if (reminderList) {
       medReminder
         .findByIdAndDelete(req.params.id)
-        .then(() => res.json("Reminder deleted."))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .then(() => {
+          console.log("Medicine deleted.");
+          medConfirmation
+            .deleteMany({doseId : req.params.id})
+            .then(() =>
+              res
+                .json("Reminders deleted."))
+                .catch((err) => res.status(400).json("reminder delete Error: " + err));
+        })
+        .catch((err) => res.status(400).json("Med delete Error: " + err));
     }
   });
 };
 
-module.exports = { getMedicine, postMedicine, deleteMedicine };
+module.exports = {  getOngoingMedicine, postMedicine, deleteMedicine,getCompleteMedicine };
