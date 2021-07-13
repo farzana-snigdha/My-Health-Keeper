@@ -246,7 +246,6 @@ function Login() {
         </Typography>
         <pre></pre>
         <pre></pre>
-        
         <pre></pre>
         <div className={classes.using}>Or SignUp Using</div>
         <p></p>
