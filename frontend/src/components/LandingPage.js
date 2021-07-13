@@ -7,9 +7,8 @@ import {Button,Typography,Link}  from '@material-ui/core';
 
 function LandingPage() {
   const imagesList = [
-    'url(/img/landingPage/Photo3.jpeg)',
-    'url(/img/landingPage/Photo1.jpeg)',
     'url(/img/landingPage/Photo4.jpeg)',
+    'url(/img/landingPage/Photo1.jpeg)',
     'url(/img/landingPage/Photo2.jpeg)'
   ];
   const useStyles = makeStyles((theme) => ({
@@ -17,7 +16,7 @@ function LandingPage() {
        
         color: "black",
         padding: "20%",
-        textShadow:"2px 2px #FFFFFF",
+        textShadow:"2px 4px #FFFFFF",
       },
     image: {
            backgroundRepeat: "no-repeat",
