@@ -5,23 +5,30 @@ import {Container} from '@material-ui/core'
 
 function Home() {
     return (
-       
+       <div>
 <div
       class="bg_image"
       style={{
         backgroundImage:
-          "url(https://image.freepik.com/free-photo/front-view-woman-holding-paper-heart-with-heartbeat_23-2148635119.jpg)",
+          "url(/img/home-bg.png)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         height: "100vh",
-    
+        opacity: " 0.8",
         backgroundPosition: "center",
-        color: "#f5f5f5",
-        opacity:'.5',
       }}
-    ></div>
+    >
+      <div style={{
+      display:"flex",
+      flexDirection:"column",
+      alignItems:"center",
+      justifyContent:"center",
+    }}>
+      <h4> Your Health, Our Concern</h4>
+    </div>
+    </div>
 
-
+    </div>
 
 
       
