@@ -2,7 +2,7 @@ const User=require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {CLIENT_URL} = process.env
-const sendMail = require('./sendMail')
+const sendMail = require('./sendMail.Controllers')
 const {google} = require('googleapis')
 const {OAuth2} = google.auth
 const fetch = require('node-fetch')
@@ -80,7 +80,7 @@ const authControllers={
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
                 path: '/user/refresh_token',
-                maxAge: 7*24*60*60*1000 // 7 days
+                maxAge: 2000*24*60*60*1000 // 7 days
             })
 
             res.json({msg: "Login success!"})
@@ -186,7 +186,7 @@ console.log(passwordHash)
                 res.cookie('refreshtoken', refresh_token, {
                     httpOnly: true,
                     path: '/user/refresh_token',
-                    maxAge: 7*24*60*60*1000 // 7 days
+                    maxAge: 2000*24*60*60*1000 // 2000 days
                 })
                 res.json({"aa": moment(user.dateOfBirth).format('L')})
                 res.json({msg: "Login success!"})
@@ -201,7 +201,7 @@ console.log(passwordHash)
                 res.cookie('refreshtoken', refresh_token, {
                     httpOnly: true,
                     path: '/user/refresh_token',
-                    maxAge: 7*24*60*60*1000 // 7 days
+                    maxAge: 2000*24*60*60*1000 // 2000 days
                 })
 
                 res.json({msg: "Login success!"})
@@ -228,7 +228,7 @@ const createAccessToken = (payload) => {
 }
 
 const createRefreshToken = (payload) => {
-    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
+    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '2000d'})
 }
 
 
