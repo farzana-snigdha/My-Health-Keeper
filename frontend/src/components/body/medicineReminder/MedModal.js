@@ -62,6 +62,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
   const { user } = auth;
   // const [disable, setDisable] = React.useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [doseId, setDoseId] = useState(null);
   const modalRef = useRef();
 
   const closeModal = (e) => {
@@ -124,6 +125,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                         <Button
                           onClick={() => {
                             setShowAlert(true);
+                            setDoseId(doses._id);
                             console.log("modal1 enter"+doses._id);
                           }}
                         >
@@ -145,7 +147,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                             <Button
                               onClick={() => {
                                 console.log("modal2 enter"+doses._id);
-                                missedConfirm(doses._id);
+                                missedConfirm(doseId);
                                 console.log("modal2 exit"+doses._id);
                                 setShowAlert(false);
                               }}
@@ -159,6 +161,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                         </Modal>
                       </td>
                     </tr>
+                    
                   ))}
                 </tbody>
               </table>
