@@ -1,3 +1,15 @@
+.customOverlay {
+  background: rgba(36, 123, 160, 0.7);
+}
+.customModal {
+  background: #b2dbbf;
+  max-width: 500px;
+  width: 20%;
+  border: #3854f3;
+  height: 200px;
+  padding: 30px;
+}
+
 .reminder_buttons {
   width: 30%;
   margin-right: 0;

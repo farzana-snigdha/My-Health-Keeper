@@ -63,17 +63,6 @@ function DisplayMedReminders() {
 
   return (
     <div className="reminder">
-      {/* <h1>Reminder List 🧭</h1>
-      <div className="reminder_header">
-        <Link href="/medicine-reminder" className="button">
-          {" "}
-          Add to List
-        </Link>
-        <Link href="/medicine-doses" className="button">
-          {" "}
-          Medicines Today
-        </Link>
-      </div> */}
 
       <div className="reminder_buttons">
       <Link href="/medicine-reminder" className="reminder_buttons_sub">{""} Add New</Link>

@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import "../../../static/Styling/medicineReminder.css";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
 import { Button, IconButton, Link } from "@material-ui/core";
+//import Modal from 'react-modal';
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 
 const Background = styled.div`
   width: 100%;
@@ -27,7 +31,7 @@ const ModalWrapper = styled.div`
   color: #000;
   position: relative;
   border-radius: 10px;
-  padding : 20px;
+  padding: 20px;
 `;
 
 const ModalContent = styled.div`
@@ -39,7 +43,6 @@ const ModalContent = styled.div`
   p {
     margin-bottom: 1rem;
   }
-  
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -57,21 +60,9 @@ const MedModal = ({ showModal, setShowModal, list }) => {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
-  const [disable, setDisable] = React.useState(false);
-  //const [mlist, setMissedList] = useState([]);
+  // const [disable, setDisable] = React.useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const modalRef = useRef();
-
-  //setMissedList(list);
-//   useEffect(async () => {
-//     await axios
-//       .get("http://localhost:5000/medDoseMissed/"+medId, {
-//         headers: { Authorization: token },
-//       })
-//       .then((res) => {
-//           setMissedList(res.data);
-//           console.log(medId);
-//       });
-//   }, []);
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
@@ -112,7 +103,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
-            <ModalContent >
+            <ModalContent>
               <table className="table">
                 <thead className="thead-light">
                   <tr>
@@ -123,14 +114,52 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                   </tr>
                 </thead>
                 <tbody>
-                {list.map((doses) => (
+                  {list.map((doses) => (
                     <tr>
-                    <td>{doses.meddate.substring(0, 10)}</td>
-                    <td>{doses.medtime}</td>
-                    <td>Missed</td>
-                    <td><Button onClick={()=> {missedConfirm(doses._id); setDisable(true);}}>Confirm</Button></td>
-                  </tr>
-                ))}
+                      <td>{doses.meddate.substring(0, 10)}</td>
+                      <td>{doses.medtime}</td>
+                      <td>Missed</td>
+                      {/* <td><Button onClick={()=> {missedConfirm(doses._id)}}>Confirm</Button></td> */}
+                      <td>
+                        <Button
+                          onClick={() => {
+                            setShowAlert(true);
+                            console.log("modal1 enter"+doses._id);
+                          }}
+                        >
+                          Confirm
+                        </Button>
+                        <Modal
+                          open={showAlert}
+                          onClose={() => setShowAlert(false)}
+                          center
+                          classNames={{
+                            overlay: "customOverlay",
+                            modal: "customModal",
+                          }}
+                        >
+                          <div>
+                            <p>
+                              Are you sure want to confirm this missed medicine?
+                            </p>
+                            <Button
+                              onClick={() => {
+                                console.log("modal2 enter"+doses._id);
+                                missedConfirm(doses._id);
+                                console.log("modal2 exit"+doses._id);
+                                setShowAlert(false);
+                              }}
+                            >
+                              Yes
+                            </Button>
+                            <Button onClick={() => setShowAlert(false)}>
+                              No
+                            </Button>
+                          </div>
+                        </Modal>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </ModalContent>
