@@ -14,7 +14,7 @@ import HealingIcon from "@material-ui/icons/Healing";
 import BubbleChartIcon from "@material-ui/icons/BubbleChart";
 
 export const mainListItems = (
-  <div className="sidebar-color">
+  <div>
     <ListItem button>
       <ListItemIcon>
       <font  className="sidebar-options-color" >
@@ -45,7 +45,7 @@ export const mainListItems = (
           <LocalHospitalIcon />
         </font>
       </ListItemIcon>
-      <Link to="/" component={NavLink}>
+      <Link to="/specialized-health-information" component={NavLink}>
       <font  className="sidebar-options-color" >
         <ListItemText primary="Specialized Health Information" />
         </font>

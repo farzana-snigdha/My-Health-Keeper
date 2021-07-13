@@ -68,10 +68,18 @@ function ForgotPassword() {
       flexDirection: "column",
       alignItems: "center",
     },
+    forms: {
+      width: "100%", // Fix IE 11 issue.
+      paddingRight: "36%",
+      paddingLeft: "36%",
+      paddingTop: "10%",
+    },
     email: {
-      maxWidth: "80%",
-      marginTop: "40px",
      
+     
+          backgroundColor: "white",
+      width: "100%",
+      borderRadius: "5px",
     },
 
     submit: {
@@ -79,11 +87,13 @@ function ForgotPassword() {
       width: "100%",
       alignItems:"flex-end",
       background: "#232327",
-      color: "white",
+      
       padding:" 10px 30px",
-      borderRadius:"3px",
+      background: "#15495d",
+      borderRadius: "10px",
+      color: "white",
       "&:hover": {
-        background: "#232327",
+        background: "#308294",
       },  },
 
       gridstyle:{
@@ -93,44 +103,35 @@ function ForgotPassword() {
   }));
   const classes = useStyles();
   return (
-    <div>
-      <CssBaseline />
-        <Toolbar className={classes.toolbar}>
-          {" "}
-         
-          <Typography
-            variant="h5"
-            color="inherit"
-            noWrap
-            className={classes.toolbarTitle}
-          >
-            <Link
-              component={NavLink}
-              to="/"
-              underline="none"
-              color="textPrimary"
-            >
-              My HealthKeeper
-            </Link>
-          </Typography>
-          
-        </Toolbar>
-
-
-   <Grid className={classes.gridstyle}
-   container component="main" maxwidth="xs">
-      
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h3">
-            Forgot Your Password?
-          </Typography>
-          
-           
-            <TextField
+    <div
+    class="bg_image"
+    style={{
+      backgroundImage:
+        "url(https://image.freepik.com/free-vector/abstract-blue-bright-background-health-care-icon-pattern-medical-innovation-concept_44392-178.jpg)",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      height: "100vh",
+      backgroundPosition: "center",
+      color: "#f5f5f5",
+    }}
+  >
+     <Toolbar className={classes.toolbar}>
+        {" "}
+        <Typography
+          variant="h4"
+          color="inherit"
+          noWrap
+          className={classes.toolbarTitle}
+        >
+          <Link component={NavLink} to="/" underline="none" color="textPrimary">
+            My HealthKeeper
+          </Link>
+        </Typography>
+      </Toolbar>
+<div className={classes.forms}>
+<TextField
               className={classes.email}
-              variant="outlined"
+           
               margin="normal"
               required
               fullWidth
@@ -150,28 +151,81 @@ function ForgotPassword() {
               Verify your email
             </Button>
             </Box>
+</div>
+         
+             
+
+      {err && showErrMsg(err)}
+         {success && showSuccessMsg(success)}
+
+  </div>
+  //   <div>
+  //     <CssBaseline />
+  //       <Toolbar className={classes.toolbar}>
+  //         {" "}
+         
+  //         <Typography
+  //           variant="h5"
+  //           color="inherit"
+  //           noWrap
+  //           className={classes.toolbarTitle}
+  //         >
+  //           <Link
+  //             component={NavLink}
+  //             to="/"
+  //             underline="none"
+  //             color="textPrimary"
+  //           >
+  //             My HealthKeeper
+  //           </Link>
+  //         </Typography>
+          
+  //       </Toolbar>
+
+
+  //  <Grid className={classes.gridstyle}
+  //  container component="main" maxwidth="xs">
+      
+  //     <Grid item xs={false} sm={4} md={7} className={classes.image} />
+  //     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+  //       <div className={classes.paper}>
+  //         <Typography component="h1" variant="h3">
+  //           Forgot Your Password?
+  //         </Typography>
+          
+           
+  //           <TextField
+  //             className={classes.email}
+  //             variant="outlined"
+  //             margin="normal"
+  //             required
+  //             fullWidth
+  //             id="email"
+  //             label="Enter your email address"
+  //             name="email"
+  //             autoComplete="email"
+  //             type="text"
+  //             autoFocus
+  //             onChange={handleChangeInput}
+  //             value={email}
+  //           />
+  //           <Box flexDirection="row-reverse">
+  //           <Button  variant="contained" 
+  //             color="primary"
+  //             className={classes.submit} onClick={forgotPassword}>
+  //             Verify your email
+  //           </Button>
+  //           </Box>
            
           
-        </div>
-        {err && showErrMsg(err)}
-        {success && showSuccessMsg(success)}
-      </Grid>
-    </Grid>
+  //       </div>
+  //       {err && showErrMsg(err)}
+  //       {success && showSuccessMsg(success)}
+  //     </Grid>
+  //   </Grid>
   
-    </div>
-   // <div className="fg_pass">
-    //     <h2>Forgot Your Password?</h2>
-
-    //     <div className="row">
-    //         {err && showErrMsg(err)}
-    //         {success && showSuccessMsg(success)}
-
-    //         <label htmlFor="email">Enter your email address</label>
-    //         <input type="email" name="email" id="email" value={email}
-    //         onChange={handleChangeInput} />
-    //         <button onClick={forgotPassword}>Verify your email</button>
-    //     </div>
-    // </div>
+  //   </div>
+ 
   );
 }
 

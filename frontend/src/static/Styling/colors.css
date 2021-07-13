@@ -1,14 +1,22 @@
 .link-color {
-    color:#312f2f;
+    color:#04272f;
+    font-weight: bold;
+    
 }
 .link-color:hover{
-    color:#312f2f;
+    color:#0a3944;
+    font-weight: bold;
+}
+.signup{
+    color:#04272f;
+    font-weight: bold;
+      font-size: 25px;
+}
+.signup:hover{
+    color:#0a3944;
     font-weight: bold;
 }
 
-.sidebar-color{
-    color:#312f2f;
-}
 
 .sidebar-options-color{
     color:white;
