@@ -1,5 +1,5 @@
 const medConfirmation = require("../models/medicineConfirmation.model");
-const sendEmail = require("./sendMail");
+const sendEmail = require("./sendMail.Controllers");
 
 setInterval(() => {
   // console.log('ss')

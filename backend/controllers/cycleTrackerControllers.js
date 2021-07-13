@@ -1,5 +1,5 @@
 const Cycle = require("../models/periodTracker.model");
-const sendMail = require("./sendMail");
+const sendMail = require("./sendMail.Controllers");
 
 setInterval(() => {
   // console.log('ss')

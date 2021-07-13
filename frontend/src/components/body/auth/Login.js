@@ -138,8 +138,8 @@ color:"#0c3646",
       class="bg_image"
       style={{
         backgroundImage:
-          "url(https://images.pexels.com/photos/4040649/pexels-photo-4040649.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)",
-        backgroundSize: "fit",
+          "url(https://image.freepik.com/free-vector/abstract-medical-wallpaper-template-design_53876-61802.jpg)",
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         height: "100vh",
         backgroundPosition: "center",
