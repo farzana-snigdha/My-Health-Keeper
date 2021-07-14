@@ -157,7 +157,7 @@ console.log(passwordHash)
                 name, avatar,phone,gender
             })
 
-            res.json({msg: "Update Success!"})
+            res.json({msg: "Update Success! Please refresh the page now"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

@@ -211,7 +211,7 @@ const cycleTrackerControllers = {
     await initialinfo
       .save()
       .then(() => {
-        return res.json({ msg: "Initial data is saved" });
+        return res.json({ msg: "Initial data is saved.  Please refresh the page now" });
       })
       .catch((err) => {
         return res.status(500).json({ msg: err.message });
