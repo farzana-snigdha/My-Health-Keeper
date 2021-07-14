@@ -175,16 +175,12 @@ export default function AddNotes() {
           </Grid>
           <Grid item xs={3}></Grid>
           <Grid item xs={2}>
-            {/* update   */}
-            &nbsp;
-            <Button
-              type="button"
-              variant="contained"
-              onClick={UploadMultipleFiles}
-              color="primary"
-            >
-              save
-            </Button>
+            <div className="sp_reminder_buttons">
+              &nbsp;
+              <Button type="button" onClick={UploadMultipleFiles}>
+                <font className="sidebar-options-color">save</font>
+              </Button>
+            </div>
           </Grid>
           {/* <Grid item xs={1.5}>
           update  
