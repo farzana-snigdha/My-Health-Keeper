@@ -168,7 +168,7 @@ const cycleTrackerControllers = {
         }
       ).then(() => {
         console.log("updateInitialData ", startDate);
-        return res.json({ msg: "Update Success!" });
+        return res.json({ msg: "Update Success!Please Refresh the page" });
       });
     } catch (err) {
       return res.status(500).json({ setupData: err.message });
@@ -211,7 +211,7 @@ const cycleTrackerControllers = {
     await initialinfo
       .save()
       .then(() => {
-        return res.json({ msg: "Initial data is saved" });
+        return res.json({ msg: "Initial data is saved!Please Refresh the page" });
       })
       .catch((err) => {
         return res.status(500).json({ msg: err.message });
