@@ -119,6 +119,16 @@ function InputMedReminder() {
 
   return (
     <Container className="container">
+      <div>
+        <Link href="/display-medicine-reminderList">
+          <Button type="button" color="primary" size="large">
+            <i class="fas fa-angle-double-left" >
+              {" "}
+              &nbsp; Return
+            </i>
+          </Button>
+        </Link>
+      </div>
       <div className="paper">
         <Grid align="center">
           <h2>Add Medicine</h2>{" "}
@@ -217,11 +227,6 @@ function InputMedReminder() {
             >
               Add
             </Button>
-            <Link href="/display-medicine-reminderList">
-              <Button type="button" variant="contained" color="primary">
-                ↩Back to Display Reminders List
-              </Button>
-            </Link>
           </div>
         </form>
       </div>
