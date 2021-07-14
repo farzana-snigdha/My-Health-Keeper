@@ -37,7 +37,7 @@ export default function SpecializedHealthInfo() {
     console.log("c ", id);
 
     await axios
-      .get("http://localhost:5100/api/get-specializedHealthInfo", {
+      .get("http://localhost:5000/api/get-specializedHealthInfo", {
         headers: { Authorization: token, userid: id },
       })
       .then((res) => setSpHealthNotes(res.data));

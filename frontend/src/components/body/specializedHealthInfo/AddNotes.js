@@ -47,7 +47,7 @@ export default function AddNotes() {
     console.log("c ",id)
     
     await axios
-      .get("http://localhost:5100/api/get-specializedHealthInfo", {
+      .get("http://localhost:5000/api/get-specializedHealthInfo", {
         headers: { Authorization: token, userid: id },
       })
       .then((res) => setSpHealthNotes(res.data));
@@ -81,7 +81,7 @@ export default function AddNotes() {
 console.log("addnotes ",id)
     const res = await axios
       .post(
-        "http://localhost:5100/api/save-specialized-health-info",
+        "http://localhost:5000/api/save-specialized-health-info",
         formData,
         mulitpleFileOptions,
         {

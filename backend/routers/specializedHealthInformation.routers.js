@@ -16,6 +16,6 @@ router.post(
 router.get("/get-specializedHealthInfo", getallSpecializedHealthInfo);
 router.get("/getallMediaFiles", getallMediaFiles);
 router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
-module.exports = {
-  routes: router,
-};
+module.exports = 
+  router
+;
