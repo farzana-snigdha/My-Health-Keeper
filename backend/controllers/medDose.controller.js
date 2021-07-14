@@ -2,22 +2,20 @@ const medConfirmation = require("../models/medicineConfirmation.model");
 const sendEmail = require("./sendMail.Controllers");
 
 setInterval(() => {
-  // console.log('ss')
-  // let user = req.headers['userid'];
+
   medConfirmation.find({}, (err, reminder) => {
     if (err) {
       console.log("medConfirmation notification: ", err);
     }
     if (reminder) {
-      //for loop reminder.size,
+     
       for (i = 0; i < reminder.length; i++) {
         if (!reminder[i].isReminded) {
           var input = reminder[i].medtime;
 
           var input1 = reminder[i].meddate;
           const q = new Date(input1);
-          // lastEndDate.setTime(lastEndDate.getTime()
-          const aaq = q.toISOString().slice(0, 11) + input + ":00.00";
+                   const aaq = q.toISOString().slice(0, 11) + input + ":00.00";
           const time1 = new Date(aaq);
 
           if (time1.getTime() - Date.now() < 0) {
@@ -86,18 +84,14 @@ const getDoses = async (req, res) => {
       user: user,
       meddate: "/^" + new Date(date1.toISOString().slice(0, 10)) + "/",
       isTaken: false,
-    },
-    (err, doseList) => {
-      if (err) {
-        console.log(user);
-        console.log("Test :" + err);
-      }
-      if (doseList) {
-        res.send(doseList);
-        //console.log(doseList);
-      }
-    }
-  );
+    })
+    .sort({
+      medtime: 1,
+    })
+    .then((result) => {
+      res.send(result);
+    });
+  
 };
 
 

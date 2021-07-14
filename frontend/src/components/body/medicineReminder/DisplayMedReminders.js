@@ -84,7 +84,7 @@ function DisplayMedReminders() {
           <h2> &nbsp;Ongoing Medicine</h2>  <hr></hr>
         </div>
         {ongoingMedReminderList.map((medicines) => (
-          <div className="reminder_card">
+          <div  variant="outlined" className="reminder_card" >
             <h2>{medicines.medname}</h2>
             <p>Description: {medicines.descriptionmed}</p>
             <p>Starting Date: {medicines.startdate.substring(0, 10)}</p>
@@ -103,7 +103,7 @@ function DisplayMedReminders() {
             </IconButton>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
             <IconButton  
-              class="btn"
+              className="btn"
              
               data-toggle="tooltip"
               title="Delete the Medicine"

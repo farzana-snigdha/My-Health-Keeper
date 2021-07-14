@@ -166,8 +166,8 @@ export default function AddNotes() {
                   textSize: "16px",
                   pathTransitionDuration: 0.5,
                   pathColor: `rgba(255, 136, 136, ${multipleProgress / 100})`,
-                  textColor: "#f88",
-                  trailColor: "#d6d6d6",
+                  textColor: "#063742",
+                  trailColor: "#1d6373",
                   backgroundColor: "#3e98c7",
                 })}
               />

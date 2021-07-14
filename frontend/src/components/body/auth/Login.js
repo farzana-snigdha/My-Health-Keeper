@@ -87,20 +87,22 @@ function Login() {
     },
    
     avatar: {
-      marginLeft: theme.spacing(2),
+     marginTop:"2%",
+      marginLeft: theme.spacing(0),
       backgroundColor: "#0c3646",
       alignItems:'center',
     },
     form: {
       width: "100%", // Fix IE 11 issue.
-      paddingRight: "36%",
-      paddingLeft: "36%",
+      paddingRight: "10%",
+      paddingLeft: "10%",
       paddingTop: "2%",
+      paddingBottom:"2%",
     },
     TextField: {
-      backgroundColor: "white",
       width: "100%",
       borderRadius: "5px",
+      boxSizing: "border-box",
     },
     using: { textAlign: "center", color: "#0a3944", fontWeight: "bold" },
     signup:{textAlign: "center", color: "#0a3944", fontWeight: "bold" },
@@ -110,6 +112,7 @@ function Login() {
       width: "100%",
       background: "#15495d",
       borderRadius: "12px",
+      boxShadow: "2px white",
       color: "white",
       "&:hover": {
         background: "#308294",
@@ -124,10 +127,30 @@ function Login() {
       borderRadius:"12px",
     },
     icons:{
-      paddingLeft:"47%",
+      paddingLeft:"50%",
       alignContent:"center",
-color:"#0c3646",
+      color:"#0c3646",
     },
+
+
+    login_body:{
+          marginLeft:"32%",
+          marginRight:"32%",
+          marginTop:"3%",
+          marginBottom:"20%",
+          borderRadius: "39px",
+          //background: "#ededed",
+          boxShadow:" 29px 29px 58px #afafaf -29px -29px 60px #ffffff",           
+         
+    },
+    typo:{
+          alignItems:"center",
+          justifyContent:"center",
+          marginLeft:"-5%",
+          marginRight:"2%",
+          textShadow:"2px 2px #FFFFFF"
+    },
+
     msg:{alignContent:"center"},
   }));
 
@@ -137,14 +160,13 @@ color:"#0c3646",
     <div
       class="bg_image"
       style={{
-        backgroundImage:
-          "url(https://image.freepik.com/free-vector/abstract-medical-wallpaper-template-design_53876-61802.jpg)",
-        backgroundSize: "cover",
+        backgroundImage:"url(/img/login.jpeg)",
+        backgroundSize: "fit",
         backgroundRepeat: "no-repeat",
         height: "100vh",
         backgroundPosition: "center",
         color: "#f5f5f5",
-        // opacity:'.8',
+        //opacity:'.8',
       }}
     >
       <Toolbar className={classes.toolbar}>
@@ -160,8 +182,9 @@ color:"#0c3646",
           </Link>
         </Typography>
       </Toolbar>
+      <div className={classes.login_body}>
       <div className={classes.icons}> <Avatar className={classes.avatar}></Avatar>
-         <Typography component="h1" variant="h5">
+         <Typography className={classes.typo} component="h1" variant="h5">
            Sign in
          </Typography></div>
          <div className={classes.msg}>
@@ -181,7 +204,6 @@ color:"#0c3646",
           name="email"
           autoComplete="email"
           type="text"
-          autoFocus
           onChange={handleChangeInput}
           value={email}
         />
@@ -224,7 +246,6 @@ color:"#0c3646",
         </Typography>
         <pre></pre>
         <pre></pre>
-        
         <pre></pre>
         <div className={classes.using}>Or SignUp Using</div>
         <p></p>
@@ -242,18 +263,16 @@ color:"#0c3646",
         <pre></pre>
         <pre></pre>
         <pre></pre>
-        <pre></pre>
-        <pre></pre>
-        <pre></pre>
-        <div className={classes.using}>Or SignUp Using</div>
+        <div className={classes.using}>Else Register a New Account</div>
         <p></p>
         <div className={classes.signup}>
         <Link  href="/signup" variant="body2">
-                <font className="signup">{"My HealthKeeper"}</font>
+                <font className="signup">{"👉🏻 My HealthKeeper"}</font>
               </Link>
         </div>
        
       </form>
+      </div>
     </div>
    
   );
