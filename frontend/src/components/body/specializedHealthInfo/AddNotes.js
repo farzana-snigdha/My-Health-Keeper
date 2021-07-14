@@ -188,9 +188,9 @@ console.log("addnotes ",id)
                   strokeLinecap: "butt",
                   textSize: "16px",
                   pathTransitionDuration: 0.5,
-                  pathColor: `rgba(255, 136, 136, ${multipleProgress / 100})`,
+                  pathColor: `rgba(6,55,66, ${multipleProgress / 100})`,
                   textColor: "#063742",
-                  trailColor: "#1d6373",
+                  trailColor:'#cdecf9', 
                   backgroundColor: "#3e98c7",
                 })}
               />
