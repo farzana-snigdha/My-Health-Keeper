@@ -1,11 +1,12 @@
 const express = require("express");
-const {  upload } = require("../helpers/filehelper");
+const { upload } = require("../helpers/filehelper");
 const router = express.Router();
 const {
   saveSpecializedHealthInfo,
   getallSpecializedHealthInfo,
   getallMediaFiles,
   updateSpecializedHealthInfo,
+  getFolderItems,
 } = require("../controllers/specializedHealthInfo.controllers");
 
 router.post(
@@ -16,6 +17,5 @@ router.post(
 router.get("/get-specializedHealthInfo", getallSpecializedHealthInfo);
 router.get("/getallMediaFiles", getallMediaFiles);
 router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
-module.exports = 
-  router
-;
+router.get("/getFolderItems", getFolderItems);
+module.exports = router;

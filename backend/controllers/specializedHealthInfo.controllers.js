@@ -4,39 +4,35 @@ const MultipleFile = require("../models/specializedHealthInfo.model");
 const saveSpecializedHealthInfo = async (req, res) => {
   try {
     // let user = req.headers["userid"];
-    let { user,folder, description, noteDate } = req.body;
+    let { user, folder, description, noteDate } = req.body;
     let filesArray = [];
-    await MultipleFile.find({ user,folder }).then((result) => {
-     
-        req.files.forEach((element) => {
-          const file = {
-            fileName: element.originalname,
-            filePath: element.path,
-            fileType: element.mimetype,
-            fileSize: fileSizeFormatter(element.size, 2),
-          };
-          filesArray.push(file);
+    await MultipleFile.find({ user, folder }).then((result) => {
+      req.files.forEach((element) => {
+        const file = {
+          fileName: element.originalname,
+          filePath: element.path,
+          fileType: element.mimetype,
+          fileSize: fileSizeFormatter(element.size, 2),
+        };
+        filesArray.push(file);
+      });
+      console.log("eccec ", result.length);
+      const multipleFiles = new MultipleFile({
+        user: user,
+        folder: folder,
+        description: description,
+        noteDate: noteDate,
+        files: filesArray,
+        numberOfFiles: filesArray.length,
+      });
+      multipleFiles
+        .save()
+        .then(() => {
+          res.json({ msg: "Files Uploaded Successfully" });
+        })
+        .catch((err) => {
+          res.json({ msg: "This folder already exists" });
         });
-        console.log("eccec ", result.length);
-        const multipleFiles = new MultipleFile({
-          user: user,
-          folder: folder,
-          description: description,
-          noteDate: noteDate,
-          files: filesArray,
-          numberOfFiles: filesArray.length,
-        });
-        multipleFiles
-          .save()
-          .then(() => {
-            res.json({ msg: "Files Uploaded Successfully" });
-       
-          })
-          .catch((err) => {
-            res.json({ msg: "This folder already exists" });
-          
-          });
-    
     });
   } catch (error) {
     console.log("cqecd ", error.message);
@@ -66,23 +62,38 @@ const updateSpecializedHealthInfo = async (req, res) => {
 const getallSpecializedHealthInfo = async (req, res, next) => {
   try {
     let user = req.headers["userid"];
-console.log("user          ",user)
+    console.log("user          ", user);
     const files = await MultipleFile.find({ user });
-console.log(files)
+    // console.log(files);
     res.status(200).send(files);
   } catch (error) {
     res.send(error.message);
   }
 };
-
-const getallMediaFiles = async (req, res, next) => {
+const getallMediaFiles = async (req, res) => {
   try {
-    let user = req.headers["userid"];
-    const folder = req.body.folder;
+    const folderID = req.headers["folderid"];
 
-    const files = await MultipleFile.findOne({ user, folder });
-
+    const files = await MultipleFile.findOne({ folderID });
     res.status(200).send(files.files);
+  } catch (error) {
+    res.send(error.message);
+  }
+};
+
+const getFolderItems = async (req, res) => {
+  try {
+    const folderID = req.headers['folderid'];
+    console.log("folderID: ", folderID);
+    const files = await MultipleFile.findById(folderID, function (err, ans) {
+      if (err) {
+        console.log("getallMediaFiles>err: ", 'no files found');
+        res.send("no files found")
+      } if(ans) {
+        console.log("getallMediaFiles>ans: ", ans.files);
+        res.status(200).send(ans.files);
+      }
+    });
   } catch (error) {
     res.send(error.message);
   }
@@ -105,4 +116,5 @@ module.exports = {
   getallSpecializedHealthInfo,
   getallMediaFiles,
   updateSpecializedHealthInfo,
+  getFolderItems,
 };

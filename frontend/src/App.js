@@ -45,21 +45,7 @@ function App() {
 
   const { isLogged } = auth;
 
-  const showSPHealthNotes = async () => {
-    console.log("id  ", auth.user._id);
-    const id = auth.user._id;
-    console.log("c ", id);
-
-    await axios
-      .get("http://localhost:5100/api/get-specializedHealthInfo", {
-        headers: { Authorization: token, userid: id },
-      })
-      .then((res) =>
-      {
-        localStorage.setItem("setSpHealthNotes", res.data)
-      } );
-  };
-  showSPHealthNotes()
+ 
 
   const getMenstrualInfo = async () => {
     const id = auth.user._id;
