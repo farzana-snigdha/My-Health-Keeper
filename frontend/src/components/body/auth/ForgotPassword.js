@@ -72,7 +72,7 @@ function ForgotPassword() {
       width: "100%", // Fix IE 11 issue.
       paddingRight: "36%",
       paddingLeft: "36%",
-      paddingTop: "10%",
+      paddingTop: "7%",
     },
     email: {
      
@@ -104,16 +104,6 @@ function ForgotPassword() {
   const classes = useStyles();
   return (
     <div
-    class="bg_image"
-    style={{
-      backgroundImage:
-        "url(https://image.freepik.com/free-vector/abstract-blue-bright-background-health-care-icon-pattern-medical-innovation-concept_44392-178.jpg)",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      height: "100vh",
-      backgroundPosition: "center",
-      color: "#f5f5f5",
-    }}
   >
      <Toolbar className={classes.toolbar}>
         {" "}
@@ -152,6 +142,15 @@ function ForgotPassword() {
             </Button>
             </Box>
 </div>
+<div class="bg_image"
+    style={{
+      backgroundImage:
+        "url(/img/reset-password.png)",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      height: "55vh",
+      backgroundPosition: "center",
+    }}></div>
          
              
 
