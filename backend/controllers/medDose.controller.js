@@ -86,18 +86,14 @@ const getDoses = async (req, res) => {
       user: user,
       meddate: "/^" + new Date(date1.toISOString().slice(0, 10)) + "/",
       isTaken: false,
-    },
-    (err, doseList) => {
-      if (err) {
-        console.log(user);
-        console.log("Test :" + err);
-      }
-      if (doseList) {
-        res.send(doseList);
-        //console.log(doseList);
-      }
-    }
-  );
+    })
+    .sort({
+      medtime: 1,
+    })
+    .then((result) => {
+      res.send(result);
+    });
+  
 };
 
 

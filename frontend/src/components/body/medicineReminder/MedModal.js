@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import "../../../static/Styling/medicineReminder.css";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
 import { Button, IconButton, Link } from "@material-ui/core";
+//import Modal from 'react-modal';
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 
 const Background = styled.div`
   width: 100%;
@@ -57,21 +61,10 @@ const MedModal = ({ showModal, setShowModal, list }) => {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
-  const [disable, setDisable] = React.useState(false);
-  //const [mlist, setMissedList] = useState([]);
+  // const [disable, setDisable] = React.useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [doseId, setDoseId] = useState(null);
   const modalRef = useRef();
-
-  //setMissedList(list);
-//   useEffect(async () => {
-//     await axios
-//       .get("http://localhost:5000/medDoseMissed/"+medId, {
-//         headers: { Authorization: token },
-//       })
-//       .then((res) => {
-//           setMissedList(res.data);
-//           console.log(medId);
-//       });
-//   }, []);
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
@@ -126,11 +119,48 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                 {list.map((doses) => (
                     <tr>
                     <td>{doses.meddate.substring(0, 10)}</td>
-                    <td>{doses.medtime}</td>
-                    <td>Missed</td>
-                    <td><Button onClick={()=> {missedConfirm(doses._id); setDisable(true);}}>Confirm</Button></td>
-                  </tr>
-                ))}
+                      <td>{doses.medtime}</td>
+                      <td>Missed</td>
+                      {/* <td><Button onClick={()=> {missedConfirm(doses._id)}}>Confirm</Button></td> */}
+                      <td>
+                        <Button
+                          onClick={() => {
+                            setShowAlert(true);
+                            setDoseId(doses._id);
+                            console.log("modal1 enter"+doses._id);
+                          }}
+                        >
+                          Confirm
+                        </Button>
+                        <Modal
+                          open={showAlert}
+                          onClose={() => setShowAlert(false)}
+                          center
+                          classNames={{
+                            overlay: "customOverlay",
+                            modal: "customModal",
+                          }}
+                        >
+                          <div>
+                            <h6>Alert!</h6>
+                            <p>
+                              Are you sure want to confirm this missed medicine?
+                            </p>
+                            <Button
+                              onClick={() => {
+                                missedConfirm(doseId);
+                                setShowAlert(false);
+                                setShowModal(false);
+                              }}
+                            >
+                              Yes
+                            </Button>
+                          </div>
+                        </Modal>
+                      </td>
+                    </tr>
+                    
+                  ))}
                 </tbody>
               </table>
             </ModalContent>
