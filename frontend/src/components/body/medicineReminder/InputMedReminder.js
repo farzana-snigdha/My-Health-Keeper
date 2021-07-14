@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
 import "../../../static/Styling/medicineReminder.css";
 import {
   Grid,
@@ -20,6 +19,7 @@ import {
   showSuccessMsg,
 } from "../../utils/notification/Notification";
 import "../../../static/Styling/medicineReminder.css";
+import { Redirect, useHistory } from "react-router-dom";
 const initialState = {
   username: "",
   medName: "",
@@ -33,9 +33,7 @@ const initialState = {
 
 function InputMedReminder() {
   const token = useSelector((state) => state.token);
-
   const history = useHistory();
-
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
 
@@ -112,7 +110,7 @@ function InputMedReminder() {
         err: "",
         success: "Medicine added Successfully!",
       });
-      history.push('/display-medicine-reminderList');
+      history.push('/display-medicine-reminderList')
     } catch (err) {
       err.response.data.msg &&
         setMedicine({ ...medicine, err: err.response.data.msg, success: "" });
@@ -121,16 +119,14 @@ function InputMedReminder() {
 
   return (
     <Container className="container">
-     
-        <div className="paper" >
-          <Grid align="center" >
-            <h2 >Add Medicine</h2>{" "}
-          </Grid>
-          {" "}
-          {err && showErrMsg(err)}
-          {success && showSuccessMsg(success)}
-          <form onSubmit={handleSubmit} className="form_body">
-            <div className="form_inputs">
+      <div className="paper">
+        <Grid align="center">
+          <h2>Add Medicine</h2>{" "}
+        </Grid>{" "}
+        {err && showErrMsg(err)}
+        {success && showSuccessMsg(success)}
+        <form onSubmit={handleSubmit} className="form_body">
+          <div className="form_inputs">
             <TextField
               variant="outlined"
               required
@@ -181,39 +177,39 @@ function InputMedReminder() {
                 shrink: true,
               }}
             />
-                </div>
-            {inputFields.map((inputField, index) => (
-              <div key={index}>
-                <TextField
-                  variant="outlined"
-                  required
-                  id="time"
-                  label="Time"
-                  name="time"
-                  onChange={handleChangeInputTime}
-                  type="time"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  //variant="filled"
-                  value={inputField.time}
-                  onChange={(event) => handleChangeInputTime(index, event)}
-                />
+          </div>
+          {inputFields.map((inputField, index) => (
+            <div key={index}>
+              <TextField
+                variant="outlined"
+                required
+                id="time"
+                label="Time"
+                name="time"
+                onChange={handleChangeInputTime}
+                type="time"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                //variant="filled"
+                value={inputField.time}
+                onChange={(event) => handleChangeInputTime(index, event)}
+              />
 
-                <IconButton
-                  disabled={inputFields.length === 1}
-                  onClick={() => handleRemoveFields(index)}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <IconButton onClick={handleAddFields}>
-                  <AddIcon />
-                </IconButton>
-              </div>
-            ))}
-            <div className="form_btns">
+              <IconButton
+                disabled={inputFields.length === 1}
+                onClick={() => handleRemoveFields(index)}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <IconButton onClick={handleAddFields}>
+                <AddIcon />
+              </IconButton>
+            </div>
+          ))}
+          <div className="form_btns">
             <Button
-                className="add_btn"
+              className="add_btn"
               type="submit"
               variant="contained"
               onClick={handleSubmit}
@@ -222,14 +218,13 @@ function InputMedReminder() {
               Add
             </Button>
             <Link href="/display-medicine-reminderList">
-              <Button type="button" variant="contained" color="primary" >
+              <Button type="button" variant="contained" color="primary">
                 ↩Back to Display Reminders List
               </Button>
             </Link>
-            </div>
-          </form>
-        </div>
-     
+          </div>
+        </form>
+      </div>
     </Container>
   );
 }

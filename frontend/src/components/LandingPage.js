@@ -7,26 +7,32 @@ import {Button,Typography,Link}  from '@material-ui/core';
 
 function LandingPage() {
   const imagesList = [
-    'url("https://images.pexels.com/photos/1128678/pexels-photo-1128678.jpeg?cs=srgb&dl=pexels-jane-d-1128678.jpg&fm=jpg")',
-    'url("https://images.pexels.com/photos/1172019/pexels-photo-1172019.jpeg?cs=srgb&dl=pexels-lisa-1172019.jpg&fm=jpg")',
-    'url("https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?cs=srgb&dl=pexels-karolina-grabowska-4386467.jpg&fm=jpg")',
-    'url("https://images.pexels.com/photos/39671/physiotherapy-weight-training-dumbbell-exercise-balls-39671.jpeg?cs=srgb&dl=pexels-pixabay-39671.jpg&fm=jpg")'
+    'url(/img/landingPage/Photo4.jpeg)',
+    'url(/img/landingPage/Photo1.jpeg)',
+    'url(/img/landingPage/Photo2.jpeg)'
   ];
   const useStyles = makeStyles((theme) => ({
     mmm: {
        
         color: "black",
         padding: "20%",
+        textShadow:"2px 4px #FFFFFF",
       },
     image: {
            backgroundRepeat: "no-repeat",
          backgroundSize: "cover",
       backgroundPosition: "center",
     },
+    typography:{
+        margin:"0%",
+    },
  button:{
      marginTop:"1%",
      background:"white",
-     color:"black"
+     color:"black",
+     borderRadius: "10px",
+     background: "#e0e0e0",
+     boxShadow:  "-1px -1px 1px 1px #ffffff",
  }
   
   }));
@@ -43,7 +49,8 @@ function LandingPage() {
         className={classes.image}
       >
         <div className={classes.mmm}>
-            <Typography variant="h3"
+            <Typography className={classes.typography} 
+            variant="h3"
             fontWeight="bold">
             START YOUR JOURNEY 
             </Typography>

@@ -1,0 +1,19 @@
+.reminder_buttons {
+    width: 30%;
+    margin-right: 0;
+    margin-left: auto;
+  }
+  
+  .reminder_buttons > .reminder_buttons_sub {
+    width: 20%;
+    background-color: #52bbdf;
+    color: white;
+    display: inline;
+    margin-left: 1em;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  

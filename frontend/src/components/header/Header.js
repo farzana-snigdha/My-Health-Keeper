@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     width: drawerWidth,
     color: "white",
-    background: "#424040",
+    background: "#04272f",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -106,10 +106,10 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     overflow: "auto",
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
+  // container: {
+  //   paddingTop: theme.spacing(4),
+  //   paddingBottom: theme.spacing(4),
+  // },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
@@ -194,7 +194,8 @@ function Header() {
     // console.log(user._id);
     return (
       <div>
-        <Link to="/profile" component={NavLink}>
+        <Link to="/profile"   data-toggle="tooltip"
+              title="Profile Settings" component={NavLink}>
           {<img className={classes.imageIcon} src={user.avatar} alt="" />}<font  className="link-color" >
           {user.name}{" "}
           </font>
@@ -326,9 +327,9 @@ function Header() {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="" className={classes.container}>
+        
             <Body />
-          </Container>
+          
         </main>
       </div>
     </React.Fragment>

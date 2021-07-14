@@ -8,30 +8,27 @@ import {
 } from "../../utils/notification/Notification";
 import {
   Button,
-  AppBar,
+ 
   Toolbar,
   Typography,
   Link,
-  CardHeader,
-  Select,
+ 
   Avatar,
 } from "@material-ui/core";
 
 import { NavLink } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
+
 import TextField from "@material-ui/core/TextField";
 
 import Grid from "@material-ui/core/Grid";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
+
 import { GoogleLogin } from "react-google-login";
 
 import { dispatchLogin } from "../../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
 
-import Header from "../../header/Header"
 
 const initialState = {
   email: "",
@@ -88,186 +85,197 @@ function Login() {
     root: {
       height: "100vh",
     },
-    image: {
-      backgroundImage:
-        "url(https://media.istockphoto.com/photos/healthy-eating-exercising-weight-and-blood-pressure-control-picture-id1280587810?b=1&k=6&m=1280587810&s=170667a&w=0&h=rhieqbyXq1Lbkqa_6_8et5n6i3zhJQ5qkE7nUnm3Gy0=)",
-      backgroundRepeat: "no-repeat",
-      backgroundColor:
-        theme.palette.type === "light"
-          ? theme.palette.grey[50]
-          : theme.palette.grey[900],
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    },
-    paper: {
-      margin: theme.spacing(8, 4),
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    },
+   
     avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: "#232327",
+     marginTop:"2%",
+      marginLeft: theme.spacing(0),
+      backgroundColor: "#0c3646",
+      alignItems:'center',
     },
     form: {
       width: "100%", // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
+      paddingRight: "10%",
+      paddingLeft: "10%",
+      paddingTop: "2%",
+      paddingBottom:"2%",
     },
+    TextField: {
+      width: "100%",
+      borderRadius: "5px",
+      boxSizing: "border-box",
+    },
+    using: { textAlign: "center", color: "#0a3944", fontWeight: "bold" },
+    signup:{textAlign: "center", color: "#0a3944", fontWeight: "bold" },
     submit: {
       marginTop: "24px",
       // margin: theme.spacing(4, 14, 1),
-      width: "60%",
-      background: "#232327",
+      width: "100%",
+      background: "#15495d",
+      borderRadius: "12px",
+      boxShadow: "2px white",
       color: "white",
       "&:hover": {
-        background: "#122221",
+        background: "#308294",
       },
     },
     fontColor: {
       color: "#122221",
     },
     google: {
-     
       justifyContent: "center",
-      width: "60%",
-     
+      width: "100%",
+      borderRadius:"12px",
     },
+    icons:{
+      paddingLeft:"50%",
+      alignContent:"center",
+      color:"#0c3646",
+    },
+
+
+    login_body:{
+          marginLeft:"32%",
+          marginRight:"32%",
+          marginTop:"3%",
+          marginBottom:"20%",
+          borderRadius: "39px",
+          //background: "#ededed",
+          boxShadow:" 29px 29px 58px #afafaf -29px -29px 60px #ffffff",           
+         
+    },
+    typo:{
+          alignItems:"center",
+          justifyContent:"center",
+          marginLeft:"-5%",
+          marginRight:"2%",
+          textShadow:"2px 2px #FFFFFF"
+    },
+
+    msg:{alignContent:"center"},
   }));
 
   const classes = useStyles();
 
-  return ( 
-    <div>      <CssBaseline />
-    <Toolbar className={classes.toolbar}>
-          {" "}
-         
-          <Typography
-            variant="h5"
-            color="inherit"
-            noWrap
-            className={classes.toolbarTitle}
-          >
-            <Link
-              component={NavLink}
-              to="/"
-              underline="none"
-              color="textPrimary"
-            >
-              My HealthKeeper
+  return (
+    <div
+      class="bg_image"
+      style={{
+        backgroundImage:"url(/img/login.jpeg)",
+        backgroundSize: "fit",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        backgroundPosition: "center",
+        color: "#f5f5f5",
+        //opacity:'.8',
+      }}
+    >
+      <Toolbar className={classes.toolbar}>
+        {" "}
+        <Typography
+          variant="h4"
+          color="inherit"
+          noWrap
+          className={classes.toolbarTitle}
+        >
+          <Link component={NavLink} to="/" underline="none" color="textPrimary">
+            My HealthKeeper
+          </Link>
+        </Typography>
+      </Toolbar>
+      <div className={classes.login_body}>
+      <div className={classes.icons}> <Avatar className={classes.avatar}></Avatar>
+         <Typography className={classes.typo} component="h1" variant="h5">
+           Sign in
+         </Typography></div>
+         <div className={classes.msg}>
+         {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
+         </div>
+        
+      <form className={classes.form} noValidate onSubmit={handleSubmit}>
+     
+        <TextField
+          className={classes.TextField}
+          margin="normal"
+          required
+          id="email"
+          
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          type="text"
+          onChange={handleChangeInput}
+          value={email}
+        />
+        <TextField
+          className={classes.TextField}
+          margin="normal"
+          required
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={handleChangeInput}
+          value={password}
+        />
+        <Grid
+          container
+          spacing={0}
+          direction="row"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item xs={7}></Grid>
+          <Grid item xs={5}>
+            <Link href="/forgot_password" variant="body2">
+              <font className="link-color">Forgot password?</font>
             </Link>
-          </Typography>
-          
-        </Toolbar>
+          </Grid>
+        </Grid>
 
-<Grid container component="main" maxwidth="xs">
+        <Typography align="center">
+          <Button
+            type="submit"
+            variant="contained"
+            className={classes.submit}
+            onSubmit={handleSubmit}
+          >
+            Sign In
+          </Button>
+        </Typography>
+        <pre></pre>
+        <pre></pre>
+        <pre></pre>
+        <div className={classes.using}>Or SignUp Using</div>
+        <p></p>
 
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}></Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              type="text"
-              autoFocus
-              onChange={handleChangeInput}
-              value={email}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChangeInput}
-              value={password}
-            />
-            {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-            /> */}
-            <Typography align="center">
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onSubmit={handleSubmit}
-              >
-                Sign In
-              </Button>
-            </Typography>
-            <Typography className={classes.fontColor}>
-              <Grid
-                container
-                spacing={0}
-                direction="row"
-                alignItems="center"
-                justify="center"
-              >
-                <Grid item xs={4}>
-                  <Link href="/forgot_password" variant="body2"><font  className="link-color" >
-                    Forgot password?
-                    </font>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2"><font  className="link-color" >
-                    {"New? Sign Up"}
-                    </font>
-                  </Link>
-                </Grid>
-              </Grid>
-            </Typography>
-            <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justify="center"
-              style={{ minHeight: "6vh" }}
-            >
-              <Grid item xs={3}>
-                OR
-              </Grid>
-            </Grid>
-            <Typography align="center">
-              <GoogleLogin
-               
-                theme="dark"
-                className={classes.google}
-                 clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
-                buttonText="Continue with Google"
-                onSuccess={responseGoogle}
-                cookiePolicy={"single_host_origin"}
-              />
-            </Typography>
-          
-          </form>
+        <Typography align="center">
+          <GoogleLogin
+            theme="dark"
+            className={classes.google}
+            clientId="129566980089-n76f07ukaj2i64bm38o5v1d8e504umjp.apps.googleusercontent.com"
+            buttonText="Continue with Google"
+            onSuccess={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
+        </Typography>
+        <pre></pre>
+        <pre></pre>
+        <pre></pre>
+        <div className={classes.using}>Else Register a New Account</div>
+        <p></p>
+        <div className={classes.signup}>
+        <Link  href="/signup" variant="body2">
+                <font className="signup">{"👉🏻 My HealthKeeper"}</font>
+              </Link>
         </div>
-        {err && showErrMsg(err)}
-        {success && showSuccessMsg(success)}
-      </Grid>
-    </Grid>
+       
+      </form>
+      </div>
     </div>
-    
+   
   );
 }
-
-
 
 export default Login;
