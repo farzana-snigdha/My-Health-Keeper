@@ -9,7 +9,7 @@ import {
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useHistory } from "react-router-dom";
-
+import SpecializedHealthInfo from "./specializedHealthInfo";
 import axios from "axios";
 const initialState = {
   folder: "",
@@ -38,6 +38,23 @@ export default function AddNotes() {
     const { name, value } = e.target;
     setNotes({ ...notes, [name]: value, err: "", success: "" });
   };
+   const [spHealthNotes, setSpHealthNotes] = useState([]);
+
+  const showSPHealthNotes = async () => {
+   
+    console.log("id  ",user._id)
+    const id = user._id;
+    console.log("c ",id)
+    
+    await axios
+      .get("http://localhost:5100/api/get-specializedHealthInfo", {
+        headers: { Authorization: token, userid: id },
+      })
+      .then((res) => setSpHealthNotes(res.data));
+  };
+  useEffect(async () => {
+    showSPHealthNotes();
+  }, []);
 
   const mulitpleFileOptions = {
     onUploadProgress: (progressEvent) => {
@@ -48,7 +65,11 @@ export default function AddNotes() {
   };
 
   const UploadMultipleFiles = async () => {
+    
+    const id = user._id;
+
     const formData = new FormData();
+    formData.append('user',id)
     formData.append("folder", folder);
     formData.append("noteDate", noteDate);
     formData.append("description", description);
@@ -57,8 +78,7 @@ export default function AddNotes() {
       formData.append("files", multipleFiles[i]);
     }
 
-    const id = user._id;
-
+console.log("addnotes ",id)
     const res = await axios
       .post(
         "http://localhost:5100/api/save-specialized-health-info",
@@ -83,6 +103,9 @@ export default function AddNotes() {
           });
 
           history.push("/specialized-health-information");
+          console.log("SpecializedHealthInfo.showSPHealthNotes();") 
+          // localStorage.setItem("setSpHealthNotes",showSPHealthNotes())
+          // showSPHealthNotes()
           setTimeout(function () {
             setNotes(initialState);
           }, 4000);

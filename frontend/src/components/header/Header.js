@@ -184,6 +184,7 @@ function Header() {
       localStorage.removeItem("firstLogin");
       localStorage.removeItem("UserMenstrualInfo")
       removeCookie("UserMenstrualInfo");
+      localStorage.removeItem("setSpHealthNotes")
       window.location.href = "/";
     } catch (err) {
       window.location.href = "/";

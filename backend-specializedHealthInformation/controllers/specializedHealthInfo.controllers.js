@@ -3,8 +3,8 @@ const MultipleFile = require("../models/specializedHealthInfo.model");
 
 const saveSpecializedHealthInfo = async (req, res) => {
   try {
-    let user = req.headers["userid"];
-    let { folder, description, noteDate } = req.body;
+    // let user = req.headers["userid"];
+    let { user,folder, description, noteDate } = req.body;
     let filesArray = [];
     await MultipleFile.find({ user,folder }).then((result) => {
      
@@ -66,9 +66,9 @@ const updateSpecializedHealthInfo = async (req, res) => {
 const getallSpecializedHealthInfo = async (req, res, next) => {
   try {
     let user = req.headers["userid"];
-
+console.log("user          ",user)
     const files = await MultipleFile.find({ user });
-
+console.log(files)
     res.status(200).send(files);
   } catch (error) {
     res.send(error.message);
