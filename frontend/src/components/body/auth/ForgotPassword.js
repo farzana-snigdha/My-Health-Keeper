@@ -72,7 +72,7 @@ function ForgotPassword() {
       width: "100%", // Fix IE 11 issue.
       paddingRight: "36%",
       paddingLeft: "36%",
-      paddingTop: "7%",
+      paddingTop: "5%",
       alignItems:"center",
       justifyContent:"center",
     },
@@ -156,7 +156,7 @@ function ForgotPassword() {
         "url(/img/reset-password.png)",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-      height: "53vh",
+      height: "55vh",
       backgroundPosition: "center",
     }}></div>
          
