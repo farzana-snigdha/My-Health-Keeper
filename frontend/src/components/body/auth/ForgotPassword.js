@@ -73,6 +73,8 @@ function ForgotPassword() {
       paddingRight: "36%",
       paddingLeft: "36%",
       paddingTop: "7%",
+      alignItems:"center",
+      justifyContent:"center",
     },
     email: {
      
@@ -80,6 +82,11 @@ function ForgotPassword() {
           backgroundColor: "white",
       width: "100%",
       borderRadius: "5px",
+    },
+    label:{
+      display:"flex",
+      alignItems:"center",
+      justifyContent:"center",
     },
 
     submit: {
@@ -119,6 +126,7 @@ function ForgotPassword() {
         </Typography>
       </Toolbar>
 <div className={classes.forms}>
+  <label className={classes.label}><h4> Recover Password 🔑</h4></label>
 <TextField
               className={classes.email}
            
@@ -148,7 +156,7 @@ function ForgotPassword() {
         "url(/img/reset-password.png)",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-      height: "55vh",
+      height: "53vh",
       backgroundPosition: "center",
     }}></div>
          
