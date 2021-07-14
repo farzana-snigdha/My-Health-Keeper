@@ -40,45 +40,45 @@ function Profile() {
     setData({ ...data, [name]: value, err: "", success: "" });
   };
 
-//   const changeAvatar = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const file = e.target.files[0];
+  // const changeAvatar = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const file = e.target.files[0];
 
-//       if (!file)
-//         return setData({
-//           ...data,
-//           err: "No files were uploaded.",
-//           success: "",
-//         });
+  //     if (!file)
+  //       return setData({
+  //         ...data,
+  //         err: "No files were uploaded.",
+  //         success: "",
+  //       });
 
-//       if (file.size > 10 * 1024 * 1024)
-//         return setData({ ...data, err: "Size too large.", success: "" });
+  //     if (file.size > 10 * 1024 * 1024)
+  //       return setData({ ...data, err: "Size too large.", success: "" });
 
-//       if (file.type !== "image/jpeg" && file.type !== "image/png")
-//         return setData({
-//           ...data,
-//           err: "File format is incorrect.",
-//           success: "",
-//         });
+  //     if (file.type !== "image/jpeg" && file.type !== "image/png")
+  //       return setData({
+  //         ...data,
+  //         err: "File format is incorrect.",
+  //         success: "",
+  //       });
 
-//       let formData = new FormData();
-//       formData.append("file", file);
+  //     let formData = new FormData();
+  //     formData.append("file", file);
 
-//       setLoading(true);
-//       const res = await axios.post("/api/upload_avatar", formData, {
-//         headers: {
-//           "content-type": "multipart/form-data",
-//           Authorization: token,
-//         },
-//       });
+  //     setLoading(true);
+  //     const res = await axios.post("/api/upload_avatar", formData, {
+  //       headers: {
+  //         "content-type": "multipart/form-data",
+  //         Authorization: token,
+  //       },
+  //     });
 
-//       setLoading(false);
-//       setAvatar(res.data.url);
-//     } catch (err) {
-//       setData({ ...data, err: err.response.data.msg, success: "" });
-//     }
-//   };
+  //     setLoading(false);
+  //     setAvatar(res.data.url);
+  //   } catch (err) {
+  //     setData({ ...data, err: err.response.data.msg, success: "" });
+  //   }
+  // };
 
   const updateInfor = () => {
     try {
@@ -114,6 +114,13 @@ function Profile() {
     position: {
       paddingTop: "45%",
     },
+    button:{
+      // width: '20%',
+      // backgroundColor: '#063742',
+      // color: 'white',
+      // display: 'inline',
+      paddingTop:'8%',
+      paddingLeft:'33%'},
   }));
 
   const classes = useStyles();
@@ -189,9 +196,12 @@ function Profile() {
                 <option value={"Others"}>Others</option>
               </Select>
             </div>
-            <button disabled={loading} onClick={handleUpdate}>
+            <div className={classes.button}>
+            <button  onClick={handleUpdate}>
               Update
             </button>
+            </div>
+           
           </div>
         </div>
       </div>
