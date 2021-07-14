@@ -8,7 +8,7 @@ const fileUpload = require("express-fileupload");
 const medReminderRouter = require('./routers/medReminder.route');
 const cycleTracker =require('./routers/cycleTracker.routers')
 const medDoses = require("./routers/medDose.route");
-const specializedHealthInformation = require('../backend-specializedHealthInformation/routers/specializedHealthInformation.routers');
+//const specializedHealthInformation = require('../backend-specializedHealthInformation/routers/specializedHealthInformation.routers');
 const path = require("path");
 
 const app = express();
