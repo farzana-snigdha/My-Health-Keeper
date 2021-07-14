@@ -54,7 +54,7 @@ export default function Body() {
           exact
         />
 
-<Route
+        <Route
           path="/specialized-health-information"
           component={isLogged ? specializedHealthInfo : Login}
           exact
