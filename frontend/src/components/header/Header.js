@@ -197,7 +197,8 @@ function Header() {
       <div>
         <Link to="/profile"   data-toggle="tooltip"
               title="Profile Settings" component={NavLink}>
-          {<img className={classes.imageIcon} src={user.avatar} alt="" />}<font  className="link-color" >
+          {/* {<img className={classes.imageIcon} src={user.avatar} alt="" />} */}
+          <font  className="link-color" >
           {user.name}{" "}
           </font>
         

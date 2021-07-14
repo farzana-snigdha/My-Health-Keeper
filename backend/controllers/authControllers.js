@@ -152,9 +152,9 @@ console.log(passwordHash)
     },
     updateUser: async (req, res) => {
         try {
-            const {name, avatar,phone,gender} = req.body
+            const {name, phone,gender} = req.body
             await User.findOneAndUpdate({_id: req.user.id}, {
-                name, avatar,phone,gender
+                name,phone,gender
             })
 
             res.json({msg: "Update Success! Please refresh the page now"})
