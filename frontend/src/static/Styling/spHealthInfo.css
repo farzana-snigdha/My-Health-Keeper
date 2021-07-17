@@ -22,3 +22,25 @@
  padding-left: 74%;
   color: #063742;
 }
+
+.reminder_card >.viewBtn:hover {
+ background-color: #cdecf9;
+  color: #063742;
+}
+
+.media_card {
+  display: flex;
+  flex-direction: column;
+  display: inline-block;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+
+  margin: 2rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  max-width: 350px;
+  border-radius: 10px;
+  background: #cdecf9;
+  box-shadow: 8px 8px 16px #aec9d4, -8px -8px 16px #ecffff;
+}
+

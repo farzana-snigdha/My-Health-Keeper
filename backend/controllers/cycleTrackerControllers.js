@@ -178,7 +178,7 @@ const cycleTrackerControllers = {
     try {
       let user = req.headers["userid"];
 
-      console.log("check ", user);
+      // console.log("check ", user);
       const check = await Cycle.findOne({
         user,
       });
