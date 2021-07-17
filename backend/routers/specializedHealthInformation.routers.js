@@ -4,11 +4,12 @@ const router = express.Router();
 const {
   saveSpecializedHealthInfo,
   getallSpecializedHealthInfo,
-  getallMediaFiles,
+ 
   updateSpecializedHealthInfo,
-  getFolderItems,deleteFolder,
+ deleteFolder,
 } = require("../controllers/specializedHealthInfo.controllers");
 
+const {getallMediaFiles, getFolderItems} =require('../controllers/mediaFile.SpHealth.controllers')
 router.post(
   "/save-specialized-health-info",
   upload.array("files"),
