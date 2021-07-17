@@ -3,6 +3,24 @@ import "../../../static/Styling/spHealthInfo.css";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import { Document } from 'react-pdf'
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: "100mvh",
+  },
+  media: {
+    resizeMode:'contain',
+    height: 240,
+    width: 240,
+       
+  },
+});
 
 export default function AddFiles() {
   const token = useSelector((state) => state.token);
@@ -11,7 +29,7 @@ export default function AddFiles() {
 
   let history = useHistory();
   //   console.log("viewFiles ", folderid);
- 
+
   const [mediaFiles, setMediaFiles] = useState([]);
   const { state } = useLocation();
   console.log("state1: ", state);
@@ -25,12 +43,38 @@ export default function AddFiles() {
       .get("http://localhost:5000/api/getFolderItems", {
         headers: { Authorization: token, folderid: state },
       })
-      .then((res) => setMediaFiles(res.data));
+      .then((res) => {
+        console.log("    hghytcfh    ", res.data);
+        setMediaFiles(res.data);
+      });
   };
 
   useEffect(async () => {
-    //   localStorage.getItem("setSpHealthNotes");
     showMediaFiles();
   }, []);
-  return <div>hi</div>;
+
+  const classes = useStyles();
+
+  return (
+    <div>
+      {mediaFiles.map((element) => (
+      
+        <div className='media_card'>
+            {console.log(mediaFiles)}
+          <img
+            className={classes.media}
+            component="img"
+            src={`http://localhost:5000/${element.filePath}`}
+            title="Contemplative Reptile"
+            alt="lpl"
+          />
+          <CardContent>
+            <h6>
+              <b>Name:</b> {element.fileName}
+            </h6>
+          </CardContent>
+        </div>
+      ))}
+    </div>
+  );
 }
