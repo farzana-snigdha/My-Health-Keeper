@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 });
 
 export default function AddFiles() {
+  const inputRef = useRef(null);
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
@@ -57,8 +58,11 @@ export default function AddFiles() {
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
+  const [multipleFiles, setMultipleFiles] = useState("");
+  const MultipleFileChange = (e) => {
+    setMultipleFiles(e.target.files);
+  };
 
-  
   useEffect(async () => {
     showMediaFiles();
   }, []);
@@ -70,92 +74,113 @@ export default function AddFiles() {
       <pre></pre>
       <div className="reminder_buttons">
         &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;
-        <Link href="/medicine-reminder" className="reminder_buttons_sub">
-          {""} ➕ Add New Files
-        </Link>
+        <div className="form-group">
+          <input
+            ref={inputRef}
+            type="file"
+            hidden
+            onChange={(e) => MultipleFileChange(e)}
+            className="form-control"
+            multiple
+          ></input>
+          <Button
+            className="viewFiles_addBtn"
+            onClick={() => inputRef.current.click()}
+            onChange={(e) => MultipleFileChange(e)}
+            // className="form-control"
+            multiple
+          >
+            {" "}
+            ➕ Add New Files
+          </Button>
+        </div>
       </div>
       <div>
         {" "}
         <h3 justify="center">{state.folder}</h3>
         <hr></hr>
       </div>
-      {state.numberOfFiles==0?(<>NO Files Added 😢</>):(<div>
-        <Grid
-          container
-          spacing={1}
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          {mediaFiles.map((element) => (
-            <div>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                key={mediaFiles.indexOf(element)}
-              >
-                <div className="media_card">
-                  {element.fileType != "application/pdf" ? (
-                    <>
-                      {" "}
-                      {console.log(element.fileType)}
-                      <img
-                        className={classes.media}
-                        component="img"
-                        src={`http://localhost:5000/${element.filePath}`}
-                        title="Contemplative Reptile"
-                        alt="lpl"
-                      />
-                      <CardContent>
-                        <h7>
-                          <b>Name:</b> {element.fileName}
-                        </h7>
-                        <div >
-                          <IconButton
-                       className="viewBtn"      data-toggle="tooltip"
-                            title="Delete this file"
-                            // onClick={() => deleteReminder(medicines._id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </div>
-                      </CardContent>
-                    </>
-                  ) : (
-                    <div className="react-pdf__Page__canvas">
-                      <Document
-                        file={`http://localhost:5000/${element.filePath}`}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                      >
-                        <Page pageNumber={pageNumber} />
-                      </Document>
-                      {/* <p>Page {pageNumber} of {numPages}</p> */}
-                      <CardContent>
-                        <h7>
-                          <b>Name:</b> {element.fileName}
-                        </h7>
-                        <div>
-                          <IconButton
-                           className="viewBtn"
-                            data-toggle="tooltip"
-                            title="Delete this file"
-                            // onClick={() => deleteReminder(medicines._id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </div>
-                      </CardContent>
-                    </div>
-                  )}
-                </div>
-              </Grid>
-            </div>
-          ))}
-        </Grid>
-      </div>
-)}
+      {state.numberOfFiles == 0 ? (
+        <>NO Files Added 😢</>
+      ) : (
+        <div>
+          <Grid
+            container
+            spacing={1}
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            {mediaFiles.map((element) => (
+              <div>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  key={mediaFiles.indexOf(element)}
+                >
+                  <div className="media_card">
+                    {element.fileType != "application/pdf" ? (
+                      <>
+                        {" "}
+                        {console.log(element.fileType)}
+                        <img
+                          className={classes.media}
+                          component="img"
+                          src={`http://localhost:5000/${element.filePath}`}
+                          title="Contemplative Reptile"
+                          alt="lpl"
+                        />
+                        <CardContent>
+                          <h7>
+                            <b>Name:</b> {element.fileName}
+                          </h7>
+                          <div>
+                            <IconButton
+                              className="viewBtn"
+                              data-toggle="tooltip"
+                              title="Delete this file"
+                              // onClick={() => deleteReminder(medicines._id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </div>
+                        </CardContent>
+                      </>
+                    ) : (
+                      <div className="react-pdf__Page__canvas">
+                        <Document
+                          file={`http://localhost:5000/${element.filePath}`}
+                          onLoadSuccess={onDocumentLoadSuccess}
+                        >
+                          <Page pageNumber={pageNumber} />
+                        </Document>
+                        {/* <p>Page {pageNumber} of {numPages}</p> */}
+                        <CardContent>
+                          <h7>
+                            <b>Name:</b> {element.fileName}
+                          </h7>
+                          <div>
+                            <IconButton
+                              className="viewBtn"
+                              data-toggle="tooltip"
+                              title="Delete this file"
+                              // onClick={() => deleteReminder(medicines._id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </div>
+                        </CardContent>
+                      </div>
+                    )}
+                  </div>
+                </Grid>
+              </div>
+            ))}
+          </Grid>
+        </div>
+      )}
     </div>
   );
 }
