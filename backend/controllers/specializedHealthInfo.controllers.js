@@ -84,6 +84,22 @@ const getallSpecializedHealthInfo = async (req, res, next) => {
   }
 };
 
+
+
+const getFolderDataForModal = async (req, res, next) => {
+  try {
+    let folder = req.params.folderId;
+
+    console.log("user          ", folder);
+    const files = await MultipleFile.findById( folder );
+    console.log("getFolderDataForModal", files);
+    res.status(200).send(files);
+  } catch (error) {
+    res.send(error.message);
+  }
+};
+
+
 const fileSizeFormatter = (bytes, decimal) => {
   if (bytes === 0) {
     return "0 Bytes";
@@ -101,4 +117,5 @@ module.exports = {
   getallSpecializedHealthInfo,
   updateSpecializedHealthInfo,
   deleteFolder,
+  getFolderDataForModal
 };

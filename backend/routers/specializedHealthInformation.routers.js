@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   saveSpecializedHealthInfo,
   getallSpecializedHealthInfo,
- 
+  getFolderDataForModal,
   updateSpecializedHealthInfo,
  deleteFolder,
 } = require("../controllers/specializedHealthInfo.controllers");
@@ -20,4 +20,5 @@ router.get("/getallMediaFiles", getallMediaFiles);
 router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
 router.get("/getFolderItems", getFolderItems);
 router.delete('/deleteFolder/:folderId',deleteFolder)
+router.get('/getFolderDataForModal/:folderId',getFolderDataForModal)
 module.exports = router;
