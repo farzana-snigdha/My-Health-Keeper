@@ -13,6 +13,9 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import HeightIcon from "@material-ui/icons/Height";
 import { Button } from "@material-ui/core";
 import WeightModal from "./WeightModal";
+import BpModal from "./BpModal";
+import SugarModal from "./SugarModal";
+import PulseModal from "./PulseModal";
 
 
 
@@ -21,6 +24,20 @@ function GeneralHealthInfo() {
   const [showWeightModal, setShowWeightModal] = useState(false);
   const openWeightModal = () => {
     setShowWeightModal((prev) => !prev);
+  };
+
+  const [showBpModal, setShowBpModal] = useState(false);
+  const openBpModal = () => {
+    setShowBpModal((prev) => !prev);
+  };
+
+  const [showPulseModal, setShowPulseModal] = useState(false);
+  const openPulseModal = () => {
+    setShowPulseModal((prev) => !prev);
+  };
+  const [showSugarModal, setShowSugarModal] = useState(false);
+  const openSugartModal = () => {
+    setShowSugarModal((prev) => !prev);
   };
 
   return (
@@ -64,7 +81,7 @@ function GeneralHealthInfo() {
           <div className="details">
             <CardContent className="content">
               <Typography component="h5" variant="h5">
-                🧍‍♂️ Height
+                🩸 Blood Pressure
               </Typography>
               <div className="margin">
                 <Grid container spacing={2} alignItems="flex-end">
@@ -79,9 +96,13 @@ function GeneralHealthInfo() {
                   </IconButton>
                 </Grid>
               </div>
-              <Button className="summary_btn"> Show History</Button>
+              <Button className="summary_btn" onClick={openBpModal}> Show History</Button>
             </CardContent>
           </div>
+         <BpModal
+         showBpModal={showBpModal}
+         setShowBpModal={setShowBpModal}>
+         </BpModal>
         </Card>
       }
       {
@@ -89,7 +110,7 @@ function GeneralHealthInfo() {
           <div className="details">
             <CardContent className="content">
               <Typography component="h5" variant="h5">
-                💓 Heart Rate
+                💓 Pulse Rate
               </Typography>
               <div className="margin">
                 <Grid container spacing={2} alignItems="flex-end">
@@ -104,10 +125,43 @@ function GeneralHealthInfo() {
                   </IconButton>
                  </Grid>
               </div>
-              <Button className="summary_btn"> Show History</Button>
+              <Button className="summary_btn" onClick={openPulseModal}> Show History</Button>
             </CardContent>
           </div>
+          <PulseModal
+         showPulseModal={showPulseModal}
+         setShowPulseModal={setShowPulseModal}>
+         </PulseModal>
         </Card>
+      }
+      {
+         <Card className="root">
+         <div className="details">
+           <CardContent className="content">
+             <Typography component="h5" variant="h5">
+               🎚 Sugar Level
+             </Typography>
+             <div className="margin">
+               <Grid container spacing={2} alignItems="flex-end">
+                 <Grid item>
+                   <FavoriteBorderIcon />
+                 </Grid>
+                 <Grid item>
+                   <TextField label="bpm" />
+                 </Grid>
+                 <IconButton aria-label="add" className="controls">
+                   <AddCircleOutlineRoundedIcon className="playIcon" />
+                 </IconButton>
+                </Grid>
+             </div>
+             <Button className="summary_btn" onClick={openSugartModal}> Show History</Button>
+           </CardContent>
+         </div>
+         <SugarModal
+         showSugarModal={showSugarModal}
+         setShowSugarModal={setShowSugarModal}>
+         </SugarModal>
+       </Card>
       }
     </div>
   );
