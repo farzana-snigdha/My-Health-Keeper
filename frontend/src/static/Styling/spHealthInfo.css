@@ -1,19 +1,46 @@
-.reminder_buttons {
-    width: 30%;
-    margin-right: 0;
-    margin-left: auto;
-  }
-  
-  .reminder_buttons > .reminder_buttons_sub {
-    width: 20%;
-    background-color: #063742;
-    color: white;
-    display: inline;
-    margin-left: 1em;
-    padding: 10px;
-    text-decoration: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
+.sp_reminder_buttons {
+  width: 20%;
+  background-color: #063742;
+  color: white;
+  display: inline;
+  margin-left: 1em;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.info-save {
+  padding: 0.5%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.reminder_card >.viewBtn {
+  align-items: flex-end;
+ padding-left: 74%;
+  color: #063742;
+}
+
+.reminder_card >.viewBtn:hover {
+ background-color: #cdecf9;
+  color: #063742;
+}
+
+.media_card {
+  display: flex;
+  flex-direction: column;
+  display: inline-block;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+
+  margin: 2rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  max-width: 350px;
+  border-radius: 10px;
+  background: #cdecf9;
+  box-shadow: 8px 8px 16px #aec9d4, -8px -8px 16px #ecffff;
+}
+
