@@ -183,8 +183,10 @@ function Header() {
       await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
       localStorage.removeItem("UserMenstrualInfo")
-      removeCookie("UserMenstrualInfo");
-      localStorage.removeItem("setSpHealthNotes")
+      localStorage.removeItem("userID")
+      localStorage.removeItem("spUser")
+       removeCookie("UserMenstrualInfo");
+     
       window.location.href = "/";
     } catch (err) {
       window.location.href = "/";
