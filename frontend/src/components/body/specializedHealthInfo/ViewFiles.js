@@ -8,8 +8,9 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { Document,Page } from "react-pdf";
+import { Document,Page,pdfjs } from "react-pdf";
 import { Grid } from "@material-ui/core";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const useStyles = makeStyles({
   root: {
@@ -97,8 +98,9 @@ export default function AddFiles() {
                     </CardContent>
                   </>
                 ) : (
-                  <div>
-                      <Document
+                  
+                    <div  className='react-pdf__Page__canvas'>
+                    <Document 
         file={`http://localhost:5000/${element.filePath}`}
         onLoadSuccess={onDocumentLoadSuccess}
       >
@@ -110,7 +112,9 @@ export default function AddFiles() {
                        <b>Name:</b> {element.fileName}
                      </h6>
                    </CardContent>
-                  </div>
+                    </div>
+                     
+                 
                 //   <>
                 //   {" "}
                 //   {console.log(element.fileType)}
