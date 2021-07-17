@@ -4,11 +4,12 @@ const router = express.Router();
 const {
   saveSpecializedHealthInfo,
   getallSpecializedHealthInfo,
-  getallMediaFiles,
+  getFolderDataForModal,
   updateSpecializedHealthInfo,
-  getFolderItems,
+ deleteFolder,
 } = require("../controllers/specializedHealthInfo.controllers");
 
+const {getallMediaFiles, getFolderItems} =require('../controllers/mediaFile.SpHealth.controllers')
 router.post(
   "/save-specialized-health-info",
   upload.array("files"),
@@ -16,6 +17,8 @@ router.post(
 );
 router.get("/get-specializedHealthInfo", getallSpecializedHealthInfo);
 router.get("/getallMediaFiles", getallMediaFiles);
-router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
+router.patch("/updateSpecializedHealthInfo/:folderId", updateSpecializedHealthInfo);
 router.get("/getFolderItems", getFolderItems);
+router.delete('/deleteFolder/:folderId',deleteFolder)
+router.get('/getFolderDataForModal/:folderId',getFolderDataForModal)
 module.exports = router;
