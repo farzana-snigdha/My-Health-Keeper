@@ -5,9 +5,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Link } from "react-router-dom";
 import {
   IconButton,
-  Typography,
   CardContent,
-  Card,
   Button,
   CardActions,
 } from "@material-ui/core";
@@ -18,16 +16,9 @@ import axios from "axios";
 import AddNotes from "./AddNotes";
 import { UserIDContext } from "../../../App";
 import DeleteIcon from "@material-ui/icons/Delete";
-
 import { makeStyles } from "@material-ui/core/styles";
-
 import clsx from "clsx";
-
 import Collapse from "@material-ui/core/Collapse";
-
-const initialState = {
-  x: false,
-};
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -41,25 +32,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SpecializedHealthInfo() {
   const [editing, setEditing] = useState(false);
-
+  const [expanded, setExpanded] = React.useState(false);
+  const [spHealthNotes, setSpHealthNotes] = useState([]);
+  const [description, setDesc] = useState("");
   const userID = useContext(UserIDContext);
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
-  const { user, isLogged } = auth;
-
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  console.log("cdcwdcwc ", userID);
+  console.log("context userID ", userID);
   let history = useHistory();
-  const [spHealthNotes, setSpHealthNotes] = useState([]);
-
-  const [description, setDesc] = useState("");
-
   const showSPHealthNotes = async () => {
     let spID = localStorage.getItem("spUser");
     if (spID) {
@@ -75,16 +59,13 @@ export default function SpecializedHealthInfo() {
         });
     }
   };
-
   useEffect(() => {
     showSPHealthNotes();
   }, []);
-
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setDesc(value);
   };
-
   const updateDesc = async (e, folderId) => {
     e.preventDefault();
     console.log("folderId ", folderId);
@@ -99,13 +80,12 @@ export default function SpecializedHealthInfo() {
       .then((response) => {
         console.log("editfolder", response.data);
         setEditing(false);
-        showSPHealthNotes()
+        showSPHealthNotes();
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   const deleteFolder = async (folderId) => {
     await axios
       .delete("http://localhost:5000/api/deleteFolder/" + folderId, {
@@ -114,7 +94,6 @@ export default function SpecializedHealthInfo() {
       .then((response) => {
         console.log(response.data);
       });
-
     const removedMed = [...spHealthNotes].filter((el) => el._id !== folderId);
     setSpHealthNotes(removedMed);
   };
@@ -124,15 +103,11 @@ export default function SpecializedHealthInfo() {
       <AddNotes getNote={() => showSPHealthNotes()} />
       <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health Diary</h4>
       <hr></hr>
-
-   
-
       {spHealthNotes.length != 0 ? (
         <div>
           {spHealthNotes.map((note, index) => (
             <div key={index} variant="outlined" className="reminder_card">
               <h2>
-                {" "}
                 <FolderSpecialIcon />
                 &nbsp;{note.folder}
               </h2>
@@ -145,30 +120,25 @@ export default function SpecializedHealthInfo() {
                 })}
                 onClick={handleExpandClick}
                 aria-expanded={expanded}
-                aria-label="show more"
               >
-                <div className="clrDiv">
-                  <h5>
-                    <b>Description</b>
-                  </h5>
-                </div>
+                <h5 className="clrDiv">
+                  <b>Description</b>
+                </h5>
               </IconButton>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>{note.description}</CardContent>
               </Collapse>
 
               {editing ? (
-                <>
-                  <CardContent>
-                    <textarea
-                      onChange={handleChangeInput}
-                      value={description}
-                    ></textarea>
-                    <Button onClick={(e) => updateDesc(e, note._id)}>👍🏼</Button>
-                  </CardContent>
-                </>
+                <CardContent>
+                  <textarea
+                    onChange={handleChangeInput}
+                    value={description}
+                  ></textarea>
+                  <Button onClick={(e) => updateDesc(e, note._id)}>👍🏼</Button>
+                </CardContent>
               ) : (
-                <> </>
+                ""
               )}
 
               <div className="clrDiv">
@@ -178,7 +148,7 @@ export default function SpecializedHealthInfo() {
                     className="viewBtn"
                     data-toggle="tooltip"
                     title="Edit Folder"
-                    onClick={() =>setEditing(true)}
+                    onClick={() => setEditing(true)}
                   >
                     <EditIcon />
                   </IconButton>
@@ -208,9 +178,7 @@ export default function SpecializedHealthInfo() {
           ))}
         </div>
       ) : (
-        <div>
-          <h2>No folder is created</h2>
-        </div>
+        <h2>No folder is created</h2>
       )}
     </div>
   );
