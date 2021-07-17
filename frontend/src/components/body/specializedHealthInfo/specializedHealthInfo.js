@@ -51,7 +51,7 @@ export default function SpecializedHealthInfo() {
         headers: { Authorization: token, folderid: folderId },
       })
       .then((res) => {
-        history.push({ pathname: `/view-files`, state: folderId });
+        // history.push({ pathname: `/view-files`, state: folderId });
         return folderId;
       });
   };
@@ -79,7 +79,7 @@ export default function SpecializedHealthInfo() {
                 <IconButton
                   component={Link}
                   to={{
-                    state: note._id,
+                    state: note,
                     pathname: `/view-files`,
                   }}
                   className="viewBtn"
