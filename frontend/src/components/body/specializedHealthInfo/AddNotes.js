@@ -18,7 +18,7 @@ const initialState = {
   success: "",
   err: "",
 };
-export default function AddNotes() {
+export default function AddNotes(props) {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
@@ -38,23 +38,23 @@ export default function AddNotes() {
     const { name, value } = e.target;
     setNotes({ ...notes, [name]: value, err: "", success: "" });
   };
-   const [spHealthNotes, setSpHealthNotes] = useState([]);
+  const [spHealthNotes, setSpHealthNotes] = useState([]);
 
-  const showSPHealthNotes = async () => {
-   
-    console.log("id  ",user._id)
-    const id = user._id;
-    console.log("c ",id)
-    
-    await axios
-      .get("http://localhost:5000/api/get-specializedHealthInfo", {
-        headers: { Authorization: token, userid: id },
-      })
-      .then((res) => setSpHealthNotes(res.data));
-  };
-  useEffect(async () => {
-    showSPHealthNotes();
-  }, []);
+  // const showSPHealthNotes = async () => {
+
+  //   console.log("id  ",user._id)
+  //   const id = user._id;
+  //   console.log("c ",id)
+
+  //   await axios
+  //     .get("http://localhost:5000/api/get-specializedHealthInfo", {
+  //       headers: { Authorization: token, userid: id },
+  //     })
+  //     .then((res) => setSpHealthNotes(res.data));
+  // };
+  // useEffect(async () => {
+  //   showSPHealthNotes();
+  // }, []);
 
   const mulitpleFileOptions = {
     onUploadProgress: (progressEvent) => {
@@ -65,11 +65,10 @@ export default function AddNotes() {
   };
 
   const UploadMultipleFiles = async () => {
-    
     const id = user._id;
 
     const formData = new FormData();
-    formData.append('user',id)
+    formData.append("user", id);
     formData.append("folder", folder);
     formData.append("noteDate", noteDate);
     formData.append("description", description);
@@ -78,7 +77,7 @@ export default function AddNotes() {
       formData.append("files", multipleFiles[i]);
     }
 
-console.log("addnotes ",id)
+    console.log("addnotes ", id);
     const res = await axios
       .post(
         "http://localhost:5000/api/save-specialized-health-info",
@@ -103,9 +102,9 @@ console.log("addnotes ",id)
           });
 
           history.push("/specialized-health-information");
-          console.log("SpecializedHealthInfo.showSPHealthNotes();") 
-          // localStorage.setItem("setSpHealthNotes",showSPHealthNotes())
+          console.log("SpecializedHealthInfo.showSPHealthNotes();");
           // showSPHealthNotes()
+          props.getNote();
           setTimeout(function () {
             setNotes(initialState);
           }, 4000);
@@ -190,7 +189,7 @@ console.log("addnotes ",id)
                   pathTransitionDuration: 0.5,
                   pathColor: `rgba(6,55,66, ${multipleProgress / 100})`,
                   textColor: "#063742",
-                  trailColor:'#cdecf9', 
+                  trailColor: "#cdecf9",
                   backgroundColor: "#3e98c7",
                 })}
               />
