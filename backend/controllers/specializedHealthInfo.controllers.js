@@ -16,7 +16,7 @@ const saveSpecializedHealthInfo = async (req, res) => {
         };
         filesArray.push(file);
       });
-      console.log("eccec ", result.length);
+      // console.log("eccec ", result.length);
       const multipleFiles = new MultipleFile({
         user: user,
         folder: folder,
@@ -60,10 +60,10 @@ const updateSpecializedHealthInfo = async (req, res) => {
 };
 
 const deleteFolder = async (req, res) => {
-  let user = req.headers["userid"];
-  let { folder } = req.body;
-
-  await MultipleFile.findOneAndDelete({ user, folder })
+ 
+  let folder = req.params.folderId;
+  console.log("folder", folder);
+  await MultipleFile.findByIdAndDelete(folder)
     .then(() => {
       res.json({ msg: "Folder Successfully Deleted!" });
     })
@@ -78,7 +78,7 @@ const getallSpecializedHealthInfo = async (req, res, next) => {
 
     console.log("user          ", user);
     const files = await MultipleFile.find({ user });
-    console.log("files", files);
+    // console.log("files", files);
     res.status(200).send(files);
   } catch (error) {
     res.send(error.message);

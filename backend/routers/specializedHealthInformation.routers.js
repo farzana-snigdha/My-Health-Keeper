@@ -18,5 +18,5 @@ router.get("/get-specializedHealthInfo", getallSpecializedHealthInfo);
 router.get("/getallMediaFiles", getallMediaFiles);
 router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
 router.get("/getFolderItems", getFolderItems);
-router.delete('/deleteFolder',deleteFolder)
+router.delete('/deleteFolder/:folderId',deleteFolder)
 module.exports = router;

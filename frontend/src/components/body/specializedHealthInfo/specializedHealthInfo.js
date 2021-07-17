@@ -58,6 +58,25 @@ export default function SpecializedHealthInfo() {
         return folderId;
       });
   };
+
+
+
+  const deleteFolder = async (folderId) => {
+    await axios
+      .delete("http://localhost:5000/api/deleteFolder/"+folderId  ,{
+        headers: { Authorization: token },
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+
+    const removedMed = [...spHealthNotes].filter(
+      (el) => el._id !== folderId
+    );
+    setSpHealthNotes(removedMed);
+  };
+
+
   return (
     <div>
       <AddNotes getNote={() => showSPHealthNotes()} />
@@ -108,7 +127,7 @@ export default function SpecializedHealthInfo() {
                 className="viewBtn"
                 data-toggle="tooltip"
                 title="Delete this Folder"
-                // onClick={() => deleteReminder(medicines._id)}
+                onClick={() => deleteFolder(note._id)}
               >
                 <DeleteIcon />
               </IconButton>
