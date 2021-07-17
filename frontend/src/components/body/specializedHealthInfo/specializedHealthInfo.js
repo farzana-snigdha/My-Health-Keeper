@@ -11,7 +11,7 @@ import axios from "axios";
 import AddNotes from "./AddNotes";
 import { UserIDContext } from "../../../App";
 import DeleteIcon from "@material-ui/icons/Delete";
-
+import SpHealthModal from './SpHealthModal'
 const initialState = {
   folder: "",
   noteDate: "",
@@ -27,6 +27,8 @@ export default function SpecializedHealthInfo() {
   console.log("cdcwdcwc ", userID);
   let history = useHistory();
   const [spHealthNotes, setSpHealthNotes] = useState([]);
+  const [spHealthNotesForModal, setSpHealthNotesForModal] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const showSPHealthNotes = async () => {
     let oo = localStorage.getItem("spUser");
@@ -37,7 +39,7 @@ export default function SpecializedHealthInfo() {
           headers: { Authorization: token, userid: userID },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           history.push("/specialized-health-information");
           setSpHealthNotes(res.data);
         });
@@ -59,23 +61,25 @@ export default function SpecializedHealthInfo() {
       });
   };
 
+  const openModal = () => {
+    console.log('edcwedewqd')
+    setShowModal((prev) => !prev);
+  };
 
+ 
 
   const deleteFolder = async (folderId) => {
     await axios
-      .delete("http://localhost:5000/api/deleteFolder/"+folderId  ,{
+      .delete("http://localhost:5000/api/deleteFolder/" + folderId, {
         headers: { Authorization: token },
       })
       .then((response) => {
         console.log(response.data);
       });
 
-    const removedMed = [...spHealthNotes].filter(
-      (el) => el._id !== folderId
-    );
+    const removedMed = [...spHealthNotes].filter((el) => el._id !== folderId);
     setSpHealthNotes(removedMed);
   };
-
 
   return (
     <div>
@@ -83,7 +87,7 @@ export default function SpecializedHealthInfo() {
       <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health Diary</h4>
       <hr></hr>
 
-      {console.log("spHealthNotes.length", spHealthNotes)}
+      {/* {console.log("spHealthNotes.length", spHealthNotes)} */}
 
       {spHealthNotes.length != 0 ? (
         <div>
@@ -102,7 +106,7 @@ export default function SpecializedHealthInfo() {
                 component={Link}
                 to={{
                   state: note,
-                  pathname: `/view-files`,
+                  pathname: '/view-files',
                 }}
                 className="viewBtn"
                 data-toggle="tooltip"
@@ -115,10 +119,11 @@ export default function SpecializedHealthInfo() {
                 className="viewBtn"
                 data-toggle="tooltip"
                 title="Edit Folder"
-                // onClick={() => {
-                //   openModal();
-                //   getmissedMed(medicines._id);
-                // }}
+                onClick={() => {
+                  openModal();
+                  // getFolderContentForModal(note._id);
+                  
+                }}
               >
                 <EditIcon />
               </IconButton>
@@ -131,7 +136,12 @@ export default function SpecializedHealthInfo() {
               >
                 <DeleteIcon />
               </IconButton>
-
+             
+              <SpHealthModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              value={note._id}
+            />
               {/* </Link> */}
             </div>
           ))}

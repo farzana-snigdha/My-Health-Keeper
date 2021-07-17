@@ -75,7 +75,7 @@ const getallSpecializedHealthInfo = async (req, res, next) => {
   try {
     let user = req.headers["userid"];
 
-    console.log("user          ", user);
+    // console.log("user          ", user);
     const files = await MultipleFile.find({ user });
     // console.log("files", files);
     res.status(200).send(files);
@@ -84,21 +84,36 @@ const getallSpecializedHealthInfo = async (req, res, next) => {
   }
 };
 
-
-
-const getFolderDataForModal = async (req, res, next) => {
-  try {
+const getFolderDataForModal = async (req, res) => {
+  
     let folder = req.params.folderId;
+    
+    MultipleFile.find(
+      {
+        _id:folder
+        
+      },
+      (err, ans) => {
+        if (err) {
+          // console.log(user);
+          console.log("Test :" + err);
+        }
+        if (ans) {
+          res.send(ans[0]);
+          console.log(ans);
+          console.log("done")
+        }
+      }
+    );
 
-    console.log("user          ", folder);
-    const files = await MultipleFile.findById( folder );
-    console.log("getFolderDataForModal", files);
-    res.status(200).send(files);
-  } catch (error) {
-    res.send(error.message);
-  }
+
+
+    // console.log("user modal          ", folder);
+    // const files = await MultipleFile.find({_id:folder})
+    // console.log("getFolderDataForModal", files[0]);
+    // res.send(files[0]._id);
+ 
 };
-
 
 const fileSizeFormatter = (bytes, decimal) => {
   if (bytes === 0) {
@@ -117,5 +132,5 @@ module.exports = {
   getallSpecializedHealthInfo,
   updateSpecializedHealthInfo,
   deleteFolder,
-  getFolderDataForModal
+  getFolderDataForModal,
 };
