@@ -16,7 +16,7 @@ const saveSpecializedHealthInfo = async (req, res) => {
         };
         filesArray.push(file);
       });
-      console.log("eccec ", result.length);
+      // console.log("eccec ", result.length);
       const multipleFiles = new MultipleFile({
         user: user,
         folder: folder,
@@ -41,14 +41,14 @@ const saveSpecializedHealthInfo = async (req, res) => {
 };
 
 const updateSpecializedHealthInfo = async (req, res) => {
-  let user = req.headers["userid"];
-  let { folder, description, noteDate } = req.body;
+  let folder = req.params.folderId;
+  let {  description } = req.body;
 
   await MultipleFile.findOneAndUpdate(
-    { user, folder },
+    {_id:  folder },
     {
       description,
-      noteDate,
+     
     }
   )
     .then(() => {
@@ -59,45 +59,60 @@ const updateSpecializedHealthInfo = async (req, res) => {
     });
 };
 
+const deleteFolder = async (req, res) => {
+  let folder = req.params.folderId;
+  console.log("folder", folder);
+  await MultipleFile.findByIdAndDelete(folder)
+    .then(() => {
+      res.json({ msg: "Folder Successfully Deleted!" });
+    })
+    .catch((err) => {
+      res.json({ msg: err.message });
+    });
+};
+
 const getallSpecializedHealthInfo = async (req, res, next) => {
   try {
     let user = req.headers["userid"];
-    
-    console.log("user          ", user);
+
+    // console.log("user          ", user);
     const files = await MultipleFile.find({ user });
-    console.log("files", files);
+    // console.log("files", files);
     res.status(200).send(files);
   } catch (error) {
     res.send(error.message);
   }
 };
-const getallMediaFiles = async (req, res) => {
-  try {
-    const folderID = req.headers["folderid"];
 
-    const files = await MultipleFile.findOne({ folderID });
-    res.status(200).send(files.files);
-  } catch (error) {
-    res.send(error.message);
-  }
-};
-
-const getFolderItems = async (req, res) => {
-  try {
-    const folderID = req.headers['folderid'];
-    console.log("folderID: ", folderID);
-    const files = await MultipleFile.findById(folderID, function (err, ans) {
-      if (err) {
-        console.log("getallMediaFiles>err: ", 'no files found');
-        res.send("no files found")
-      } if(ans) {
-        console.log("getallMediaFiles>ans: ", ans.files);
-        res.status(200).send(ans.files);
+const getFolderDataForModal = async (req, res) => {
+  
+    let folder = req.params.folderId;
+    
+    MultipleFile.find(
+      {
+        _id:folder
+        
+      },
+      (err, ans) => {
+        if (err) {
+          // console.log(user);
+          console.log("Test :" + err);
+        }
+        if (ans) {
+          res.send(ans[0]);
+          console.log(ans);
+          console.log("done")
+        }
       }
-    });
-  } catch (error) {
-    res.send(error.message);
-  }
+    );
+
+
+
+    // console.log("user modal          ", folder);
+    // const files = await MultipleFile.find({_id:folder})
+    // console.log("getFolderDataForModal", files[0]);
+    // res.send(files[0]._id);
+ 
 };
 
 const fileSizeFormatter = (bytes, decimal) => {
@@ -115,7 +130,7 @@ const fileSizeFormatter = (bytes, decimal) => {
 module.exports = {
   saveSpecializedHealthInfo,
   getallSpecializedHealthInfo,
-  getallMediaFiles,
   updateSpecializedHealthInfo,
-  getFolderItems,
+  deleteFolder,
+  getFolderDataForModal,
 };
