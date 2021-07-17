@@ -9,20 +9,16 @@ const PulseModal = ({showPulseModal, setShowPulseModal}) => {
     
     
     const closePulseModal = () => {
-      
-          setShowPulseModal(false);
-      
-      };
+        setShowPulseModal(false);
+        };
      
         return (
             <>
-              {showPulseModal ? (
-
               <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                showPulseModal={showPulseModal}
+                show={showPulseModal}
                 onHide={closePulseModal}
                 
                 >
@@ -38,7 +34,7 @@ const PulseModal = ({showPulseModal, setShowPulseModal}) => {
                             </Button>
                         </Modal.Footer>
                </Modal>
-               ) : null}
+           
             </>
       )
 

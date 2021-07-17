@@ -6,7 +6,6 @@ import { Button } from "@material-ui/core";
 
 
 const SugarModal = ({showSugarModal,setShowSugarModal}) => {
-  
     
     const closeSugarModal = () => {
          setShowSugarModal(false);
@@ -14,14 +13,13 @@ const SugarModal = ({showSugarModal,setShowSugarModal}) => {
       };
     
         return (
-            <>
-              {showSugarModal ? (
 
+            <>   
               <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                showSugarModal={showSugarModal}
+                show={showSugarModal}
                 onHide={closeSugarModal}
                
                 >
@@ -37,7 +35,6 @@ const SugarModal = ({showSugarModal,setShowSugarModal}) => {
                             </Button>
                         </Modal.Footer>
                </Modal>
-               ) : null}
             </>
       )
 

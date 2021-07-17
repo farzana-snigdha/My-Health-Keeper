@@ -13,13 +13,11 @@ const WeightModal = ({ showWeightModal, setShowWeightModal}) => {
     
         return (
             <>
-              {showWeightModal ? (
-
               <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                showWeightModal={showWeightModal}
+                show={showWeightModal}
                 onHide={closeWeightModal}
                 >
                     <Modal.Header>
@@ -34,7 +32,6 @@ const WeightModal = ({ showWeightModal, setShowWeightModal}) => {
                             </Button>
                         </Modal.Footer>
                </Modal>
-               ) : null}
             </>
       )
 

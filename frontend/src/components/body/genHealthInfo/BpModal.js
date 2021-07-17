@@ -14,13 +14,11 @@ const BpModal = ({showBpModal, setShowBpModal}) => {
     
         return (
             <>
-              {showBpModal ? (
-
               <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                showBpModal={showBpModal}
+                show={showBpModal}
                 onHide={closeBpModal}
                
                 >
@@ -36,7 +34,7 @@ const BpModal = ({showBpModal, setShowBpModal}) => {
                             </Button>
                         </Modal.Footer>
                </Modal>
-               ) : null}
+              
             </>
       )
 

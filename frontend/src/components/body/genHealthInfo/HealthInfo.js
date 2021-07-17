@@ -23,23 +23,17 @@ import PulseModal from "./PulseModal";
 function GeneralHealthInfo() {
 
   const [showWeightModal, setShowWeightModal] = useState(false);
-  const openWeightModal = () => {
-    setShowWeightModal(true);
-  };
+  const openWeightModal = () => setShowWeightModal(true);
 
   const [showBpModal, setShowBpModal] = useState(false);
-  const openBpModal = () => {
-    setShowBpModal(true);
-  };
+  const openBpModal = () => setShowBpModal(true);
 
   const [showPulseModal, setShowPulseModal] = useState(false);
-  const openPulseModal = () => {
-    setShowPulseModal(true);
-  };
+  const openPulseModal = () => setShowPulseModal(true);
+ 
   const [showSugarModal, setShowSugarModal] = useState(false);
-  const openSugarModal = () => {
-    setShowSugarModal(true);
-  };
+  const openSugarModal = () =>  setShowSugarModal(true);
+
 
   return (
     <div className=" body ">
@@ -64,9 +58,7 @@ function GeneralHealthInfo() {
                   </IconButton>
                 </Grid>
               </div>
-              <Button className="summary_btn" onClick={
-                ()=>{openWeightModal()}
-                }>
+              <Button className="summary_btn" onClick={openWeightModal}>
                  Show History</Button>
             </CardContent>
           </div>
