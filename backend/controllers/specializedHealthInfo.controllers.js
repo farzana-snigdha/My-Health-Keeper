@@ -41,14 +41,14 @@ const saveSpecializedHealthInfo = async (req, res) => {
 };
 
 const updateSpecializedHealthInfo = async (req, res) => {
-  let user = req.headers["userid"];
-  let { folder, description, noteDate } = req.body;
+  let folder = req.params.folderId;
+  let {  description } = req.body;
 
   await MultipleFile.findOneAndUpdate(
-    { user, folder },
+    {_id:  folder },
     {
       description,
-      noteDate,
+     
     }
   )
     .then(() => {

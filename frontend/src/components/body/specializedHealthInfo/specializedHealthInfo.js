@@ -3,7 +3,14 @@ import "../../../static/Styling/spHealthInfo.css";
 import { useSelector } from "react-redux";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Link } from "react-router-dom";
-import { IconButton } from "@material-ui/core";
+import {
+  IconButton,
+  Typography,
+  CardContent,
+  Card,
+  Button,
+  CardActions,
+} from "@material-ui/core";
 import FolderSpecialIcon from "@material-ui/icons/FolderSpecial";
 import { useHistory } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
@@ -16,12 +23,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import clsx from "clsx";
-import CardContent from "@material-ui/core/CardContent";
+
 import Collapse from "@material-ui/core/Collapse";
 
 const initialState = {
-  folder: "",
-  noteDate: "",
   description: "",
 };
 
@@ -36,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SpecializedHealthInfo() {
+  const [editing, setEditing] = useState(false);
+
   const userID = useContext(UserIDContext);
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
@@ -53,6 +60,7 @@ export default function SpecializedHealthInfo() {
   const [spHealthNotes, setSpHealthNotes] = useState([]);
   const [spHealthNotesForModal, setSpHealthNotesForModal] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [description, setDesc] = useState("");
 
   const showSPHealthNotes = async () => {
     let oo = localStorage.getItem("spUser");
@@ -85,9 +93,29 @@ export default function SpecializedHealthInfo() {
       });
   };
 
-  const openModal = () => {
-    console.log("edcwedewqd");
-    setShowModal((prev) => !prev);
+  // const openModal = () => {
+  //   console.log("edcwedewqd");
+  //   setShowModal((prev) => !prev);
+  // };
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setDesc( value );
+  };
+
+  const updateDesc = async (e,folderId) => {
+    e.preventDefault();
+console.log("folderId ",folderId)
+    await axios
+    .patch("http://localhost:5000/api/updateSpecializedHealthInfo/" + folderId, { description},{
+      headers: { Authorization: token },
+    })
+    .then((response) => {
+      console.log("editfolder", response.data);
+      setEditing(false)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
 
   const deleteFolder = async (folderId) => {
@@ -113,8 +141,8 @@ export default function SpecializedHealthInfo() {
 
       {spHealthNotes.length != 0 ? (
         <div>
-          {spHealthNotes.map((note) => (
-            <div variant="outlined" className="reminder_card">
+          {spHealthNotes.map((note, index) => (
+            <div key={index} variant="outlined" className="reminder_card">
               <h2>
                 {" "}
                 <FolderSpecialIcon />
@@ -137,45 +165,63 @@ export default function SpecializedHealthInfo() {
                   </h5>
                 </div>
               </IconButton>
-
               <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>{note.description}</CardContent>
-              </Collapse>
+                    <CardContent>{note.description}</CardContent>
+                  </Collapse>
+             
+             
+             
+              {editing ? (
+                <>
+                  {/* <Collapse in={expanded} timeout="auto" unmountOnExit> */}
+                  <CardContent>
+                    <textarea onChange={handleChangeInput} value={description}>
+                     
+                    </textarea>
+                    <Button onClick={(e)=>updateDesc(e,note._id)}>👍🏼</Button>
+                  </CardContent>
+                  {/* </Collapse> */}
+                </>
+              ) : (
+                <>
+                  {" "}
+                 
+                </>
+              )}
 
-              <div  className="clrDiv">
+              <div className="clrDiv">
                 {" "}
-                <IconButton
-                  component={Link}
-                  to={{
-                    state: note,
-                    pathname: "/view-files",
-                  }}
-                  className="viewBtn"
-                  data-toggle="tooltip"
-                  title="View Your Saved Files"
-                  onClick={() => viewFolder(note._id)}
-                >
-                  <VisibilityIcon />
-                </IconButton>
-                <IconButton
-                  className="viewBtn"
-                  data-toggle="tooltip"
-                  title="Edit Folder"
-                  onClick={() => {
-                    openModal();
-                    // getFolderContentForModal(note._id);
-                  }}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  className="viewBtn"
-                  data-toggle="tooltip"
-                  title="Delete this Folder"
-                  onClick={() => deleteFolder(note._id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
+                <CardActions className="clrCardAction">
+                  <IconButton
+                    className="viewBtn"
+                    data-toggle="tooltip"
+                    title="Edit Folder"
+                    onClick={() => setEditing(true)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    component={Link}
+                    to={{
+                      state: note,
+                      pathname: "/view-files",
+                    }}
+                    className="viewBtn"
+                    data-toggle="tooltip"
+                    title="View Your Saved Files"
+                    onClick={() => viewFolder(note._id)}
+                  >
+                    <VisibilityIcon />
+                  </IconButton>
+                  <IconButton
+                    className="viewBtn"
+                    data-toggle="tooltip"
+                    title="Delete this Folder"
+                    onClick={() => deleteFolder(note._id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </CardActions>
               </div>
 
               <SpHealthModal
