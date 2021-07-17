@@ -10,4 +10,5 @@ navbar=>avatar(before logout)
 check part7N
 
 //new
-npm i react-pdf
+frontend: npm i react-pdf
+backend: npm uninstall express-fileupload
