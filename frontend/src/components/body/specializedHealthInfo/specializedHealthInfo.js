@@ -18,16 +18,15 @@ import axios from "axios";
 import AddNotes from "./AddNotes";
 import { UserIDContext } from "../../../App";
 import DeleteIcon from "@material-ui/icons/Delete";
-import SpHealthModal from "./SpHealthModal";
+
 import { makeStyles } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 import clsx from "clsx";
 
 import Collapse from "@material-ui/core/Collapse";
 
 const initialState = {
-  description: "",
+  x: false,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -58,14 +57,13 @@ export default function SpecializedHealthInfo() {
   console.log("cdcwdcwc ", userID);
   let history = useHistory();
   const [spHealthNotes, setSpHealthNotes] = useState([]);
-  const [spHealthNotesForModal, setSpHealthNotesForModal] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+
   const [description, setDesc] = useState("");
 
   const showSPHealthNotes = async () => {
-    let oo = localStorage.getItem("spUser");
-    if (oo) {
-      console.log("sp id     ", oo);
+    let spID = localStorage.getItem("spUser");
+    if (spID) {
+      console.log("sp id     ", spID);
       await axios
         .get("http://localhost:5000/api/get-specializedHealthInfo", {
           headers: { Authorization: token, userid: userID },
@@ -82,40 +80,29 @@ export default function SpecializedHealthInfo() {
     showSPHealthNotes();
   }, []);
 
-  const viewFolder = async (folderId) => {
-    await axios
-      .get("http://localhost:5000/api/getallMediaFiles", {
-        headers: { Authorization: token, folderid: folderId },
-      })
-      .then((res) => {
-        // history.push({ pathname: `/view-files`, state: folderId });
-        return folderId;
-      });
-  };
-
-  // const openModal = () => {
-  //   console.log("edcwedewqd");
-  //   setShowModal((prev) => !prev);
-  // };
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setDesc( value );
+    setDesc(value);
   };
 
-  const updateDesc = async (e,folderId) => {
+  const updateDesc = async (e, folderId) => {
     e.preventDefault();
-console.log("folderId ",folderId)
+    console.log("folderId ", folderId);
     await axios
-    .patch("http://localhost:5000/api/updateSpecializedHealthInfo/" + folderId, { description},{
-      headers: { Authorization: token },
-    })
-    .then((response) => {
-      console.log("editfolder", response.data);
-      setEditing(false)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .patch(
+        "http://localhost:5000/api/updateSpecializedHealthInfo/" + folderId,
+        { description },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then((response) => {
+        console.log("editfolder", response.data);
+        setEditing(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const deleteFolder = async (folderId) => {
@@ -137,7 +124,7 @@ console.log("folderId ",folderId)
       <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health Diary</h4>
       <hr></hr>
 
-      {/* {console.log("spHealthNotes.length", spHealthNotes)} */}
+   
 
       {spHealthNotes.length != 0 ? (
         <div>
@@ -166,27 +153,21 @@ console.log("folderId ",folderId)
                 </div>
               </IconButton>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>{note.description}</CardContent>
-                  </Collapse>
-             
-             
-             
+                <CardContent>{note.description}</CardContent>
+              </Collapse>
+
               {editing ? (
                 <>
-                  {/* <Collapse in={expanded} timeout="auto" unmountOnExit> */}
                   <CardContent>
-                    <textarea onChange={handleChangeInput} value={description}>
-                     
-                    </textarea>
-                    <Button onClick={(e)=>updateDesc(e,note._id)}>👍🏼</Button>
+                    <textarea
+                      onChange={handleChangeInput}
+                      value={description}
+                    ></textarea>
+                    <Button onClick={(e) => updateDesc(e, note._id)}>👍🏼</Button>
                   </CardContent>
-                  {/* </Collapse> */}
                 </>
               ) : (
-                <>
-                  {" "}
-                 
-                </>
+                <> </>
               )}
 
               <div className="clrDiv">
@@ -196,7 +177,7 @@ console.log("folderId ",folderId)
                     className="viewBtn"
                     data-toggle="tooltip"
                     title="Edit Folder"
-                    onClick={() => setEditing(true)}
+                    onClick={() =>setEditing(true)}
                   >
                     <EditIcon />
                   </IconButton>
@@ -209,7 +190,6 @@ console.log("folderId ",folderId)
                     className="viewBtn"
                     data-toggle="tooltip"
                     title="View Your Saved Files"
-                    onClick={() => viewFolder(note._id)}
                   >
                     <VisibilityIcon />
                   </IconButton>
@@ -223,13 +203,6 @@ console.log("folderId ",folderId)
                   </IconButton>
                 </CardActions>
               </div>
-
-              <SpHealthModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                value={note._id}
-              />
-              {/* </Link> */}
             </div>
           ))}
         </div>
