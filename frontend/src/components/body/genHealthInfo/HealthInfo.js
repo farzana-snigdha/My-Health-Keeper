@@ -12,6 +12,8 @@ import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRoun
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import HeightIcon from "@material-ui/icons/Height";
 import heartRate from "../../../static/images/heart-rate.png";
+import { Button } from "@material-ui/core";
+
 
 function generalHealthInfo() {
   return (
@@ -24,7 +26,7 @@ function generalHealthInfo() {
                 👣 Weight
               </Typography>
               <div className="margin">
-                <Grid container spacing={1} alignItems="flex-end">
+                <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>
                     <LocalHospitalRoundedIcon />
                   </Grid>
@@ -36,6 +38,7 @@ function generalHealthInfo() {
                   </IconButton>
                 </Grid>
               </div>
+              <Button className="summary_btn"> Show History</Button>
             </CardContent>
           </div>
         </Card>
@@ -48,7 +51,7 @@ function generalHealthInfo() {
                 🧍‍♂️ Height
               </Typography>
               <div className="margin">
-                <Grid container spacing={1} alignItems="flex-end">
+                <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>
                     <HeightIcon />
                   </Grid>
@@ -60,6 +63,7 @@ function generalHealthInfo() {
                   </IconButton>
                 </Grid>
               </div>
+              <Button className="summary_btn"> Show History</Button>
             </CardContent>
           </div>
         </Card>
@@ -72,7 +76,7 @@ function generalHealthInfo() {
                 💓 Heart Rate
               </Typography>
               <div className="margin">
-                <Grid container spacing={1} alignItems="flex-end">
+                <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>
                     <FavoriteBorderIcon />
                   </Grid>
@@ -82,8 +86,9 @@ function generalHealthInfo() {
                   <IconButton aria-label="add" className="controls">
                     <AddCircleOutlineRoundedIcon className="playIcon" />
                   </IconButton>
-                </Grid>
+                 </Grid>
               </div>
+              <Button className="summary_btn"> Show History</Button>
             </CardContent>
           </div>
         </Card>
