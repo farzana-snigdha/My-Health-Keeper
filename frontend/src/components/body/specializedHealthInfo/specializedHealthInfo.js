@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
 import FolderSpecialIcon from "@material-ui/icons/FolderSpecial";
 import { useHistory } from "react-router-dom";
+import EditIcon from "@material-ui/icons/Edit";
 import axios from "axios";
 import AddNotes from "./AddNotes";
 import { UserIDContext } from "../../../App";
+import DeleteIcon from "@material-ui/icons/Delete";
+
 const initialState = {
   folder: "",
   noteDate: "",
@@ -75,21 +78,41 @@ export default function SpecializedHealthInfo() {
               <hr></hr>
               <p>Note Date: {note.noteDate.substring(0, 10)}</p>
               <p>Description: {note.description}</p>
-            
-                <IconButton
-                  component={Link}
-                  to={{
-                    state: note,
-                    pathname: `/view-files`,
-                  }}
-                  className="viewBtn"
-                  data-toggle="tooltip"
-                  title="View Your Saved Files"
-                  onClick={() => viewFolder(note._id)}
-                >
-                  <VisibilityIcon />
-                </IconButton>
-              
+
+              <IconButton
+                component={Link}
+                to={{
+                  state: note,
+                  pathname: `/view-files`,
+                }}
+                className="viewBtn"
+                data-toggle="tooltip"
+                title="View Your Saved Files"
+                onClick={() => viewFolder(note._id)}
+              >
+                <VisibilityIcon />
+              </IconButton>
+              <IconButton
+                className="viewBtn"
+                data-toggle="tooltip"
+                title="Edit Folder"
+                // onClick={() => {
+                //   openModal();
+                //   getmissedMed(medicines._id);
+                // }}
+              >
+                <EditIcon />
+              </IconButton>
+
+              <IconButton
+                className="viewBtn"
+                data-toggle="tooltip"
+                title="Delete this Folder"
+                // onClick={() => deleteReminder(medicines._id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+
               {/* </Link> */}
             </div>
           ))}
