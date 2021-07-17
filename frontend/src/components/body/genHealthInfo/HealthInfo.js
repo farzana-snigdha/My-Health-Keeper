@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import LocalHospitalRoundedIcon from "@material-ui/icons/LocalHospitalRounded";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import HeightIcon from "@material-ui/icons/Height";
 import { Button } from "@material-ui/core";
@@ -23,21 +24,21 @@ function GeneralHealthInfo() {
 
   const [showWeightModal, setShowWeightModal] = useState(false);
   const openWeightModal = () => {
-    setShowWeightModal((prev) => !prev);
+    setShowWeightModal(true);
   };
 
   const [showBpModal, setShowBpModal] = useState(false);
   const openBpModal = () => {
-    setShowBpModal((prev) => !prev);
+    setShowBpModal(true);
   };
 
   const [showPulseModal, setShowPulseModal] = useState(false);
   const openPulseModal = () => {
-    setShowPulseModal((prev) => !prev);
+    setShowPulseModal(true);
   };
   const [showSugarModal, setShowSugarModal] = useState(false);
-  const openSugartModal = () => {
-    setShowSugarModal((prev) => !prev);
+  const openSugarModal = () => {
+    setShowSugarModal(true);
   };
 
   return (
@@ -86,7 +87,7 @@ function GeneralHealthInfo() {
               <div className="margin">
                 <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>
-                    <HeightIcon />
+                    <InvertColorsIcon />
                   </Grid>
                   <Grid item>
                     <TextField label="cm" />
@@ -144,7 +145,7 @@ function GeneralHealthInfo() {
              <div className="margin">
                <Grid container spacing={2} alignItems="flex-end">
                  <Grid item>
-                   <FavoriteBorderIcon />
+                   < HeightIcon />
                  </Grid>
                  <Grid item>
                    <TextField label="bpm" />
@@ -154,7 +155,7 @@ function GeneralHealthInfo() {
                  </IconButton>
                 </Grid>
              </div>
-             <Button className="summary_btn" onClick={openSugartModal}> Show History</Button>
+             <Button className="summary_btn" onClick={openSugarModal}> Show History</Button>
            </CardContent>
          </div>
          <SugarModal
