@@ -17,14 +17,14 @@
   padding-right: 3%;
 }
 
-.reminder_card >.viewBtn {
+.reminder_card > .viewBtn {
   align-items: flex-end;
- padding-left: 74%;
+  padding-left: 74%;
   color: #063742;
 }
 
-.reminder_card >.viewBtn:hover {
- background-color: #cdecf9;
+.reminder_card > .viewBtn:hover {
+  background-color: #cdecf9;
   color: #063742;
 }
 
@@ -34,13 +34,14 @@
   display: inline-block;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
-
-  margin: 2rem;
+  width: 210px;
+  height: 280px;
+  margin: 1.7rem;
   margin-top: 1rem;
   padding: 0.5rem;
+  /* margin-left: 10px; */
   max-width: 350px;
   border-radius: 10px;
-  background: #cdecf9;
-  box-shadow: 8px 8px 16px #aec9d4, -8px -8px 16px #ecffff;
+  /* background: #cdecf9; */
+  box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
 }
-

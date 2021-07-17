@@ -8,17 +8,17 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { Document } from 'react-pdf'
+import { Document,Page } from "react-pdf";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: "100mvh",
   },
   media: {
-    resizeMode:'contain',
-    height: 240,
-    width: 240,
-       
+    resizeMode: "contain",
+    height: 180,
+    width: 190,
   },
 });
 
@@ -26,6 +26,8 @@ export default function AddFiles() {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
+
+  const [mediaFileType, setMediaFileType] = useState("");
 
   let history = useHistory();
   //   console.log("viewFiles ", folderid);
@@ -49,6 +51,13 @@ export default function AddFiles() {
       });
   };
 
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+
   useEffect(async () => {
     showMediaFiles();
   }, []);
@@ -56,25 +65,75 @@ export default function AddFiles() {
   const classes = useStyles();
 
   return (
-    <div>
-      {mediaFiles.map((element) => (
-      
-        <div className='media_card'>
-            {console.log(mediaFiles)}
-          <img
-            className={classes.media}
-            component="img"
-            src={`http://localhost:5000/${element.filePath}`}
-            title="Contemplative Reptile"
-            alt="lpl"
-          />
-          <CardContent>
-            <h6>
-              <b>Name:</b> {element.fileName}
-            </h6>
-          </CardContent>
-        </div>
-      ))}
+    <div className={classes.root}>
+      <pre></pre>
+      <pre></pre>
+      <Grid
+        container
+        spacing={1}
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-start"
+      >
+        {mediaFiles.map((element) => (
+          <div>
+            <Grid item xs={12} sm={6} md={3} key={mediaFiles.indexOf(element)}>
+              <div className="media_card">
+                {element.fileType != 'application/pdf' ? (
+                  <>
+                    {" "}
+                    {console.log(element.fileType)}
+                    <img
+                      className={classes.media}
+                      component="img"
+                      src={`http://localhost:5000/${element.filePath}`}
+                      title="Contemplative Reptile"
+                      alt="lpl"
+                    />
+                    <CardContent>
+                      <h6>
+                        <b>Name:</b> {element.fileName}
+                      </h6>
+                    </CardContent>
+                  </>
+                ) : (
+                  <div>
+                      <Document
+        file={`http://localhost:5000/${element.filePath}`}
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
+        <Page pageNumber={pageNumber} />
+      </Document>
+      {/* <p>Page {pageNumber} of {numPages}</p> */}
+       <CardContent>
+                     <h6>
+                       <b>Name:</b> {element.fileName}
+                     </h6>
+                   </CardContent>
+                  </div>
+                //   <>
+                //   {" "}
+                //   {console.log(element.fileType)}
+                //   <img
+                //     className={classes.media}
+                //     component="img"
+                //     src={`http://localhost:5000/${element.filePath}`}
+                //     title="Contemplative Reptile"
+                //     alt="cdc"
+                //   />
+                //   <CardContent>
+                //     <h6>
+                //       <b>Name:</b> {element.fileName}
+                //     </h6>
+                //   </CardContent>
+                // </>
+                )}
+                
+              </div>
+            </Grid>
+          </div>
+        ))}
+      </Grid>
     </div>
   );
 }
