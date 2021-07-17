@@ -75,7 +75,7 @@ export default function SpecializedHealthInfo() {
               <hr></hr>
               <p>Note Date: {note.noteDate.substring(0, 10)}</p>
               <p>Description: {note.description}</p>
-              {note.numberOfFiles > 0 ? (
+            
                 <IconButton
                   component={Link}
                   to={{
@@ -89,9 +89,7 @@ export default function SpecializedHealthInfo() {
                 >
                   <VisibilityIcon />
                 </IconButton>
-              ) : (
-                <pre></pre>
-              )}
+              
               {/* </Link> */}
             </div>
           ))}

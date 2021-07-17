@@ -58,27 +58,10 @@ export default function AddFiles() {
     setNumPages(numPages);
   }
 
-  useEffect(async () => {
-    showMediaFiles();
-  }, []);
-
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <pre></pre>
-      <div className="reminder_buttons">
-        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;
-        <Link href="/medicine-reminder" className="reminder_buttons_sub">
-          {""} ➕ Add New Files
-        </Link>
-      </div>
-      <div>
-        {" "}
-        <h3 justify="center">{state.folder}</h3>
-        <hr></hr>
-      </div>
-      <div>
+  const setFolderContents=async()=>{
+    return(
+<>
+<div>
         <Grid
           container
           spacing={1}
@@ -108,17 +91,18 @@ export default function AddFiles() {
                         alt="lpl"
                       />
                       <CardContent>
-                        <h6>
+                        <h7>
                           <b>Name:</b> {element.fileName}
-                        </h6>
-                        <IconButton
-                          className="fileButton"
-                          data-toggle="tooltip"
-                          title="Delete the Medicine"
-                          // onClick={() => deleteReminder(medicines._id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                        </h7>
+                        <div >
+                          <IconButton
+                       className="viewBtn"      data-toggle="tooltip"
+                            title="Delete this file"
+                            // onClick={() => deleteReminder(medicines._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </div>
                       </CardContent>
                     </>
                   ) : (
@@ -131,9 +115,19 @@ export default function AddFiles() {
                       </Document>
                       {/* <p>Page {pageNumber} of {numPages}</p> */}
                       <CardContent>
-                        <h6>
+                        <h7>
                           <b>Name:</b> {element.fileName}
-                        </h6>
+                        </h7>
+                        <div>
+                          <IconButton
+                           className="viewBtn"
+                            data-toggle="tooltip"
+                            title="Delete this file"
+                            // onClick={() => deleteReminder(medicines._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </div>
                       </CardContent>
                     </div>
                   )}
@@ -143,6 +137,107 @@ export default function AddFiles() {
           ))}
         </Grid>
       </div>
+  
+</>
+    )
+  }
+  useEffect(async () => {
+    showMediaFiles();
+  }, []);
+
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <pre></pre>
+      <div className="reminder_buttons">
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;
+        <Link href="/medicine-reminder" className="reminder_buttons_sub">
+          {""} ➕ Add New Files
+        </Link>
+      </div>
+      <div>
+        {" "}
+        <h3 justify="center">{state.folder}</h3>
+        <hr></hr>
+      </div>
+      {state.numberOfFiles==0?(<>NO Files Added 😢</>):(<div>
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          {mediaFiles.map((element) => (
+            <div>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                key={mediaFiles.indexOf(element)}
+              >
+                <div className="media_card">
+                  {element.fileType != "application/pdf" ? (
+                    <>
+                      {" "}
+                      {console.log(element.fileType)}
+                      <img
+                        className={classes.media}
+                        component="img"
+                        src={`http://localhost:5000/${element.filePath}`}
+                        title="Contemplative Reptile"
+                        alt="lpl"
+                      />
+                      <CardContent>
+                        <h7>
+                          <b>Name:</b> {element.fileName}
+                        </h7>
+                        <div >
+                          <IconButton
+                       className="viewBtn"      data-toggle="tooltip"
+                            title="Delete this file"
+                            // onClick={() => deleteReminder(medicines._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </div>
+                      </CardContent>
+                    </>
+                  ) : (
+                    <div className="react-pdf__Page__canvas">
+                      <Document
+                        file={`http://localhost:5000/${element.filePath}`}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                      >
+                        <Page pageNumber={pageNumber} />
+                      </Document>
+                      {/* <p>Page {pageNumber} of {numPages}</p> */}
+                      <CardContent>
+                        <h7>
+                          <b>Name:</b> {element.fileName}
+                        </h7>
+                        <div>
+                          <IconButton
+                           className="viewBtn"
+                            data-toggle="tooltip"
+                            title="Delete this file"
+                            // onClick={() => deleteReminder(medicines._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </div>
+                      </CardContent>
+                    </div>
+                  )}
+                </div>
+              </Grid>
+            </div>
+          ))}
+        </Grid>
+      </div>
+)}
     </div>
   );
 }
