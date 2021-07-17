@@ -11,18 +11,42 @@ import axios from "axios";
 import AddNotes from "./AddNotes";
 import { UserIDContext } from "../../../App";
 import DeleteIcon from "@material-ui/icons/Delete";
-import SpHealthModal from './SpHealthModal'
+import SpHealthModal from "./SpHealthModal";
+import { makeStyles } from "@material-ui/core/styles";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import clsx from "clsx";
+import CardContent from "@material-ui/core/CardContent";
+import Collapse from "@material-ui/core/Collapse";
+
 const initialState = {
   folder: "",
   noteDate: "",
   description: "",
 };
 
+const useStyles = makeStyles((theme) => ({
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+}));
+
 export default function SpecializedHealthInfo() {
   const userID = useContext(UserIDContext);
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
+
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   console.log("cdcwdcwc ", userID);
   let history = useHistory();
@@ -62,11 +86,9 @@ export default function SpecializedHealthInfo() {
   };
 
   const openModal = () => {
-    console.log('edcwedewqd')
+    console.log("edcwedewqd");
     setShowModal((prev) => !prev);
   };
-
- 
 
   const deleteFolder = async (folderId) => {
     await axios
@@ -100,48 +122,67 @@ export default function SpecializedHealthInfo() {
               </h2>
               <hr></hr>
               <p>Note Date: {note.noteDate.substring(0, 10)}</p>
-              <p>Description: {note.description}</p>
 
               <IconButton
-                component={Link}
-                to={{
-                  state: note,
-                  pathname: '/view-files',
-                }}
-                className="viewBtn"
-                data-toggle="tooltip"
-                title="View Your Saved Files"
-                onClick={() => viewFolder(note._id)}
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
               >
-                <VisibilityIcon />
-              </IconButton>
-              <IconButton
-                className="viewBtn"
-                data-toggle="tooltip"
-                title="Edit Folder"
-                onClick={() => {
-                  openModal();
-                  // getFolderContentForModal(note._id);
-                  
-                }}
-              >
-                <EditIcon />
+                <div className="clrDiv">
+                  <h5>
+                    <b>Description</b>
+                  </h5>
+                </div>
               </IconButton>
 
-              <IconButton
-                className="viewBtn"
-                data-toggle="tooltip"
-                title="Delete this Folder"
-                onClick={() => deleteFolder(note._id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-             
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>{note.description}</CardContent>
+              </Collapse>
+
+              <div  className="clrDiv">
+                {" "}
+                <IconButton
+                  component={Link}
+                  to={{
+                    state: note,
+                    pathname: "/view-files",
+                  }}
+                  className="viewBtn"
+                  data-toggle="tooltip"
+                  title="View Your Saved Files"
+                  onClick={() => viewFolder(note._id)}
+                >
+                  <VisibilityIcon />
+                </IconButton>
+                <IconButton
+                  className="viewBtn"
+                  data-toggle="tooltip"
+                  title="Edit Folder"
+                  onClick={() => {
+                    openModal();
+                    // getFolderContentForModal(note._id);
+                  }}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  className="viewBtn"
+                  data-toggle="tooltip"
+                  title="Delete this Folder"
+                  onClick={() => deleteFolder(note._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+
               <SpHealthModal
-              showModal={showModal}
-              setShowModal={setShowModal}
-              value={note._id}
-            />
+                showModal={showModal}
+                setShowModal={setShowModal}
+                value={note._id}
+              />
               {/* </Link> */}
             </div>
           ))}

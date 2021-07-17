@@ -17,7 +17,7 @@
   padding-right: 3%;
 }
 
-.reminder_card > .viewBtn {
+.reminder_card >.clrDiv> .viewBtn {
   align-items: flex-end;
   padding-left: 10%;
   color: #063742;
@@ -53,4 +53,7 @@
 .fileButton{
   color:#063742;
   align-content: flex-end;
+}
+.clrDiv{
+  color:#063742;
 }
