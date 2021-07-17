@@ -8,3 +8,6 @@ for easy registration comment out the if conditions except if(user)
 
 navbar=>avatar(before logout)
 check part7N
+
+//new
+npm i react-pdf
