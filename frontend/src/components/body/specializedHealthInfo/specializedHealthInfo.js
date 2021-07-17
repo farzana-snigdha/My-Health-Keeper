@@ -99,6 +99,7 @@ export default function SpecializedHealthInfo() {
       .then((response) => {
         console.log("editfolder", response.data);
         setEditing(false);
+        showSPHealthNotes()
       })
       .catch((error) => {
         console.log(error);
