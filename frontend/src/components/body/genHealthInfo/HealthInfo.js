@@ -1,8 +1,8 @@
 import "../../../static/Styling/healthInfo.css";
 import React from "react";
+import { useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -11,14 +11,22 @@ import LocalHospitalRoundedIcon from "@material-ui/icons/LocalHospitalRounded";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import HeightIcon from "@material-ui/icons/Height";
-import heartRate from "../../../static/images/heart-rate.png";
 import { Button } from "@material-ui/core";
+import WeightModal from "./WeightModal";
 
 
-function generalHealthInfo() {
+
+function GeneralHealthInfo() {
+
+  const [showWeightModal, setShowWeightModal] = useState(false);
+  const openWeightModal = () => {
+    setShowWeightModal((prev) => !prev);
+  };
+
   return (
     <div className=" body ">
       {
+        <div>
         <Card className="root">
           <div className="details">
             <CardContent className="content">
@@ -38,10 +46,18 @@ function generalHealthInfo() {
                   </IconButton>
                 </Grid>
               </div>
-              <Button className="summary_btn"> Show History</Button>
+              <Button className="summary_btn" onClick={
+                ()=>{openWeightModal()}
+                }>
+                 Show History</Button>
             </CardContent>
           </div>
+          <WeightModal
+        showWeightModal={showWeightModal}
+        setShowWeightModal={setShowWeightModal}
+      />
         </Card>
+      </div>
       }
       {
         <Card className="root">
@@ -97,4 +113,4 @@ function generalHealthInfo() {
   );
 }
 
-export default generalHealthInfo;
+export default GeneralHealthInfo;
