@@ -82,7 +82,7 @@ function GeneralHealthInfo() {
                     <InvertColorsIcon />
                   </Grid>
                   <Grid item>
-                    <TextField label="cm" />
+                    <TextField label="bpm" />
                   </Grid>
                   <IconButton aria-label="add" className="controls">
                     <AddCircleOutlineRoundedIcon className="playIcon" />
@@ -140,7 +140,7 @@ function GeneralHealthInfo() {
                    < HeightIcon />
                  </Grid>
                  <Grid item>
-                   <TextField label="bpm" />
+                   <TextField label=" " />
                  </Grid>
                  <IconButton aria-label="add" className="controls">
                    <AddCircleOutlineRoundedIcon className="playIcon" />
