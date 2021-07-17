@@ -17,14 +17,14 @@
   padding-right: 3%;
 }
 
-.reminder_card >.viewBtn {
+.reminder_card >.clrDiv> .clrCardAction>.viewBtn {
   align-items: flex-end;
- padding-left: 74%;
+
   color: #063742;
 }
 
-.reminder_card >.viewBtn:hover {
- background-color: #cdecf9;
+.reminder_card > .viewBtn:hover {
+  background-color: #cdecf9;
   color: #063742;
 }
 
@@ -33,14 +33,45 @@
   flex-direction: column;
   display: inline-block;
   font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
-
-  margin: 2rem;
+  font-size: 13px;
+  width: 210px;
+  height: auto;
+  margin: 1.7rem;
   margin-top: 1rem;
   padding: 0.5rem;
+  /* margin-left: 10px; */
   max-width: 350px;
   border-radius: 10px;
-  background: #cdecf9;
-  box-shadow: 8px 8px 16px #aec9d4, -8px -8px 16px #ecffff;
+  /* background: #cdecf9; */
+  box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
+}
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+  width: 80% !important;
+  height: 100% !important;
+}
+.fileButton{
+  color:#063742;
+  align-content: flex-end;
+}
+.clrDiv{
+  color:#063742;
 }
 
+.index>.reminder_card{
+  display: flex;
+  flex-direction: column;
+  display: inline-block;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 13px;
+  width: 210px;
+  height: auto;
+  margin: 1.7rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  /* margin-left: 10px; */
+  max-width: 350px;
+  border-radius: 10px;
+  /* background: #cdecf9; */
+  box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
+}
