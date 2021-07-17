@@ -6,7 +6,7 @@ const {
   getallSpecializedHealthInfo,
   getallMediaFiles,
   updateSpecializedHealthInfo,
-  getFolderItems,
+  getFolderItems,deleteFolder,
 } = require("../controllers/specializedHealthInfo.controllers");
 
 router.post(
@@ -18,4 +18,5 @@ router.get("/get-specializedHealthInfo", getallSpecializedHealthInfo);
 router.get("/getallMediaFiles", getallMediaFiles);
 router.patch("/updateSpecializedHealthInfo", updateSpecializedHealthInfo);
 router.get("/getFolderItems", getFolderItems);
+router.delete('/deleteFolder',deleteFolder)
 module.exports = router;
