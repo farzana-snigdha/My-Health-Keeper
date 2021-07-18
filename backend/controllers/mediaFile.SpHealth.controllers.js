@@ -11,6 +11,51 @@ const getallMediaFiles = async (req, res) => {
   }
 };
 
+const updateMediaFiles = async (req, res) => {
+  const folderID = req.headers["folderid"];
+  console.log("folderID: ", folderID);
+  let filesArray = [];
+  // await MultipleFile.findOne({ _id: folderId }).then((filedata) => {
+  //   console.log(filedata.files.length)
+  //   if (filedata.files.length!=0) {
+  //     for (let i = 0; i < filedata.files.length; i++) {
+  //       filesArray.push(filedata.files[i]);
+  //     }
+  //   }
+  //   else{
+  //     filesArray=[]
+  //   }
+  // });
+
+  req.files.forEach((element) => {
+    const file = {
+      fileName: element.originalname,
+      filePath: element.path,
+      fileType: element.mimetype,
+      // fileSize: fileSizeFormatter(element.size, 2),
+    };
+    filesArray.push(file);
+  });
+  console.log(filesArray);
+  await MultipleFile.findOneAndUpdate(
+    { _id: folderID },
+
+    { $set: { files: filesArray, numberOfFiles: filesArray.length } },
+
+    { returnNewDocument: true },
+
+    function (err, result) {
+      if (err) {
+        console.log("mediaFiles", err);
+      }
+      if (result) {
+        console.log("success ", result);
+        res.status(200).send(result.files);
+      }
+    }
+  );
+};
+
 const getFolderItems = async (req, res) => {
   try {
     const folderID = req.headers["folderid"];
@@ -32,6 +77,6 @@ const getFolderItems = async (req, res) => {
 
 module.exports = {
   getallMediaFiles,
-
+  updateMediaFiles,
   getFolderItems,
 };
