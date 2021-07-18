@@ -4,13 +4,11 @@ import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import CardContent from "@material-ui/core/CardContent";
-import { Button, IconButton, Link, Grid } from "@material-ui/core";
+import ModalImage from "react-modal-image";
+import LazyLoad from "react-lazyload";
+import { Button, Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PdfView from "./pdfView";
-import { Document, Page, pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const useStyles = makeStyles({
   root: {
@@ -24,14 +22,13 @@ const useStyles = makeStyles({
 });
 
 export default function AddFiles() {
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
-  const { user, isLogged } = auth;
 
   const [mediaFiles, setMediaFiles] = useState([]);
   const { state } = useLocation();
-  console.log("state1: ", state);
+
   const showMediaFiles = async (state) => {
     await axios
       .get("http://localhost:5000/api/getFolderItems", {
@@ -43,12 +40,6 @@ export default function AddFiles() {
       });
   };
 
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
   const [multipleFiles, setMultipleFiles] = useState("");
   const MultipleFileChange = (e) => {
     setMultipleFiles(e.target.files);
@@ -93,28 +84,14 @@ export default function AddFiles() {
             Save
           </Button>
           <input
-            ref={inputRef}
+            // ref={inputRef}
             type="file"
             // hidden
             onChange={(e) => {
               MultipleFileChange(e);
-              // updateFiles()
             }}
-            // className="form-control"
             multiple
           ></input>
-
-          {/* <Button
-            className="viewFiles_addBtn"
-            onClick={() => inputRef.current.click()}
-            onChange={(e) => {MultipleFileChange(e)
-            updateFiles()}}
-            // className="form-control"
-            multiple
-          >
-            {" "}
-            ➕ Add New Files
-          </Button> */}
         </div>
       </div>
       <h3>&emsp;{folderName}</h3>
@@ -141,53 +118,26 @@ export default function AddFiles() {
                 >
                   <div className="media_card">
                     {element.fileType != "application/pdf" ? (
-                      <>
-                        {" "}
-                        {console.log(element.fileType)}
-                        <img
-                          className={classes.media}
-                          component="img"
-                          src={`http://localhost:5000/${element.filePath}`}
-                          title="Contemplative Reptile"
-                          alt="lpl"
+                      <LazyLoad key={element.fileName}>
+                        <ModalImage
+                          small={`http://localhost:5000/${element.filePath}`}
+                          large={`http://localhost:5000/${element.filePath}`}
+                          alt={element.fileName}
+                          hideDownload={false}
+                          hideZoom={false}
                         />
-                        <CardContent>
-                          <h7>
-                            <b>Name:</b> {element.fileName}
-                          </h7>
-                          <div>
-                            <IconButton
-                              className="viewBtn"
-                              data-toggle="tooltip"
-                              title="Delete this file"
-                              // onClick={() => deleteReminder(medicines._id)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </div>
-                        </CardContent>
-                      </>
+                        <h7>
+                          <b>Name:</b> {element.fileName}
+                        </h7>
+                      </LazyLoad>
                     ) : (
-                     
                       <div className="react-pdf__Page__canvas">
-                        
-                         <PdfView getFilePath={element.filePath}/>
-                   
-                        <CardContent>
+                        <LazyLoad key={element.fileName}>
+                          <PdfView getFilePath={element.filePath} />
                           <h7>
                             <b>Name:</b> {element.fileName}
                           </h7>
-                          <div>
-                            <IconButton
-                              className="viewBtn"
-                              data-toggle="tooltip"
-                              title="Delete this file"
-                              // onClick={() => deleteReminder(medicines._id)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </div>
-                        </CardContent>
+                        </LazyLoad>
                       </div>
                     )}
                   </div>
