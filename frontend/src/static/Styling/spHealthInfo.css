@@ -17,7 +17,7 @@
   padding-right: 3%;
 }
 
-.reminder_card >.clrDiv> .clrCardAction>.viewBtn {
+.reminder_card > .clrCardAction>.viewBtn {
   align-items: flex-end;
 
   color: #063742;

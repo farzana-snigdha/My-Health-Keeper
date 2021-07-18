@@ -141,14 +141,13 @@ export default function SpecializedHealthInfo() {
                 ""
               )}
 
-              <div className="clrDiv">
-                {" "}
+             
                 <CardActions className="clrCardAction">
                   <IconButton
                     className="viewBtn"
                     data-toggle="tooltip"
                     title="Edit Folder"
-                    onClick={() => setEditing(true)}
+                    onClick={(e) => setEditing(true)}
                   >
                     <EditIcon />
                   </IconButton>
@@ -173,7 +172,7 @@ export default function SpecializedHealthInfo() {
                     <DeleteIcon />
                   </IconButton>
                 </CardActions>
-              </div>
+             
             </div>
           ))}
         </div>
