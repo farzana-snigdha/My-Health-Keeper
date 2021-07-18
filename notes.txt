@@ -12,3 +12,8 @@ check part7N
 //new
 frontend: npm i react-pdf
 backend: npm uninstall express-fileupload
+
+
+
+//new
+npm i react-lazyload react-modal-image
