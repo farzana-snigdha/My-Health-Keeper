@@ -27,34 +27,26 @@ export default function PdfView(props) {
     changePage(1);
   }
   return (
-    <div>
+    <div className="mainPdf">
       <Document
         file={`http://localhost:5000/${props.getFilePath}`}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page pageNumber={pageNumber} />
       </Document>
-      <div className='pdfViewer'>
-        <div >
-          Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
-        </div>
-        <div >
-          <button
-            type="button"
-            disabled={pageNumber <= 1}
-            onClick={previousPage}
-            className="Pre"
-          >
-            Previous
-          </button>
-          <button
-            type="button"
-            disabled={pageNumber >= numPages}
-            onClick={nextPage}
-          >
-            Next
-          </button>
-        </div>
+      <div className="pdfViewer">
+        <button type="button" disabled={pageNumber <= 1} onClick={previousPage}>
+          ⬅
+        </button>
+        &nbsp; Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
+        &nbsp;{" "}
+        <button
+          type="button"
+          disabled={pageNumber >= numPages}
+          onClick={nextPage}
+        >
+          ➡
+        </button>
       </div>
     </div>
   );

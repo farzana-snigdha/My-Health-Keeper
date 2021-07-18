@@ -103,3 +103,7 @@
   color:white;
 
 }
+.mainPdf>.pdfViewer{
+  display: inline-block;
+  color: #063742;
+}
