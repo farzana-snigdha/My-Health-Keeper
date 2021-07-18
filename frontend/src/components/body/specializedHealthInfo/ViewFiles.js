@@ -7,7 +7,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import { Button, IconButton, Link, Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import PdfView from "./pdfView";
 import { Document, Page, pdfjs } from "react-pdf";
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const useStyles = makeStyles({
@@ -166,14 +168,11 @@ export default function AddFiles() {
                         </CardContent>
                       </>
                     ) : (
+                     
                       <div className="react-pdf__Page__canvas">
-                        <Document
-                          file={`http://localhost:5000/${element.filePath}`}
-                          onLoadSuccess={onDocumentLoadSuccess}
-                        >
-                          <Page pageNumber={pageNumber} />
-                        </Document>
-                        {/* <p>Page {pageNumber} of {numPages}</p> */}
+                        
+                         <PdfView getFilePath={element.filePath}/>
+                   
                         <CardContent>
                           <h7>
                             <b>Name:</b> {element.fileName}
