@@ -75,15 +75,31 @@
   /* background: #cdecf9; */
   box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
 }
-.reminder_buttons>.form-group>.viewFiles_addBtn{
+.spHealth_reminder_buttons{
+  width: 30%;
+  margin-right: 0;
+  margin-left: auto;
+  margin-top: 0px;
+}
+.spHealth_reminder_buttons>.viewFiles_Btn>.viewFiles_addBtn{
+ 
   width: auto;
-  background-color: #063742;
-  color: white;
-  display: inline;
-  margin-left: 1em;
-  padding: 10px;
+  height: 30px;
+  text-justify: center;
+  /* background-color: #063742; */
+  color:#063742;
+   /* margin-left: 1em; */
+  /* padding: 10px; */
   text-decoration: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
+  display: inline-block;
+ 
+}
+.reminder_buttons>.viewFiles_Btn>.viewFiles_addBtn:hover{
+ 
+  background-color: #063742;
+  color:white;
+
 }

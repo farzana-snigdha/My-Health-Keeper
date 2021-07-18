@@ -155,7 +155,7 @@ export default function SpecializedHealthInfo() {
                   <IconButton
                     component={Link}
                     to={{
-                      state1: note,
+                      state: note,
                       pathname: "/view-files",
                     }}
                     className="viewBtn"

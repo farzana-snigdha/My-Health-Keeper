@@ -12,20 +12,20 @@ const getallMediaFiles = async (req, res) => {
 };
 
 const updateMediaFiles = async (req, res) => {
-  const folderID = req.headers["folderid"];
-  console.log("folderID: ", folderID);
+  const folder = req.headers["folder"];
+  console.log("folderID: ", folder);
   let filesArray = [];
-  // await MultipleFile.findOne({ _id: folderId }).then((filedata) => {
-  //   console.log(filedata.files.length)
-  //   if (filedata.files.length!=0) {
-  //     for (let i = 0; i < filedata.files.length; i++) {
-  //       filesArray.push(filedata.files[i]);
-  //     }
-  //   }
-  //   else{
-  //     filesArray=[]
-  //   }
-  // });
+  await MultipleFile.findOne({ folder: folder }).then((filedata) => {
+    console.log('filedata',filedata)
+    if (filedata.files.length!=0) {
+      for (let i = 0; i < filedata.files.length; i++) {
+        filesArray.push(filedata.files[i]);
+      }
+    }
+    else{
+      filesArray=[]
+    }
+  });
 
   req.files.forEach((element) => {
     const file = {
@@ -38,7 +38,7 @@ const updateMediaFiles = async (req, res) => {
   });
   console.log(filesArray);
   await MultipleFile.findOneAndUpdate(
-    { _id: folderID },
+    {  folder },
 
     { $set: { files: filesArray, numberOfFiles: filesArray.length } },
 

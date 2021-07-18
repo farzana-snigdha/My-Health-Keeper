@@ -5,7 +5,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import { Button, IconButton, Link, Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -28,20 +27,10 @@ export default function AddFiles() {
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
 
-  const [mediaFileType, setMediaFileType] = useState("");
-
-  let history = useHistory();
-  //   console.log("viewFiles ", folderid);
-
   const [mediaFiles, setMediaFiles] = useState([]);
   const { state } = useLocation();
   console.log("state1: ", state);
-  const showMediaFiles = async () => {
-    // console.log("id  ", user._id);
-
-    console.log("state: ", state);
-    const userid = user._id;
-
+  const showMediaFiles = async (state) => {
     await axios
       .get("http://localhost:5000/api/getFolderItems", {
         headers: { Authorization: token, folderid: state._id },
@@ -63,44 +52,72 @@ export default function AddFiles() {
     setMultipleFiles(e.target.files);
   };
 
+  const folderName = state.folder;
+  const fileLength = state.numberOfFiles;
+
   useEffect(async () => {
-    showMediaFiles();
+    showMediaFiles(state);
   }, []);
+
+  const updateFiles = async () => {
+    const formData = new FormData();
+    console.log("swdxs", state.folder);
+
+    for (let i = 0; i < multipleFiles.length; i++) {
+      formData.append("files", multipleFiles[i]);
+    }
+    await axios
+      .put("http://localhost:5000/api/updateMediaFiles", formData, {
+        headers: { Authorization: token, folder: folderName },
+      })
+      .then((result) => {
+        // history.push("/view-files");
+        showMediaFiles(state);
+        setMultipleFiles("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <pre></pre>
-      <div className="reminder_buttons">
-        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;
-        <div className="form-group">
+      <div className="spHealth_reminder_buttons">
+        <div className="viewFiles_Btn">
+          <Button className="viewFiles_addBtn" onClick={updateFiles} multiple>
+            {" "}
+            Save
+          </Button>
           <input
             ref={inputRef}
             type="file"
-            hidden
-            onChange={(e) => MultipleFileChange(e)}
-            className="form-control"
+            // hidden
+            onChange={(e) => {
+              MultipleFileChange(e);
+              // updateFiles()
+            }}
+            // className="form-control"
             multiple
           ></input>
-          <Button
+
+          {/* <Button
             className="viewFiles_addBtn"
             onClick={() => inputRef.current.click()}
-            onChange={(e) => MultipleFileChange(e)}
+            onChange={(e) => {MultipleFileChange(e)
+            updateFiles()}}
             // className="form-control"
             multiple
           >
             {" "}
             ➕ Add New Files
-          </Button>
+          </Button> */}
         </div>
       </div>
-      <div>
-        {" "}
-        <h3 justify="center">{state.folder}</h3>
-        <hr></hr>
-      </div>
-      {state.numberOfFiles == 0 ? (
+      <h3>&emsp;{folderName}</h3>
+      <hr></hr>
+      {fileLength == 0 ? (
         <>NO Files Added 😢</>
       ) : (
         <div>
