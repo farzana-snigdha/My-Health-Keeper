@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
   media: {
     resizeMode: "contain",
-    height: 180,
+    height: 225,
     width: 190,
   },
 });
@@ -118,8 +118,9 @@ export default function AddFiles() {
                 >
                   <div className="media_card">
                     {element.fileType != "application/pdf" ? (
-                      <LazyLoad key={element.fileName}>
+                      <LazyLoad key={element.fileName} >
                         <ModalImage
+                        className={classes.media}
                           small={`http://localhost:5000/${element.filePath}`}
                           large={`http://localhost:5000/${element.filePath}`}
                           alt={element.fileName}
@@ -131,10 +132,10 @@ export default function AddFiles() {
                         </h7>
                       </LazyLoad>
                     ) : (
-                      <div className="react-pdf__Page__canvas">
-                        <LazyLoad key={element.fileName}>
+                      <div className="react-pdf__Page__canvas" onClick={(e)=>{window.open(`http://localhost:5000/${element.filePath}`, '_blank')}}>
+                        <LazyLoad key={element.fileName}  >
                           <PdfView getFilePath={element.filePath} />
-                          <h7>
+                          <h7 >
                             <b>Name:</b> {element.fileName}
                           </h7>
                         </LazyLoad>

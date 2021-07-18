@@ -15,39 +15,17 @@ export default function PdfView(props) {
     setPageNumber(1);
   }
 
-  function changePage(offset) {
-    setPageNumber((prevPageNumber) => prevPageNumber + offset);
-  }
-
-  function previousPage() {
-    changePage(-1);
-  }
-
-  function nextPage() {
-    changePage(1);
-  }
+  
   return (
     <div className="mainPdf">
       <Document
+      // onItemClick={}
         file={`http://localhost:5000/${props.getFilePath}`}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page pageNumber={pageNumber} />
       </Document>
-      <div className="pdfViewer">
-        <button type="button" disabled={pageNumber <= 1} onClick={previousPage}>
-          ⬅
-        </button>
-        &nbsp; Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
-        &nbsp;{" "}
-        <button
-          type="button"
-          disabled={pageNumber >= numPages}
-          onClick={nextPage}
-        >
-          ➡
-        </button>
-      </div>
+  
     </div>
   );
 }
