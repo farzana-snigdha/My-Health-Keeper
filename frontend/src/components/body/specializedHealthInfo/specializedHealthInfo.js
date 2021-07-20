@@ -8,6 +8,7 @@ import {
   CardContent,
   Button,
   CardActions,
+  Grid,
 } from "@material-ui/core";
 import FolderSpecialIcon from "@material-ui/icons/FolderSpecial";
 import { useHistory } from "react-router-dom";
@@ -19,6 +20,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Collapse from "@material-ui/core/Collapse";
+import LazyLoad from "react-lazyload";
+import Modal from "react-bootstrap/Modal";
+import EditNotesModal from "./EditNotesModal";
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -39,9 +43,11 @@ export default function SpecializedHealthInfo() {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
-  const handleExpandClick = () => {
+  const handleExpandClick = (index) => {
+    console.log("wdwd", index);
     setExpanded(!expanded);
   };
+
   console.log("context userID ", userID);
   let history = useHistory();
   const showSPHealthNotes = async () => {
@@ -59,6 +65,10 @@ export default function SpecializedHealthInfo() {
         });
     }
   };
+
+  const [showEditModal, setShowEditModal] = useState(false);
+  const openSpEditModal = () => setShowEditModal(true);
+
   useEffect(() => {
     showSPHealthNotes();
   }, []);
@@ -105,76 +115,73 @@ export default function SpecializedHealthInfo() {
       <hr></hr>
       {spHealthNotes.length != 0 ? (
         <div>
-          {spHealthNotes.map((note, index) => (
-            <div key={index} variant="outlined" className="reminder_card">
-              <h2>
-                <FolderSpecialIcon />
-                &nbsp;{note.folder}
-              </h2>
-              <hr></hr>
-              <p>Note Date: {note.noteDate.substring(0, 10)}</p>
+          <Grid container spacing={1} direction="row">
+            {spHealthNotes.map((note, index) => (
+              <Grid item xs={12} sm={6} md={3}>
+                <div className="media_card">
+                  <LazyLoad key={note.folder}>
+                    <EditNotesModal
+                      showEditModal={showEditModal}
+                      setShowEditModal={setShowEditModal}
+                    />
+                    <h2>
+                      <FolderSpecialIcon />
+                      &nbsp;{note.folder}
+                    </h2>
+                    <hr></hr>
+                    <h6>Note Date: {note.noteDate.substring(0, 10)}</h6>
 
-              <IconButton
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded,
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-              >
-                <h5 className="clrDiv">
-                  <b>Description</b>
-                </h5>
-              </IconButton>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>{note.description}</CardContent>
-              </Collapse>
+                    <IconButton
+                      className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                      })}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                    >
+                      <h5 className="clrDiv">
+                        <b>Description</b>
+                      </h5>
+                    </IconButton>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                      <CardContent>{note.description}</CardContent>
+                    </Collapse>
+                    <div className="clrCardAction">
+                      <IconButton
+                        className="viewBtn"
+                        data-toggle="tooltip"
+                        title="Edit Folder"
+                        onClick={openSpEditModal}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        component={Link}
+                        to={{
+                          state: note,
+                          pathname: "/view-files",
+                        }}
+                        className="viewBtn"
+                        data-toggle="tooltip"
+                        title="View Your Saved Files"
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                      <IconButton
+                        className="viewBtn"
+                        data-toggle="tooltip"
+                        title="Delete this Folder"
+                        onClick={() => deleteFolder(note._id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </div>
 
-              {editing ? (
-                <CardContent>
-                  <textarea
-                    onChange={handleChangeInput}
-                    value={description}
-                  ></textarea>
-                  <Button onClick={(e) => updateDesc(e, note._id)}>👍🏼</Button>
-                </CardContent>
-              ) : (
-                ""
-              )}
-
-             
-                <CardActions className="clrCardAction">
-                  <IconButton
-                    className="viewBtn"
-                    data-toggle="tooltip"
-                    title="Edit Folder"
-                    onClick={(e) => setEditing(true)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    component={Link}
-                    to={{
-                      state: note,
-                      pathname: "/view-files",
-                    }}
-                    className="viewBtn"
-                    data-toggle="tooltip"
-                    title="View Your Saved Files"
-                  >
-                    <VisibilityIcon />
-                  </IconButton>
-                  <IconButton
-                    className="viewBtn"
-                    data-toggle="tooltip"
-                    title="Delete this Folder"
-                    onClick={() => deleteFolder(note._id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </CardActions>
-             
-            </div>
-          ))}
+                  
+                  </LazyLoad>
+                </div>
+              </Grid>
+            ))}
+          </Grid>
         </div>
       ) : (
         <h2>No folder is created</h2>

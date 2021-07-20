@@ -6,9 +6,10 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import ModalImage from "react-modal-image";
 import LazyLoad from "react-lazyload";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PdfView from "./pdfView";
+import Modal from "react-bootstrap/Modal";
 
 const useStyles = makeStyles({
   root: {
@@ -80,13 +81,10 @@ export default function AddFiles() {
       <div className="spHealth_reminder_buttons">
         <div className="viewFiles_Btn">
           <Button className="viewFiles_addBtn" onClick={updateFiles} multiple>
-            {" "}
             Save
           </Button>
           <input
-            // ref={inputRef}
             type="file"
-            // hidden
             onChange={(e) => {
               MultipleFileChange(e);
             }}
@@ -94,19 +92,13 @@ export default function AddFiles() {
           ></input>
         </div>
       </div>
-      <h3>&emsp;{folderName}</h3>
+      <h3> &emsp; {folderName}</h3>
       <hr></hr>
       {fileLength == 0 ? (
         <>NO Files Added 😢</>
       ) : (
         <div>
-          <Grid
-            container
-            spacing={1}
-            direction="row"
-            justify="flex-start"
-            alignItems="flex-start"
-          >
+          <Grid container spacing={1} direction="row">
             {mediaFiles.map((element) => (
               <div>
                 <Grid
@@ -118,24 +110,34 @@ export default function AddFiles() {
                 >
                   <div className="media_card">
                     {element.fileType != "application/pdf" ? (
-                      <LazyLoad key={element.fileName} >
-                        <ModalImage
-                        className={classes.media}
-                          small={`http://localhost:5000/${element.filePath}`}
-                          large={`http://localhost:5000/${element.filePath}`}
-                          alt={element.fileName}
-                          hideDownload={false}
-                          hideZoom={false}
-                        />
-                        <h7>
-                          <b>Name:</b> {element.fileName}
-                        </h7>
-                      </LazyLoad>
+                      
+                        <LazyLoad key={element.fileName}>
+                          <ModalImage
+                            className={classes.media}
+                            small={`http://localhost:5000/${element.filePath}`}
+                            large={`http://localhost:5000/${element.filePath}`}
+                            alt={element.fileName}
+                            hideDownload={false}
+                            hideZoom={false}
+                          />
+                          <h7>
+                            <b>Name:</b> {element.fileName}
+                          </h7>
+                        </LazyLoad>
+                     
                     ) : (
-                      <div className="react-pdf__Page__canvas" onClick={(e)=>{window.open(`http://localhost:5000/${element.filePath}`, '_blank')}}>
-                        <LazyLoad key={element.fileName}  >
+                      <div
+                        className="react-pdf__Page__canvas"
+                        onClick={(e) => {
+                          window.open(
+                            `http://localhost:5000/${element.filePath}`,
+                            "_blank"
+                          );
+                        }}
+                      >
+                        <LazyLoad key={element.fileName}>
                           <PdfView getFilePath={element.filePath} />
-                          <h7 >
+                          <h7>
                             <b>Name:</b> {element.fileName}
                           </h7>
                         </LazyLoad>
