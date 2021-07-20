@@ -38,7 +38,6 @@ export default function SpecializedHealthInfo() {
   const [editing, setEditing] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [spHealthNotes, setSpHealthNotes] = useState([]);
-  const [description, setDesc] = useState("");
   const userID = useContext(UserIDContext);
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
@@ -61,6 +60,7 @@ export default function SpecializedHealthInfo() {
         .then((res) => {
           // console.log(res.data);
           history.push("/specialized-health-information");
+        
           setSpHealthNotes(res.data);
         });
     }
@@ -72,30 +72,7 @@ export default function SpecializedHealthInfo() {
   useEffect(() => {
     showSPHealthNotes();
   }, []);
-  const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setDesc(value);
-  };
-  const updateDesc = async (e, folderId) => {
-    e.preventDefault();
-    console.log("folderId ", folderId);
-    await axios
-      .patch(
-        "http://localhost:5000/api/updateSpecializedHealthInfo/" + folderId,
-        { description },
-        {
-          headers: { Authorization: token },
-        }
-      )
-      .then((response) => {
-        console.log("editfolder", response.data);
-        setEditing(false);
-        showSPHealthNotes();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
   const deleteFolder = async (folderId) => {
     await axios
       .delete("http://localhost:5000/api/deleteFolder/" + folderId, {
@@ -117,13 +94,18 @@ export default function SpecializedHealthInfo() {
         <div>
           <Grid container spacing={1} direction="row">
             {spHealthNotes.map((note, index) => (
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item>
                 <div className="media_card">
                   <LazyLoad key={note.folder}>
+                    {/* { console.log('edit',getDesc(note))} */}
                     <EditNotesModal
+                    key={note.folder}
                       showEditModal={showEditModal}
                       setShowEditModal={setShowEditModal}
+                      getNote={note.description}
+                      getID={note._id}
                     />
+
                     <h2>
                       <FolderSpecialIcon />
                       &nbsp;{note.folder}
@@ -175,8 +157,6 @@ export default function SpecializedHealthInfo() {
                         <DeleteIcon />
                       </IconButton>
                     </div>
-
-                  
                   </LazyLoad>
                 </div>
               </Grid>
