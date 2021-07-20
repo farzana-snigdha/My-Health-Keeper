@@ -31,7 +31,7 @@ const ModalWrapper = styled.div`
   color: #000;
   position: relative;
   border-radius: 10px;
-  padding : 20px;
+  padding: 20px;
 `;
 
 const ModalContent = styled.div`
@@ -43,7 +43,6 @@ const ModalContent = styled.div`
   p {
     margin-bottom: 1rem;
   }
-  
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -105,7 +104,7 @@ const MedModal = ({ showModal, setShowModal, list }) => {
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
-            <ModalContent >
+            <ModalContent>
               <table className="table">
                 <thead className="thead-light">
                   <tr>
@@ -116,9 +115,9 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                   </tr>
                 </thead>
                 <tbody>
-                {list.map((doses) => (
+                  {list.map((doses) => (
                     <tr>
-                    <td>{doses.meddate.substring(0, 10)}</td>
+                      <td>{doses.meddate.substring(0, 10)}</td>
                       <td>{doses.medtime}</td>
                       <td>Missed</td>
                       {/* <td><Button onClick={()=> {missedConfirm(doses._id)}}>Confirm</Button></td> */}
@@ -142,18 +141,21 @@ const MedModal = ({ showModal, setShowModal, list }) => {
                           }}
                         >
                           <div>
-                            <h6>Alert!</h6>
                             <p>
                               Are you sure want to confirm this missed medicine?
                             </p>
                             <Button
                               onClick={() => {
+                                console.log("modal2 enter"+doses._id);
                                 missedConfirm(doseId);
+                                console.log("modal2 exit"+doses._id);
                                 setShowAlert(false);
-                                setShowModal(false);
                               }}
                             >
                               Yes
+                            </Button>
+                            <Button onClick={() => setShowAlert(false)}>
+                              No
                             </Button>
                           </div>
                         </Modal>
