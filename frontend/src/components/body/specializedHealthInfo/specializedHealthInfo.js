@@ -18,7 +18,7 @@ export default function SpecializedHealthInfo() {
   let history = useHistory();
 
   const showSPHealthNotes = async () => {
-    let spID = localStorage.getItem("spUser");
+    let spID = localStorage.getItem("userID");
 
     console.log("sp id     ", spID);
     await axios

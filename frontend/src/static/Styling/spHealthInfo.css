@@ -16,6 +16,20 @@
   font-weight: bold;
   box-shadow: 8px 8px 16px #063742;
 }
+.heading{
+  padding: 1%;
+  display: flex;
+   color: #063742;
+   justify-content: space-between;
+ }
+.heading>.return_to_spHealth{
+     color: #063742;
+     font-size: 18px;
+  }
+  .heading>.return_to_spHealth:hover{
+
+   font-weight: bold;
+   }
 .sp_reminder_buttons {
   width: 20%;
   background-color: #063742;
@@ -43,7 +57,6 @@
 }
 .info-save > .addNotes_textArea > .description {
   width: 100%;
- 
 }
 .clrCardAction > .viewBtn {
   align-items: flex-end;
@@ -57,24 +70,21 @@
 }
 
 .media_card {
-  display: flex;
-  flex-direction: column;
+  cursor: pointer;
   display: inline-block;
   font-family: "Times New Roman", Times, serif;
-  font-size: 13px;
+  font-size: 15px;
   width: 210px;
   max-height: auto;
   margin: 1.7rem;
   margin-top: 1rem;
   padding: 0.5rem;
-  /* margin-left: 10px; */
   max-width: 350px;
   border-radius: 10px;
-  /* background: #cdecf9; */
   box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
 }
 .react-pdf__Page__canvas {
-  margin: 0 auto;
+  margin: 6px;
   width: 85% !important;
   height: 100% !important;
 }
@@ -104,14 +114,18 @@
   /* background: #cdecf9; */
   box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
 }
-.spHealth_reminder_buttons {
+.heading>.spHealth_reminder_buttons {
+  display: flex;
   width: 30%;
   margin-right: 0;
   margin-left: auto;
   margin-top: 0px;
+  
 }
-
-.spHealth_reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn {
+.heading>.spHealth_reminder_buttons > .viewFiles_Btn {
+  display: inline-block;
+}
+.heading>.spHealth_reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn {
   width: auto;
   height: 30px;
   text-justify: center;
@@ -123,7 +137,7 @@
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
-  display: inline-block;
+ 
 }
 .reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn:hover {
   background-color: #063742;
@@ -145,3 +159,4 @@
   padding-bottom: 0%;
   padding-top: 0%;
 }
+

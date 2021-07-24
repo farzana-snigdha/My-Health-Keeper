@@ -19,6 +19,7 @@ export default function PdfView(props) {
   return (
     <div className="mainPdf">
       <Document
+      className='react-pdf__Page__canvas'
       // onItemClick={}
         file={`http://localhost:5000/${props.getFilePath}`}
         onLoadSuccess={onDocumentLoadSuccess}

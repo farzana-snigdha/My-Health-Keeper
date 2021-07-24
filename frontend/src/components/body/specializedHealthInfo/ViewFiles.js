@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../../static/Styling/spHealthInfo.css";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import ModalImage from "react-modal-image";
@@ -10,7 +10,7 @@ import { Button, Grid, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PdfView from "./pdfView";
 import Modal from "react-bootstrap/Modal";
-
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const useStyles = makeStyles({
   root: {
     maxWidth: "100mvh",
@@ -78,21 +78,31 @@ export default function AddFiles() {
 
   return (
     <div className={classes.root}>
-      <div className="spHealth_reminder_buttons">
-        <div className="viewFiles_Btn">
-          <Button className="viewFiles_addBtn" onClick={updateFiles} multiple>
-            Save
-          </Button>
-          <input
-            type="file"
-            onChange={(e) => {
-              MultipleFileChange(e);
-            }}
-            multiple
-          ></input>
+      <div className="heading">
+        <Link
+          className="return_to_spHealth"
+          component={NavLink}
+          to="/specialized-health-information"
+        >
+          <ArrowBackIcon /> Return 
+        </Link>
+        <div className="spHealth_reminder_buttons">
+          <div className="viewFiles_Btn">
+            <Button className="viewFiles_addBtn" onClick={updateFiles} multiple>
+              Save
+            </Button>
+            <input
+              type="file"
+              onChange={(e) => {
+                MultipleFileChange(e);
+              }}
+              multiple
+            ></input>
+          </div>
         </div>
       </div>
-      <h3> &emsp; {folderName}</h3>
+
+      <h3>&nbsp; {folderName}</h3>
       <hr></hr>
       {fileLength == 0 ? (
         <>NO Files Added 😢</>
@@ -110,24 +120,22 @@ export default function AddFiles() {
                 >
                   <div className="media_card">
                     {element.fileType != "application/pdf" ? (
-                      
-                        <LazyLoad key={element.fileName}>
-                          <ModalImage
-                            className={classes.media}
-                            small={`http://localhost:5000/${element.filePath}`}
-                            large={`http://localhost:5000/${element.filePath}`}
-                            alt={element.fileName}
-                            hideDownload={false}
-                            hideZoom={false}
-                          />
-                          <h7>
-                            <b>Name:</b> {element.fileName}
-                          </h7>
-                        </LazyLoad>
-                     
+                      <LazyLoad key={element.fileName}>
+                        <ModalImage
+                          className={classes.media}
+                          small={`http://localhost:5000/${element.filePath}`}
+                          large={`http://localhost:5000/${element.filePath}`}
+                          alt={element.fileName}
+                          hideDownload={false}
+                          hideZoom={false}
+                        />
+                        <h7>
+                          <b>Name:</b> {element.fileName}
+                        </h7>
+                      </LazyLoad>
                     ) : (
                       <div
-                        className="react-pdf__Page__canvas"
+                       
                         onClick={(e) => {
                           window.open(
                             `http://localhost:5000/${element.filePath}`,
