@@ -16,32 +16,7 @@
   font-weight: bold;
   box-shadow: 8px 8px 16px #063742;
 }
-.heading{
-  padding: 1%;
-  display: flex;
-   color: #063742;
-   justify-content: space-between;
- }
-.heading>.return_to_spHealth{
-     color: #063742;
-     font-size: 18px;
-  }
-  .heading>.return_to_spHealth:hover{
 
-   font-weight: bold;
-   }
-.sp_reminder_buttons {
-  width: 20%;
-  background-color: #063742;
-  color: white;
-  display: inline;
-  margin-left: 1em;
-  padding: 10px;
-  text-decoration: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-}
 .folderName:hover {
   font-weight: bold;
   margin: 0px;
@@ -50,14 +25,7 @@
 .SPiconBtn {
   padding: 0%;
 }
-.info-save {
-  padding: 0.5%;
-  padding-left: 3%;
-  padding-right: 3%;
-}
-.info-save > .addNotes_textArea > .description {
-  width: 100%;
-}
+
 .clrCardAction > .viewBtn {
   align-items: flex-end;
   color: #063742;
@@ -69,25 +37,6 @@
   color: #063742;
 }
 
-.media_card {
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 15px;
-  width: 210px;
-  max-height: auto;
-  margin: 1.7rem;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  max-width: 350px;
-  border-radius: 10px;
-  box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
-}
-.react-pdf__Page__canvas {
-  margin: 6px;
-  width: 85% !important;
-  height: 100% !important;
-}
 .fileButton {
   color: #063742;
   align-content: flex-end;
@@ -97,56 +46,7 @@
   color: #063742;
 }
 
-.index > .reminder_card {
-  display: flex;
-  flex-direction: column;
-  display: inline-block;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 13px;
-  width: 210px;
-  height: auto;
-  margin: 1.7rem;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  /* margin-left: 10px; */
-  max-width: 350px;
-  border-radius: 10px;
-  /* background: #cdecf9; */
-  box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
-}
-.heading>.spHealth_reminder_buttons {
-  display: flex;
-  width: 30%;
-  margin-right: 0;
-  margin-left: auto;
-  margin-top: 0px;
-  
-}
-.heading>.spHealth_reminder_buttons > .viewFiles_Btn {
-  display: inline-block;
-}
-.heading>.spHealth_reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn {
-  width: auto;
-  height: 30px;
-  text-justify: center;
-  /* background-color: #063742; */
-  color: #063742;
-  /* margin-left: 1em; */
-  /* padding: 10px; */
-  text-decoration: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
- 
-}
-.reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn:hover {
-  background-color: #063742;
-  color: white;
-}
-.mainPdf > .pdfViewer {
-  display: inline-block;
-  color: #063742;
-}
+
 .sp_reminder_card > .content > .editingBox {
   border-radius: 10px;
   border-color: #063742;
@@ -159,4 +59,3 @@
   padding-bottom: 0%;
   padding-top: 0%;
 }
-

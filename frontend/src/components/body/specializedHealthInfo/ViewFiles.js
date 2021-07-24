@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../../static/Styling/spHealthInfo.css";
+import "../../../static/Styling/spViewFiles.css";
 import { useSelector } from "react-redux";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
