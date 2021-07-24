@@ -51,8 +51,11 @@ export default function SpecializedHealthInfo() {
   return (
     <div>
       <AddNotes getNote={() => showSPHealthNotes()} />
+    
       <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health Diary</h4>
       <hr></hr>
+      
+      
       {spHealthNotes.length != 0 ? (
         <div>
           {spHealthNotes.map((note) => (

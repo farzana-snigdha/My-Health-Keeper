@@ -1,3 +1,22 @@
+.sp_reminder_card {
+  display: flex;
+  flex-direction: column;
+  display: inline-block;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  margin: 2rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  max-width: 350px;
+  border-radius: 10px;
+  background: #cdecf9;
+  box-shadow: 8px 8px 16px #aec9d4;
+}
+.sp_reminder_card:hover{
+
+ font-weight: bold;
+ box-shadow: 8px 8px 16px #063742;
+}
 .sp_reminder_buttons {
   width: 20%;
   background-color: #063742;
@@ -10,16 +29,17 @@
   cursor: pointer;
   font-weight: bold;
 }
-
+.folderName:hover{
+  font-weight: bold;
+}
 .info-save {
   padding: 0.5%;
   padding-left: 3%;
   padding-right: 3%;
 }
 
- .clrCardAction>.viewBtn {
+.clrCardAction > .viewBtn {
   align-items: flex-end;
-
   color: #063742;
 }
 
@@ -50,15 +70,15 @@
   width: 85% !important;
   height: 100% !important;
 }
-.fileButton{
-  color:#063742;
+.fileButton {
+  color: #063742;
   align-content: flex-end;
 }
-.clrDiv{
-  color:#063742;
+.clrDiv {
+  color: #063742;
 }
 
-.index>.reminder_card{
+.index > .reminder_card {
   display: flex;
   flex-direction: column;
   display: inline-block;
@@ -75,35 +95,37 @@
   /* background: #cdecf9; */
   box-shadow: 2px 8px 16px #47565c, -2px -8px 16px #feffff;
 }
-.spHealth_reminder_buttons{
+.spHealth_reminder_buttons {
   width: 30%;
   margin-right: 0;
   margin-left: auto;
   margin-top: 0px;
 }
-.spHealth_reminder_buttons>.viewFiles_Btn>.viewFiles_addBtn{
- 
+
+.spHealth_reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn {
   width: auto;
   height: 30px;
   text-justify: center;
   /* background-color: #063742; */
-  color:#063742;
-   /* margin-left: 1em; */
+  color: #063742;
+  /* margin-left: 1em; */
   /* padding: 10px; */
   text-decoration: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
   display: inline-block;
- 
 }
-.reminder_buttons>.viewFiles_Btn>.viewFiles_addBtn:hover{
- 
+.reminder_buttons > .viewFiles_Btn > .viewFiles_addBtn:hover {
   background-color: #063742;
-  color:white;
-
+  color: white;
 }
-.mainPdf>.pdfViewer{
+.mainPdf > .pdfViewer {
   display: inline-block;
   color: #063742;
+}
+.sp_reminder_card>.content>.editingBox{
+  border-radius: 10px;
+  border-color: #063742;
+  background: #d9ebf3;
 }

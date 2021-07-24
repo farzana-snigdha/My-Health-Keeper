@@ -5,6 +5,7 @@ import {
   CardContent,
   Button,
   CardActions,
+  CardHeader,
 } from "@material-ui/core";
 import clsx from "clsx";
 import Collapse from "@material-ui/core/Collapse";
@@ -15,6 +16,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Link } from "react-router-dom";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import "../../../static/Styling/spHealthInfo.css";
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -38,10 +41,6 @@ export default function ViewFolderProps(props) {
 
   const classes = useStyles();
 
-  const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setDesc(value);
-  };
   const updateDesc = async (e, folderId) => {
     e.preventDefault();
     console.log("folderId ", folderId);
@@ -64,13 +63,13 @@ export default function ViewFolderProps(props) {
   };
 
   return (
-    <div variant="outlined" className="reminder_card">
-      {console.log(props.note)}
-      <h2>
+    <div variant="outlined" className="sp_reminder_card">
+      <h2 className='folderName'>
         <FolderSpecialIcon />
         &nbsp;{props.note.folder}
       </h2>
       <hr></hr>
+
       <p>Note Date: {props.note.noteDate.substring(0, 10)}</p>
       <IconButton
         className={clsx(classes.expand, {
@@ -88,25 +87,40 @@ export default function ViewFolderProps(props) {
       </Collapse>
 
       {editing ? (
-        <CardContent>
-          <textarea onChange={handleChangeInput} value={description}></textarea>
-          <Button onClick={(e) => updateDesc(e, props.note._id)}>👍🏼</Button>
+        <CardContent className='content'>
+          {" "}
+          <textarea className='editingBox'
+            value={description}
+            onChange={(e) => setDesc(e.target.value)}
+          ></textarea>
         </CardContent>
       ) : (
         ""
       )}
 
       <CardActions className="clrCardAction">
-        <IconButton
-          className="viewBtn"
-          data-toggle="tooltip"
-          title="Edit Folder"
-          key={props.note.folder}
-          value={props.note.description}
-          onClick={() => setEditing(true)}
-        >
-          <EditIcon />
-        </IconButton>
+        {editing ? (
+          <IconButton
+            className="viewBtn"
+            data-toggle="tooltip"
+            title="Update Description"
+            onClick={(e) => updateDesc(e, props.note._id)}
+          >
+            <CheckBoxIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className="viewBtn"
+            data-toggle="tooltip"
+            title="Edit Folder"
+            key={props.note.folder}
+            value={props.note.description}
+            onClick={() => setEditing(true)}
+          >
+            <EditIcon />
+          </IconButton>
+        )}
+
         <IconButton
           component={Link}
           to={{
