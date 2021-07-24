@@ -103,7 +103,7 @@ const authControllers = {
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge: 2000 * 24 * 60 * 60 * 1000, // 7 days
+        maxAge: 200 * 24 * 60 * 60 * 1000, // 7 days
       });
 
       res.json({ msg: "Login success!" });
@@ -165,7 +165,7 @@ const authControllers = {
         res.cookie("refreshtoken", refresh_token, {
           httpOnly: true,
           path: "/user/refresh_token",
-          maxAge: 2000 * 24 * 60 * 60 * 1000, // 2000 days
+          maxAge: 200 * 24 * 60 * 60 * 1000, // 2000 days
         });
         res.json({ aa: moment(user.dateOfBirth).format("L") });
         res.json({ msg: "Login success!" });
@@ -183,7 +183,7 @@ const authControllers = {
         res.cookie("refreshtoken", refresh_token, {
           httpOnly: true,
           path: "/user/refresh_token",
-          maxAge: 2000 * 24 * 60 * 60 * 1000, // 2000 days
+          maxAge: 200 * 24 * 60 * 60 * 1000, // 2000 days
         });
 
         res.json({ msg: "Login success!" });
@@ -214,7 +214,7 @@ const createAccessToken = (payload) => {
 
 const createRefreshToken = (payload) => {
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "2000d",
+    expiresIn: "200d",
   });
 };
 
