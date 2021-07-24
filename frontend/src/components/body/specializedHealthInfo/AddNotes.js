@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../../static/Styling/spHealthInfo.css";
 import { useSelector } from "react-redux";
-import { Button, Grid, TextField } from "@material-ui/core";
+import { Button, Grid, TextareaAutosize, TextField } from "@material-ui/core";
 import {
   showErrMsg,
   showSuccessMsg,
@@ -150,12 +150,13 @@ export default function AddNotes(props) {
             />
           </Grid>
 
-          <Grid item xs={11}>
+          <Grid className='addNotes_textArea'
+          item xs={11}>
             <h5>Description</h5>
-            <TextField
+            <TextareaAutosize
               className="description"
               variant="outlined"
-              fullWidth
+              // fullWidth
               type="text"
               id="description"
               name="description"

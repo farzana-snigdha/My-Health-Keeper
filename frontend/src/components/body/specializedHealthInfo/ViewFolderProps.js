@@ -21,8 +21,8 @@ import "../../../static/Styling/spHealthInfo.css";
 
 const useStyles = makeStyles((theme) => ({
   expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
+    // transform: "rotate(0deg)",
+    // marginLeft: "auto",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
@@ -64,22 +64,29 @@ export default function ViewFolderProps(props) {
 
   return (
     <div variant="outlined" className="sp_reminder_card">
-      <h2 className='folderName'>
+      <h2 className="folderName">
         <FolderSpecialIcon />
         &nbsp;{props.note.folder}
       </h2>
       <hr></hr>
+      <div>Note Date: {props.note.noteDate.substring(0, 10)}</div>
 
-      <p>Note Date: {props.note.noteDate.substring(0, 10)}</p>
       <IconButton
-        className={clsx(classes.expand, {
-          [classes.expandOpen]: expanded,
-        })}
+        className={
+          (clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          }),
+          "SPiconBtn")
+        }
         onClick={handleExpandClick}
         aria-expanded={expanded}
       >
-        <h5 className="clrDiv">
-          <b>Description</b>
+        <h5
+          className="clrDiv"
+          data-toggle="tooltip"
+          title="Click To View Details"
+        >
+          Description
         </h5>
       </IconButton>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -87,12 +94,15 @@ export default function ViewFolderProps(props) {
       </Collapse>
 
       {editing ? (
-        <CardContent className='content'>
+        <CardContent className="content">
           {" "}
-          <textarea className='editingBox'
+          <textarea
+            className="editingBox"
             value={description}
             onChange={(e) => setDesc(e.target.value)}
-          ></textarea>
+          >
+            {props.note.description}
+          </textarea>
         </CardContent>
       ) : (
         ""
