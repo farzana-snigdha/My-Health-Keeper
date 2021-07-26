@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const medReminderRouter = require("./routers/medReminder.route");
 const cycleTracker = require("./routers/cycleTracker.routers");
 const medDoses = require("./routers/medDose.route");
+const payment=require('./routers/payment.routers')
 const specializedHealthInformation = require('./routers/specializedHealthInformation.routers');
 const path = require("path");
 
@@ -23,5 +24,7 @@ app.use(medDoses);
 
 app.use("/user", cycleTracker);
 app.use("/user", router);
+
+app.use('/payment',payment)
 
 module.exports = app;
