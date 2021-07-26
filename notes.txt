@@ -9,11 +9,10 @@ for easy registration comment out the if conditions except if(user)
 navbar=>avatar(before logout)
 check part7N
 
-//new
+
 frontend: npm i react-pdf
 backend: npm uninstall express-fileupload
-
-
-
-//new
 npm i react-lazyload react-modal-image
+
+//new 
+backend: npm i ssl-commerz-node shortid morgan
