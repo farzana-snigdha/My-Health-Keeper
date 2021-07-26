@@ -19,8 +19,11 @@ const SMSPayment = new Schema(
     userPhone: {
       type: String,
     },
-    amount:{
+    total_amount:{
         type:Number,
+    },
+    paymentDate:{
+      type:Date,
     },
   },
   { timestamps: true }
