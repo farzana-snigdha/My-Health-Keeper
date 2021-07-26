@@ -11,6 +11,22 @@ const getallMediaFiles = async (req, res) => {
   }
 };
 
+const deleteFiles=async(req,res)=>{
+  let filePath = req.params.filePath;
+let folder=req.params.folderID
+  console.log("folder", folder);
+  const filepath=await MultipleFile.findOne({ _id:folder }).then((filedata) => {
+    console.log('filedata',filedata)
+   
+  });
+  // await MultipleFile.findByIdAndDelete(folder)
+  //   .then(() => {
+  //     res.json({ msg: "Folder Successfully Deleted!" });
+  //   })
+  //   .catch((err) => {
+  //     res.json({ msg: err.message });
+  //   });
+}
 const updateMediaFiles = async (req, res) => {
   const folder = req.headers["folder"];
   console.log("folderID: ", folder);
@@ -77,6 +93,7 @@ const getFolderItems = async (req, res) => {
 
 module.exports = {
   getallMediaFiles,
+  deleteFiles,
   updateMediaFiles,
   getFolderItems,
 };
