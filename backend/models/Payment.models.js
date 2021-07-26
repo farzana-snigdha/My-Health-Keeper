@@ -16,7 +16,7 @@ const SMSPayment = new Schema(
       type: Boolean,
       default: false,
     },
-    userPhone: {
+    phone: {
       type: String,
     },
     total_amount:{
@@ -25,6 +25,38 @@ const SMSPayment = new Schema(
     paymentDate:{
       type:Date,
     },
+    deliveryMethod: {
+      type: String,
+      default: "",
+    },
+    // customerInfo: {
+    //   type: Object,
+    //   default: {
+    //     cusName: "",
+    //     cusEmail: "",
+    //     cusAdd1: "",
+    //     cusAdd2: "",
+    //     cusCity: "",
+    //     cusState: "",
+    //     cusPostcode: "",
+    //     cusCountry: "Bangladesh",
+    //     cusPhone: "",
+    //     cusFax: "",
+    //   },
+    // },
+    // shippingInfo: {
+    //   type: Object,
+    //   default: {
+    //     name: "",
+    //     shippingAdd1: "",
+    //     shippingAdd2: "",
+    //     shippingCity: "",
+    //     shippingState: "",
+    //     shippingPostcode: "",
+    //     shippingCountry: "Bangladesh",
+    //     cusPhone: "",
+    //   },
+    // },
   },
   { timestamps: true }
 );
