@@ -7,9 +7,9 @@ const {
   getFolderDataForModal,
   updateSpecializedHealthInfo,
  deleteFolder,
-} = require("../controllers/specializedHealthInfo.controllers");
+} = require("../controllers/SpHealth.controllers/specializedHealthInfo.controllers");
 
-const {getallMediaFiles,deleteFiles, getFolderItems,updateMediaFiles} =require('../controllers/mediaFile.SpHealth.controllers')
+const {getallMediaFiles,deleteFiles, getFolderItems,updateMediaFiles} =require('../controllers/SpHealth.controllers/mediaFile.SpHealth.controllers')
 router.post(
   "/save-specialized-health-info",
   upload.array("files"),

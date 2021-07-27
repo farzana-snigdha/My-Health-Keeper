@@ -1,4 +1,4 @@
-const MultipleFile = require("../models/specializedHealthInfo.model");
+const MultipleFile = require("../../models/specializedHealthInfo.model");
 
 const getallMediaFiles = async (req, res) => {
   try {

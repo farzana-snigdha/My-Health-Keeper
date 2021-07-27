@@ -1,8 +1,8 @@
-const medConfirmation = require("../models/medicineConfirmation.model");
-const UserModel = require("../models/userModel");
-const sendEmail = require("./sendMail.Controllers");
+const medConfirmation = require("../../models/medicineConfirmation.model");
+const UserModel = require("../../models/userModel");
+const sendEmail = require("../sendMail.Controllers");
 
-const sendSMS = require("./SMS.controllers");
+const sendSMS = require("../SMS.controllers");
 
 setInterval(() => {
   medConfirmation.find({}, (err, reminder) => {

@@ -1,5 +1,5 @@
-const medReminder = require("../models/medReminder.model");
-const medConfirmation = require("../models/medicineConfirmation.model");
+const medReminder = require("../../models/medReminder.model");
+const medConfirmation = require("../../models/medicineConfirmation.model");
 const moment = require("moment");
 
 //const doseId = null;

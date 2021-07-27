@@ -1,8 +1,8 @@
-const User = require("../models/userModel");
+const User = require("../../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { CLIENT_URL } = process.env;
-const sendMail = require("./sendMail.Controllers");
+const sendMail = require("../sendMail.Controllers");
 const { google } = require("googleapis");
 const { OAuth2 } = google.auth;
 const fetch = require("node-fetch");

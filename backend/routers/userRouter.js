@@ -1,8 +1,8 @@
 const router = require("express").Router();
 
-const userCtrl = require("../controllers/authControllers");
-const passwordChangeControllers=require('../controllers/passwordChange.controllers')
-const profileCtrl=require('../controllers/profile.controllers')
+const userCtrl = require("../controllers/user.controllers/authControllers");
+const passwordChangeControllers=require('../controllers/user.controllers/passwordChange.controllers')
+const profileCtrl=require('../controllers/user.controllers/profile.controllers')
 const auth=require("../middleware/auth")
 
 

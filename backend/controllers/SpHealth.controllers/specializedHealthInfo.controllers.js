@@ -1,5 +1,5 @@
 "use strict";
-const MultipleFile = require("../models/specializedHealthInfo.model");
+const MultipleFile = require("../../models/specializedHealthInfo.model");
 
 const saveSpecializedHealthInfo = async (req, res) => {
   try {
