@@ -1,7 +1,7 @@
 const medConfirmation = require("../../models/medicineConfirmation.model");
 const UserModel = require("../../models/userModel");
 const sendEmail = require("../sendMail.Controllers");
-
+const PaymentModel = require("../../models/Payment.models");
 const sendSMS = require("../SMS.controllers");
 
 setInterval(() => {
@@ -36,7 +36,16 @@ setInterval(() => {
                 UserModel.find({ email: remind.userEmail }).then((res1) => {
                   const userPhone = res1[0].phone;
 
-                  sendSMS(userPhone, msg);
+                  PaymentModel.find({
+                    user: remind.user,
+                    paymentDone: true,
+                  }).then((res2) => {
+                    if (res2.length > 0) {
+                      sendSMS(userPhone, msg);
+                    } else {
+                      console.log("pay first");
+                    }
+                  });
                 });
 
                 sendEmail(remind.userEmail, "", msg, "", "");

@@ -63,12 +63,9 @@ const postMedicine = async (req, res) => {
     .then((data) => {
       res.json(data);
       const doseId = data._id;
-      // console.log(data);
-      // console.log(doseId);
-
+     
       const date1 = new Date(startdate);
       const date2 = new Date(enddate);
-
       const days = Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
       const frequency = doses.length;
 
@@ -100,12 +97,6 @@ const postMedicine = async (req, res) => {
       res.json(error);
     });
 
-  // const date1 = new Date(startdate);
-  // const date2 = new Date(moment(date1).add(1, "days"));
-  // console.log(date2);
-
-  // console.log(doses[1].time);
-  //console.log(startdate+1);
 };
 
 const deleteMedicine = async (req, res) => {
