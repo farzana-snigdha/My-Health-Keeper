@@ -42,13 +42,14 @@ const payment = new PaymentSession(
   process.env.STORE_ID,
   process.env.STORE_PASSWORD
 );
-
+let sessionkey=null
 exports.SSLCommerz_payment_init = async (req, res) => {
   const transactionId = `transaction_${shortid.generate()}`;
   let user = req.headers["userid"];
   console.log('req.headers["userid"]; ', user);
   let phone = req.headers["phone"];
   console.log('req.headers["userphone"]; ', phone);
+  let name=req.headers['userName']
 
   try {
     // Set the urls
@@ -82,7 +83,7 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       state: "cusState",
       postcode: 4000,
       country: "Bangladesh",
-      phone: "cusPhone",
+      phone: phone,
       fax: "cusFax",
     });
 
@@ -109,13 +110,14 @@ exports.SSLCommerz_payment_init = async (req, res) => {
 
     // Initiate Payment and Get session key
     payment.paymentInit().then(async (response) => {
-      // console.log("paymentInit", response);
+       sessionkey=response['sessionkey']
+      console.log("paymentInit", sessionkey);
       res.send(response["GatewayPageURL"]);
       // paymentDone = response["status"] === "SUCCESS";
       console.log("user ", user);
 
       const existingUser = await PaymentModel.findOne({ user });
-      console.log('existingUser ',existingUser)
+      // console.log('existingUser ',existingUser)
       if (existingUser) {
         await PaymentModel.findOneAndUpdate(
           { user },
@@ -123,7 +125,7 @@ exports.SSLCommerz_payment_init = async (req, res) => {
             transactionId: transactionId,
           }
         ).then((res2) => {
-          console.log("res2 ", res2);
+          // console.log("res2 ", res2);
         });
       } else {
         console.log("res11 ", res1);
@@ -146,6 +148,8 @@ exports.SSLCommerz_payment_init = async (req, res) => {
 };
 
 exports.SSLCommerz_payment_success = async (req, res) => {
+  console.log("SSLCommerz_payment_success", sessionkey);
+
   const { transactionId } = req.query;
   await PaymentModel.findOne({ transactionId }).then((ans) => {
     console.log("dcacxac ", transactionId);
@@ -153,6 +157,11 @@ exports.SSLCommerz_payment_success = async (req, res) => {
   if (!transactionId) {
     return res.json({ message: "transactionId must be required" });
   } else {
+    // await SSLCommerz.validate(sessionkey).then((res3)=>{
+    //   console.log(res3)
+    // }).catch((err)=>{
+    //   console.log('res3 ',err)
+    // })
     const currentPayment = PaymentModel.findOneAndUpdate(
       { transactionId: transactionId },
       {
@@ -163,17 +172,17 @@ exports.SSLCommerz_payment_success = async (req, res) => {
 
     currentPayment.exec((err, result) => {
       if (err) console.log(err);
-      res.redirect(`http://127.0.0.1:5001/`);
+      res.redirect(`${process.env.CLIENT_URL}/profile`);
     });
   }
 };
 
 exports.SSLCommerz_payment_fail = (req, res) => {
-  res.redirect(`http://127.0.0.1:5001/profile/fail`);
+  res.redirect(process.env.CLIENT_URL);
 };
 
 exports.SSLCommerz_payment_cancel = (req, res) => {
-  res.redirect(`http://127.0.0.1:5001/profile/cancel`);
+  res.redirect(process.env.CLIENT_URL);
 };
 
 // -------------------------------- After Success
