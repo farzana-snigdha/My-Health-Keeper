@@ -7,6 +7,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "child_process": "^1.0.2",
     "cloudinary": "^1.26.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -23,6 +24,7 @@
     "nodemailer": "^6.6.2",
     "nodemon": "^2.0.7",
     "shortid": "^2.2.16",
+    "soap": "^0.40.0",
     "ssl-commerz-node": "^1.0.4",
     "web-push": "^3.4.5"
   },

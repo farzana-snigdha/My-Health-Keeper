@@ -15,4 +15,7 @@ backend: npm uninstall express-fileupload
 npm i react-lazyload react-modal-image
 
 //new 
-backend: npm i ssl-commerz-node shortid morgan
+backend: npm i ssl-commerz-node shortid morgan soap child_process
+python -m pip install zeep
+
+****install python extension 
