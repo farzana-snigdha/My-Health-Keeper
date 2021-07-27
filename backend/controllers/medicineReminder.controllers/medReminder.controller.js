@@ -7,6 +7,7 @@ const moment = require("moment");
 const getOngoingMedicine = async (req, res) => {
   let user = req.user.id;
 const todayDate=new Date()
+todayDate.setDate(todayDate.getDate()-1)
   medReminder.find({ user,enddate:{$gte:todayDate} }, (err, reminderList) => {
     if (err) {
       console.log(user);
@@ -23,6 +24,8 @@ const todayDate=new Date()
 const getCompleteMedicine = async (req, res) => {
   let user = req.user.id;
 const todayDate=new Date()
+todayDate.setDate(todayDate.getDate()-1)
+console.log('today ',todayDate)
   medReminder.find({ user,enddate:{$lt:todayDate} }, (err, reminderList) => {
     if (err) {
       console.log(user);
