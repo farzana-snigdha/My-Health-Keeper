@@ -1,21 +1,22 @@
 const medConfirmation = require("../models/medicineConfirmation.model");
+const UserModel = require("../models/userModel");
 const sendEmail = require("./sendMail.Controllers");
 
-setInterval(() => {
+const sendSMS = require("./SMS.controllers");
 
+setInterval(() => {
   medConfirmation.find({}, (err, reminder) => {
     if (err) {
       console.log("medConfirmation notification: ", err);
     }
     if (reminder) {
-     
       for (i = 0; i < reminder.length; i++) {
         if (!reminder[i].isReminded) {
           var input = reminder[i].medtime;
 
           var input1 = reminder[i].meddate;
           const q = new Date(input1);
-                   const aaq = q.toISOString().slice(0, 11) + input + ":00.00";
+          const aaq = q.toISOString().slice(0, 11) + input + ":00.00";
           const time1 = new Date(aaq);
 
           if (time1.getTime() - Date.now() < 0) {
@@ -30,57 +31,40 @@ setInterval(() => {
                 if (err) {
                   console.log(err);
                 }
+                let msg = `REMINDER for ${remind.medname}!!`;
+               
+                UserModel.find({ email: remind.userEmail }).then((res1) => {
+                  const userPhone = res1[0].phone;
+                  console.log("jojojo", userPhone);
+                  sendSMS(userPhone, msg);
+                  // const pyProg = spawn("python", [
+                  //   "../SMS.api.py",
+                  //   userPhone,
+                  //   msg,
+                  // ]);
+                  // pyProg.stdout.on("data", function (data) {
+                  //   console.log(data.toString());
+                  // });
+                });
 
-                sendEmail(
-                  remind.userEmail,
-                  "",
-                  `REMINDER for ${remind.medname}!!`,
-                  "",
-                  ""
-                );
+                //  console.log('userPhone ',userPhone)
+
+                sendEmail(remind.userEmail, "", msg, "", "");
               }
             );
           }
         }
-
-        // if (!reminder[i].isReminded) {
-
-        //   if (periodDate - now < 0) {
-        //     Cycle.findByIdAndUpdate(
-        //       reminder[i]._id,
-        //       { isReminded: true },
-        //       (err, remind) => {
-        //         if (err) {
-        //           console.log(err);
-        //         }
-        //         const nextDate = new Date(
-        //           remind.endDate.setTime(
-        //             remind.endDate.getTime() + remind.cycleLength * 86400000
-        //           )
-        //         );
-        //         console.log(nextDate);
-        //         sendMail(
-        //           remind.userEmail,
-        //           null,
-        //           `Get ready for your PERIOD !!  \n Your probable date : ${nextDate}`,
-        //           null,
-        //           null
-        //         );
-        //       }
-        //     );
-        //   }
-        // }
       }
     }
   });
-}, 6000);
+}, 1000);
 const getDoses = async (req, res) => {
   let user = req.user.id;
   const date1 = new Date();
   console.log(new Date(date1.toISOString().slice(0, 10)));
 
-  medConfirmation.find(
-    {
+  medConfirmation
+    .find({
       user: user,
       meddate: "/^" + new Date(date1.toISOString().slice(0, 10)) + "/",
       isTaken: false,
@@ -91,9 +75,7 @@ const getDoses = async (req, res) => {
     .then((result) => {
       res.send(result);
     });
-  
 };
-
 
 const getMissedDoses = async (req, res) => {
   let user = req.user.id;
@@ -104,7 +86,7 @@ const getMissedDoses = async (req, res) => {
     {
       user: user,
       doseId: req.params.id,
-      meddate: {$lt: new Date(date1.toISOString().slice(0, 10))},
+      meddate: { $lt: new Date(date1.toISOString().slice(0, 10)) },
       isTaken: false,
     },
     (err, doseList) => {
@@ -115,7 +97,7 @@ const getMissedDoses = async (req, res) => {
       if (doseList) {
         res.send(doseList);
         console.log(doseList);
-        console.log("done")
+        console.log("done");
       }
     }
   );
