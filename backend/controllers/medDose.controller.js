@@ -32,22 +32,12 @@ setInterval(() => {
                   console.log(err);
                 }
                 let msg = `REMINDER for ${remind.medname}!!`;
-               
+
                 UserModel.find({ email: remind.userEmail }).then((res1) => {
                   const userPhone = res1[0].phone;
-                  console.log("jojojo", userPhone);
-                  sendSMS(userPhone, msg);
-                  // const pyProg = spawn("python", [
-                  //   "../SMS.api.py",
-                  //   userPhone,
-                  //   msg,
-                  // ]);
-                  // pyProg.stdout.on("data", function (data) {
-                  //   console.log(data.toString());
-                  // });
-                });
 
-                //  console.log('userPhone ',userPhone)
+                  sendSMS(userPhone, msg);
+                });
 
                 sendEmail(remind.userEmail, "", msg, "", "");
               }
