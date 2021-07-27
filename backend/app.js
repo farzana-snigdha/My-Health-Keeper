@@ -27,4 +27,33 @@ app.use("/user", router);
 
 app.use('/payment',payment)
 
+const { spawn } = require('child_process');
+app.get('/', (req, res) => {
+
+    // 
+   
+    const pyProg = spawn('python',['SMS.controllers.py','snigdha']);
+
+    pyProg.stdout.on('data', function(data) {
+
+        console.log(data.toString());
+        // res.write(data);
+        // res.end('end');
+    });
+
+    pyProg.stderr.on('data', function(data) {
+
+        console.error(data.toString());
+        // res.write(data);
+        // res.end('end');
+    });
+
+    pyProg.on('close', function(code) {
+
+        console.log(code);
+        // res.write(data);
+        // res.end('end');
+    });
+})
+
 module.exports = app;
