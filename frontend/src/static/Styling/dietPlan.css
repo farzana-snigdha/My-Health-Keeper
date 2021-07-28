@@ -6,7 +6,7 @@
 }
 
 .diet_buttons > .diet_buttons_sub {
-  width: 20%;
+  width: auto;
   color: white;
   background-color: #063742;
   display: inline;
