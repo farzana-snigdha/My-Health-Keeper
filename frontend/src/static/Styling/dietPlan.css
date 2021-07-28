@@ -1,12 +1,20 @@
 .diet_buttons {
-    width: 20%;
-    background-color: #063742;
-    color: white;
-    display: inline;
-    margin-left: 1em;
-    padding: 10px;
-    text-decoration: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-  }
+  margin-top: 1%;
+  width: 30%;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.diet_buttons > .diet_buttons_sub {
+  width: 20%;
+  color: white;
+  background-color: #063742;
+  display: inline;
+  margin-left: 1em;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+

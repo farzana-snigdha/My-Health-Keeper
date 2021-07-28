@@ -1,0 +1,13 @@
+.set_diet_goal_button {
+    padding: 1%;
+    color: #063742;
+  }
+  
+  .set_diet_goal_button > .set_diet_goal_button_sub {
+    color: #063742;
+    font-size: 18px;
+  }
+  .set_diet_goal_button > .set_diet_goal_button_sub:hover {
+    font-weight: bold;
+  }
+  
