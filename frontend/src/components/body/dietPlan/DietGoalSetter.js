@@ -14,17 +14,17 @@ const initialState = {
   target: "",
 };
 
-export default function DietGoalSetter() {
+export default function DietGoalSetter(props) {
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
   const [basicInfo, setBasicInfo] = useState(initialState);
   const { height, weight, age, levelOfActivity, target } = basicInfo;
-
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setBasicInfo({ ...basicInfo, [name]: value });
   };
+
   return (
     <div className="root">
       <Grid className="goal_grid" spacing={3} container>
@@ -127,6 +127,10 @@ export default function DietGoalSetter() {
       </Grid>
       <div className="set_diet_goal_button">
         <Button className="set_diet_goal_button_sub">SAVE</Button>
+        &emsp;&emsp;
+        <Button className="set_diet_goal_button_sub" onClick={props.isVisible}>
+          Cancel
+        </Button>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@
 .set_diet_goal_button > .set_diet_goal_button_sub {
   color: #063742;
   font-size: 18px;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .set_diet_goal_button > .set_diet_goal_button_sub:hover {
   background-color: #063742;
