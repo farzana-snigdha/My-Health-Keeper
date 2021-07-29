@@ -36,6 +36,10 @@ export default function ViewFolderProps(props) {
   const [editing, setEditing] = useState(false);
   const [description, setDesc] = useState("");
   const [expanded, setExpanded] = React.useState(false);
+
+  const [showEditModal, setShowEditModal] = useState(false);
+  const openSpEditModal = () => setShowEditModal(true);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -110,27 +114,19 @@ export default function ViewFolderProps(props) {
       )}
 
       <CardActions className="clrCardAction">
-        {editing ? (
-          <IconButton
-            className="viewBtn"
-            data-toggle="tooltip"
-            title="Update Description"
-            onClick={(e) => updateDesc(e, props.note._id)}
-          >
-            <CheckBoxIcon />
-          </IconButton>
-        ) : (
+     
           <IconButton
             className="viewBtn"
             data-toggle="tooltip"
             title="Edit Folder"
             key={props.note.folder}
             value={props.note.description}
-            onClick={() => setEditing(true)}
+            // onClick={() => setEditing(true)}
+            onClick={openSpEditModal}
           >
             <EditIcon />
           </IconButton>
-        )}
+      
 
         <IconButton
           component={Link}
@@ -153,6 +149,13 @@ export default function ViewFolderProps(props) {
           <DeleteIcon />
         </IconButton>
       </CardActions>
+      <EditNotesModal
+                    key={props.note.folder}
+                      showEditModal={showEditModal}
+                      setShowEditModal={setShowEditModal}
+                      getNote={props.note.description}
+                      getID={props.note._id}
+                      showSPHealthNotes= {props.showSPHealthNotes}   />
     </div>
   );
 }

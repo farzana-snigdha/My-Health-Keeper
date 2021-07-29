@@ -7,7 +7,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 
-const EditNotesModal = ({ showEditModal, setShowEditModal,getNote,getID }) => {
+const EditNotesModal = ({ showEditModal, setShowEditModal,getNote,getID,showSPHealthNotes }) => {
     const token = useSelector((state) => state.token);
 
     const closeEditModal = () => {
@@ -30,7 +30,7 @@ const EditNotesModal = ({ showEditModal, setShowEditModal,getNote,getID }) => {
         }
       )
       .then((response) => {
-        // showSPHealthNotes();
+        showSPHealthNotes();
       })
       .catch((error) => {
         console.log(error);
