@@ -7,6 +7,7 @@ import {
   CardActions,
   CardHeader,
 } from "@material-ui/core";
+import EditNotesModal from "./EditNotesModal";
 import clsx from "clsx";
 import Collapse from "@material-ui/core/Collapse";
 import { makeStyles } from "@material-ui/core/styles";
