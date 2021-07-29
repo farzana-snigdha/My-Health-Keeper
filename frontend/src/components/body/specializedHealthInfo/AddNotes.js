@@ -142,7 +142,7 @@ export default function AddNotes(props) {
             <TextareaAutosize
               className="description"
               variant="outlined"
-              // fullWidth
+             rows='3'
               type="text"
               id="description"
               name="description"
