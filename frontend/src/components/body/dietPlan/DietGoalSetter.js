@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Grid, TextField, MenuItem, Select } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import "../../../static/Styling/dietPlanGoal.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import {
+  showErrMsg,
+  showSuccessMsg,
+} from "../../utils/notification/Notification";
 
 const initialState = {
   height: "",
@@ -12,6 +15,8 @@ const initialState = {
   age: "",
   levelOfActivity: "",
   target: "",
+  success: "",
+  err:'',
 };
 
 export default function DietGoalSetter(props) {
@@ -19,14 +24,53 @@ export default function DietGoalSetter(props) {
   const auth = useSelector((state) => state.auth);
   const { user, isLogged } = auth;
   const [basicInfo, setBasicInfo] = useState(initialState);
-  const { height, weight, age, levelOfActivity, target } = basicInfo;
+  const { height, weight, age, levelOfActivity, target,
+    success,err } = basicInfo;
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setBasicInfo({ ...basicInfo, [name]: value });
+    setBasicInfo({ ...basicInfo, [name]: value, err: "", success: "" });
   };
 
+const handleSubmit=async(e)=>{
+  e.preventDefault();
+let gender=user.gender
+let userId=user._id
+
+await axios.post(
+  "http://localhost:5000/diet-plan/setup-target_info",
+  {
+    height: height,
+    weight: weight,
+    age: age,
+    gender: gender,
+    levelOfActivity: levelOfActivity,
+    target: target,
+    user: userId,
+  },
+  {
+    headers: { Authorization: token },
+  }
+).then((res)=>{
+  setBasicInfo({ ...basicInfo,  err: "", success: 'Your target is saved!!' });
+  console.log('diet goal setter success ',res)
+
+  setTimeout(function () {
+    setBasicInfo(initialState);
+    props.isVisible()
+  }, 2000);
+}).catch((err)=>{
+  setBasicInfo({ ...basicInfo,  err: "Something went wrong!!", success: '' });
+  console.log('diet goal setter ',err)
+})
+}
+
+
+
   return (
-    <div className="root">
+<div>
+<div className="root">
+       {err && showErrMsg(err)}
+      {success && showSuccessMsg(success)}
       <Grid className="goal_grid" spacing={3} container>
         <Grid className="goal_grid_item" item xs={4}>
           <div
@@ -126,12 +170,14 @@ export default function DietGoalSetter(props) {
         </Grid>
       </Grid>
       <div className="set_diet_goal_button">
-        <Button className="set_diet_goal_button_sub">SAVE</Button>
+        <Button onClick={handleSubmit} className="set_diet_goal_button_sub">SAVE</Button>
         &emsp;&emsp;
         <Button className="set_diet_goal_button_sub" onClick={props.isVisible}>
           Cancel
         </Button>
       </div>
     </div>
+
+</div>
   );
 }
