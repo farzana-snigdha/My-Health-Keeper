@@ -19,8 +19,11 @@ export default function DietPlan() {
           {""} Set Your Goal
         </Button>
       </div>
-      {targetVisible ? <DietGoalSetter
-       isVisible={() => viewtargetInfo()}  /> : ""}
+      {targetVisible ? (
+        <DietGoalSetter isVisible={() => viewtargetInfo()} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
